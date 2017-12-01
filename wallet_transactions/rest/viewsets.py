@@ -102,7 +102,7 @@ class TellerCashBalancesViewSet(viewsets.ViewSet):
     """
     TellerCashBalances list, retrieve, add, update and delete
     """
-    permission_classes = (IsTellerUser)
+    permission_classes = (IsTellerUser,)
 
     def list(self, request):
         queryset = TellerCashBalances.objects.filter(teller__user=request.user)

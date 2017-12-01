@@ -224,10 +224,11 @@ class TellerServiceChargesViewSet(viewsets.ViewSet):
     """
     List, retrieve, add, update and delete Teller services
     """
-    permission_classes = (IsTellerUser)
+    permission_classes = (IsTellerUser,)
 
     def list(self, request):
         queryset = TellerServiceCharges.objects.filter(teller__user=request.user)
+
         serializer = TellerServiceChargesSerializer(queryset, many=True)
         return Response(serializer.data)
 
@@ -239,7 +240,8 @@ class TellerServiceChargesViewSet(viewsets.ViewSet):
 
     def post(self, request, format=None):
         try:
-            TellerServiceCharges.objects.create(teller__user=request.user, service__code=request.data['service_code'],\
+            service = Service.objects.get(code=request.data['service_code'])
+            TellerServiceCharges.objects.create(teller=request.user.teller, service=service,\
                                                 min_charges=request.data['min_charges'], \
                                                 max_charges=request.data['max_charges'])
             return Response({
@@ -255,7 +257,7 @@ class TellerServiceChargesViewSet(viewsets.ViewSet):
 
     def put(self, request, format=None):
         try:
-            teller_service_charge = TellerServiceCharges.objects.get(teller__user=request.user,\
+            teller_service_charge = TellerServiceCharges.objects.get(teller=request.user.teller,\
                                                                     service__code=request.data['service_code'])
             teller_service_charge.min_charges = request.data['min_charges']
             teller_service_charge.max_charges = request.data['max_charges']
@@ -270,12 +272,12 @@ class TellerServiceChargesViewSet(viewsets.ViewSet):
     def delete(self, request, format=None):
 
         try:
-            teller_service_charge = TellerServiceCharges.objects.get(teller__user=request.user,\
+            teller_service_charge = TellerServiceCharges.objects.get(teller=request.user.teller,\
                                                                     service__code=request.data['service_code'])
             teller_service_charge.delete()
             return Response({
                 'success': True,
-                'message': 'Balance deleted successfully'
+                'message': 'Service charges deleted successfully'
             })
         except TellerServiceCharges.DoesNotExist:
             raise Http404
