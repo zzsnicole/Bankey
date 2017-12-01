@@ -5,6 +5,15 @@ from wallet_transactions.models import *
 from rest_framework import serializers
 
 
+class CurrencySerializer(serializers.ModelSerializer):
+    """
+    Currency Serializer
+    """
+    class Meta:
+        model = Currency
+        fields = ('name', 'code', 'status')
+
+
 class UserWalletSerializer(serializers.ModelSerializer):
     """
     UserWallet Serializer

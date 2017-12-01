@@ -23,8 +23,10 @@ from wallet_transactions.rest.viewsets import *
 router = routers.DefaultRouter()
 router.register(r'users', UserViewSet)
 router.register(r'tellers', TellerViewSet)
+router.register(r'services', ServiceViewSet, base_name='services')
 router.register(r'tellerservices', TellerServiceChargesViewSet, base_name='tellerservices')
 router.register(r'tellercashbalances', TellerCashBalancesViewSet, base_name='tellercashbalances')
+router.register(r'currency', CurrencyViewSet, base_name='currencies')
 router.register(r'wallets', WalletViewSet, base_name='wallets')
 router.register(r'transactions', SendMoneyTransactionHistoryViews, base_name='transaction')
 

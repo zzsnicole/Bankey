@@ -130,6 +130,15 @@ class UserContactsViews(generics.ListCreateAPIView):
             raise Http404
 
 
+class ServiceViewSet(viewsets.ModelViewSet):
+    """
+    List, retrieve, add, update and delete services for bankey by admin only
+    """
+    queryset = Service.objects.filter(status='A')
+    serializer_class = ServiceSerializer
+    permission_classes = (IsAdminUser,)
+
+
 class TellerViewSet(viewsets.ReadOnlyModelViewSet):
     """
     List tellers and Retrieve teller for admin only
