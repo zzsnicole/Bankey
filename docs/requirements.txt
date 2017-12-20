@@ -7,3 +7,5 @@ olefile==0.44
 Pillow==4.3.0
 psycopg2==2.7.3.2
 pytz==2017.3
+twilio==6.10.0
+django-cors-headers==2.1.0

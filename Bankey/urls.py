@@ -24,6 +24,7 @@ router = routers.DefaultRouter()
 router.register(r'users', UserViewSet)
 router.register(r'tellers', TellerViewSet)
 router.register(r'services', ServiceViewSet, base_name='services')
+router.register(r'countries', CountryViewSet, base_name='countries')
 router.register(r'tellerservices', TellerServiceChargesViewSet, base_name='tellerservices')
 router.register(r'tellercashbalances', TellerCashBalancesViewSet, base_name='tellercashbalances')
 router.register(r'currency', CurrencyViewSet, base_name='currencies')
@@ -34,6 +35,7 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     url(r'^api/', include(router.urls)),
+    url(r'^api/listcountries/$', CountryListView.as_view(), name='list_countries'),
     url(r'^api/signup/$', Signup.as_view(), name='signup'),
     url(r'^api/userdetails/(?P<pk>[0-9]+)/$', UserDetail.as_view(), name='user_detail'),
     url(r'^api/usercontacts/$', UserContactsViews.as_view(), name='user_contacts'),

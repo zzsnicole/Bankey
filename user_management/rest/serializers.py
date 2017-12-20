@@ -5,10 +5,20 @@ from user_management.models import *
 from rest_framework import serializers
 
 
+class CountrySerializer(serializers.ModelSerializer):
+    """
+    Country Serializer
+    """
+    class Meta:
+        model = Country
+        fields = ('name', 'code', 'status')
+
+
 class AddressSerializer(serializers.ModelSerializer):
     """
     Address Serializer
     """
+
     class Meta:
         model = Address
         fields = ('line1', 'location', 'city_or_village', 'state', 'country', 'pin_code')

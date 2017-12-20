@@ -1,5 +1,9 @@
+import random
+import string
+
 from django.contrib.auth import authenticate,login,logout
 from django.contrib.auth import update_session_auth_hash
+from django.conf import settings
 from django.http import Http404
 
 from user_management.models import *
@@ -13,6 +17,24 @@ from rest_framework.permissions import IsAdminUser, AllowAny, IsAuthenticated
 from rest_framework import generics
 from rest_framework.views import APIView
 from rest_framework import status
+
+
+class CountryViewSet(viewsets.ModelViewSet):
+    """
+    List, retrieve, add, update and delete countries for bankey by admin only
+    """
+    queryset = Country.objects.filter(status='A')
+    serializer_class = CountrySerializer
+    permission_classes = (IsAdminUser,)
+
+
+class CountryListView(generics.ListAPIView):
+    """
+    List countries
+    """
+    queryset = Country.objects.filter(status='A')
+    serializer_class = CountrySerializer
+    permission_classes = (AllowAny,)
 
 
 class UserViewSet(viewsets.ReadOnlyModelViewSet):
@@ -248,7 +270,7 @@ class TellerServiceChargesViewSet(viewsets.ViewSet):
                 'success': True,
                 'message': 'Successfully created'
             })
-        except:
+        except Exception as e:
             return Response({
                 'success': False,
                 'message': 'Fail to create'

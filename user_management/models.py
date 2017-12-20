@@ -13,6 +13,26 @@ from django.core.validators import MinValueValidator, MaxValueValidator
 from .managers import UserManager
 
 
+class Country(models.Model):
+    """
+    Country model
+    """
+    name = models.CharField(max_length=128, blank=False, null=False)
+    code = models.CharField(max_length=128, unique=True, blank=False, null=False)
+    status = models.CharField(max_length=1, choices=settings.STATUS_CHOICES, default='A')
+
+    def __str__(self):
+        country = '%s(%s)' % (self.name, self.code)
+        return country.strip()
+
+    def delete(self):
+        """
+        Delete currency
+        """
+        self.status = 'D'
+        self.save()
+
+
 class Address(models.Model):
     """
     Address model
@@ -21,7 +41,8 @@ class Address(models.Model):
     location = models.CharField(max_length=128, blank=True, null=True)
     city_or_village = models.CharField(max_length=128, blank=True, null=True)
     state = models.CharField(max_length=128, blank=True, null=True)
-    country = models.CharField(max_length=128, blank=False, null=False)
+    # country = models.ForeignKey('Country', related_name='address', blank=False, null=False)
+    country = models.CharField(max_length=128, blank=True, null=True)
     pin_code = models.PositiveIntegerField(blank=True, null=True)
     status = models.CharField(max_length=1, choices=settings.STATUS_CHOICES, default='A')
 
@@ -54,7 +75,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     )
     date_joined = models.DateTimeField(_('date joined'), default=timezone.now)
     photo = models.ImageField(upload_to='user_photos/', default='user_photos/no-photo.jpeg')
-    address = models.ForeignKey('Address', related_name='user', blank=True, null=True)
+    address = models.ForeignKey('Address', related_name='user', blank=False, null=True)
     contacts = models.ManyToManyField('self', related_name='user_contacts', blank=True)
     status = models.CharField(max_length=1, choices=settings.STATUS_CHOICES, default='A')
 
@@ -96,15 +117,17 @@ class User(AbstractBaseUser, PermissionsMixin):
         send_mail(subject, message, from_email, [self.email], **kwargs)
 
 
-class VerificationCode(models.Model):
+class PhoneVerification(models.Model):
     """
     VerificationCode model for phone number verification
     """
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='user_phone_verification',\
+                             blank=False, null=False)
     phone_no = models.CharField(_('phone number'), validators=[RegexValidator(regex=r'^\+?1?\d{9,15}$',
                                  message="Phone number must be entered in the format:\
                                   '+999999999'. Up to 15 digits allowed.")], max_length=15,\
                                   unique=True, blank=False, null=False)
-    datetime = models.DateTimeField()
+    verified_on = models.DateTimeField(default=timezone.now)
     code = models.CharField(max_length=64, unique=True, blank=False, null=False)
     status = models.CharField(max_length=1, choices=settings.VERIFICATION_STATUS, default='U')
 
