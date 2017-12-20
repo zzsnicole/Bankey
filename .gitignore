@@ -3,3 +3,8 @@
 media/
 migrations/
 venv/
+node_modules/
+build/
+platforms/
+plugins/
+.DS_Store

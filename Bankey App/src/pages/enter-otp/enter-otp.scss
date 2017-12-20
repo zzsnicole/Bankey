@@ -1,0 +1,26 @@
+page-enter-otp {
+    .header-label {
+        color: #0472cb;
+        padding: 10px 10%;
+        text-align: center;
+    }
+    .dash-row{
+        width: 300px;
+        overflow: hidden;
+    }
+    .partitioned {
+        
+        background-image: linear-gradient(to left, black 70%, rgba(255, 255, 255, 0) 0%);
+    background-size: 50px 1px;
+    width: 400px;
+    font-size: 24px;
+    letter-spacing: 37px;
+    border-width: 0px;
+    border-style: initial;
+    border-color: initial;
+    border-image: initial;
+    background-position: 31px bottom;
+    background-repeat: repeat-x;
+    }
+
+}
