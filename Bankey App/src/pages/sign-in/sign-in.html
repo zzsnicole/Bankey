@@ -16,21 +16,16 @@
 
       <form (ngSubmit)="login()" #loginForm="ngForm">
 
-            <ion-list inset>
+          <ion-item>
+            <ion-input text-center type="text" placeholder="Email" name="email" [(ngModel)]="loginCredentials.email" required></ion-input>
+          </ion-item>
 
-              <ion-item>
-                <ion-input type="text" placeholder="Email" name="email" [(ngModel)]="loginCredentials.email" required></ion-input>
-              </ion-item>
+          <ion-item>
+            <ion-input margin-top text-center type="password" placeholder="Password" name="password" [(ngModel)]="loginCredentials.password" required></ion-input>
+          </ion-item>
 
-              <ion-item>
-                <ion-input type="password" placeholder="Password" name="password" [(ngModel)]="loginCredentials.password" required></ion-input>
-              </ion-item>
-
-            </ion-list>
-
-
-            <button ion-button class="submit-btn" full type="submit" [disabled]="!loginForm.form.valid">Log in</button>
-            <p>If you don't have one,<a class="register-btn" block clear (click)="createAccount()">Make one Now!</a></p>
+          <button ion-button class="submit-btn" full type="submit" [disabled]="!loginForm.form.valid">Log in</button>
+          <p text-center>If you don't have one,<a class="register-btn" block clear (click)="createAccount()">Make one Now!</a></p>
 
       </form>
     </div>

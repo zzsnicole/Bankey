@@ -32,7 +32,7 @@ export class HomePage {
   ];
 
   public goToNextPage(){
-    this.navCtrl.setRoot(SignUpPage);
+    this.navCtrl.setRoot(SignInPage);
   }
 
 }

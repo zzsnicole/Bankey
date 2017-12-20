@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import {SignUpPage} from "../sign-up/sign-up";
 
 /**
  * Generated class for the SignInPage page.
@@ -24,7 +25,7 @@ export class SignInPage {
     loginCredentials = { email: '', password: '' };
 
   public createAccount() {
-
+      this.navCtrl.setRoot(SignUpPage);
   }
 
   public login() {

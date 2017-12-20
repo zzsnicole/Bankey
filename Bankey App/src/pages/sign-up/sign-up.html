@@ -19,11 +19,11 @@
     <form (ngSubmit)="register()" #registerForm="ngForm">
 
             <ion-item >
-              <ion-input text-center type="text" placeholder="Email" name="email" [(ngModel)]="registerCredentials.email" required></ion-input>
+              <ion-input text-center type="email" placeholder="Email" name="email" [(ngModel)]="registerCredentials.email" required></ion-input>
             </ion-item>
 
             <ion-item>
-              <ion-input text-center type="text" placeholder="Username" name="username" [(ngModel)]="registerCredentials.username" required></ion-input>
+              <ion-input text-center type="text" placeholder="Name" name="name" [(ngModel)]="registerCredentials.name" required></ion-input>
             </ion-item>
 
             <ion-item>
@@ -36,7 +36,7 @@
 
             <ion-item margin-top no-padding class="blue-background white-text-color">
               <ion-label no-padding class="select-label-font-size">Select Country</ion-label>
-              <ion-select padding-right no-padding>
+              <ion-select name="country" [(ngModel)]="registerCredentials.country" padding-right no-padding>
                 <ion-option value="bacon" selected="true">Bacon</ion-option>
                 <ion-option value="olives">Black Olives</ion-option>
                 <ion-option value="xcheese">Extra Cheese</ion-option>
