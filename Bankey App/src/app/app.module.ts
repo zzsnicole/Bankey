@@ -17,6 +17,7 @@ import {Camera} from '@ionic-native/camera';
 import {SocialSharing} from '@ionic-native/social-sharing';
 import {SignInPage} from "../pages/sign-in/sign-in";
 import {SignUpPage} from "../pages/sign-up/sign-up";
+import { HttpClientProvider } from '../providers/http-client/http-client';
 
 @NgModule({
     declarations: [
@@ -53,7 +54,8 @@ import {SignUpPage} from "../pages/sign-up/sign-up";
         SplashScreen,
         Camera,
         SocialSharing,
-        {provide: ErrorHandler, useClass: IonicErrorHandler}
+        {provide: ErrorHandler, useClass: IonicErrorHandler},
+    HttpClientProvider
     ]
 })
 export class AppModule {
