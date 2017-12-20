@@ -12,47 +12,45 @@
     </ion-col>
     <ion-col></ion-col>
   </ion-row>
+  <h5 class = "primary-text-color" text-center>Be one of us</h5>
+  <p text-center>Create bank account and empowers your pocket!</p>
   <div class="login-box">
 
     <form (ngSubmit)="register()" #registerForm="ngForm">
-          <ion-list inset>
 
-            <ion-item>
-              <ion-input type="text" placeholder="Email" name="email" [(ngModel)]="registerCredentials.email" required></ion-input>
+            <ion-item >
+              <ion-input text-center type="text" placeholder="Email" name="email" [(ngModel)]="registerCredentials.email" required></ion-input>
             </ion-item>
 
             <ion-item>
-              <ion-input type="text" placeholder="Username" name="username" [(ngModel)]="registerCredentials.username" required></ion-input>
+              <ion-input text-center type="text" placeholder="Username" name="username" [(ngModel)]="registerCredentials.username" required></ion-input>
             </ion-item>
 
             <ion-item>
-              <ion-input type="password" placeholder="Password" name="password" [(ngModel)]="registerCredentials.password" required></ion-input>
+              <ion-input text-center type="password" placeholder="Password" name="password" [(ngModel)]="registerCredentials.password" required></ion-input>
             </ion-item>
 
             <ion-item>
-              <ion-input type="phone" placeholder="Phone Number" name="phone" [(ngModel)]="registerCredentials.phone" required></ion-input>
+              <ion-input text-center type="phone" placeholder="Phone Number" name="phone" [(ngModel)]="registerCredentials.phone" required></ion-input>
             </ion-item>
 
-            <ion-list>
-              <ion-item>
-                <ion-label>Select your country</ion-label>
-                <ion-select>
-                  <ion-option value="bacon" selected="true">Bacon</ion-option>
-                  <ion-option value="olives">Black Olives</ion-option>
-                  <ion-option value="xcheese" selected="true">Extra Cheese</ion-option>
-                  <ion-option value="peppers">Green Peppers</ion-option>
-                  <ion-option value="mushrooms">Mushrooms</ion-option>
-                  <ion-option value="onions">Onions</ion-option>
-                  <ion-option value="pepperoni">Pepperoni</ion-option>
-                  <ion-option value="pineapple">Pineapple</ion-option>
-                  <ion-option value="sausage">Sausage</ion-option>
-                  <ion-option value="Spinach">Spinach</ion-option>
-                </ion-select>
-              </ion-item>
-            </ion-list>
-          </ion-list>
+            <ion-item margin-top no-padding class="blue-background white-text-color">
+              <ion-label no-padding class="select-label-font-size">Select Country</ion-label>
+              <ion-select padding-right no-padding>
+                <ion-option value="bacon" selected="true">Bacon</ion-option>
+                <ion-option value="olives">Black Olives</ion-option>
+                <ion-option value="xcheese">Extra Cheese</ion-option>
+                <ion-option value="peppers">Green Peppers</ion-option>
+                <ion-option value="mushrooms">Mushrooms</ion-option>
+                <ion-option value="onions">Onions</ion-option>
+                <ion-option value="pepperoni">Pepperoni</ion-option>
+                <ion-option value="pineapple">Pineapple</ion-option>
+                <ion-option value="sausage">Sausage</ion-option>
+                <ion-option value="Spinach">Spinach</ion-option>
+              </ion-select>
+            </ion-item>
 
-          <button ion-button class="submit-btn" full type="submit" [disabled]="!registerForm.form.valid">Sign Up</button>
+          <button margin-top ion-button class="submit-btn" full type="submit" [disabled]="!registerForm.form.valid">Sign Up</button>
 
     </form>
   </div>

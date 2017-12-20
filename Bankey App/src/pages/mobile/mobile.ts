@@ -44,6 +44,7 @@ export class MobilePage {
 
   public formatCountryList() {
     let formattedListArr = [];
+
     // _.forEach(this.countryList, element => {
     //   let filterListObj = {
     //     "name": parseInt(element[2]),
@@ -52,6 +53,7 @@ export class MobilePage {
     //   }
     //   formattedListArr.push(filterListObj);
     // });
+
     this.Country = formattedListArr;
   }
   goToNextPage() {
