@@ -44,6 +44,7 @@ urlpatterns = [
     url(r'^api/login/$', Login.as_view(), name='login'),
     url(r'^api/logout/$', Logout.as_view(), name='logout'),
     url(r'^api/changepassword/$', ChangePassword.as_view(), name='change_password'),
+    url(r'^api/phoneverification/$', PhoneVerificationView.as_view(), name='phone_verification'),
     url(r'^api/teller/add/$', AddTeller.as_view(), name='add_teller'),
     url(r'^api/teller/change/activationmode/$', ChangeTellerActivationMode.as_view(),\
                                                             name='change_teller_activation_mode'),

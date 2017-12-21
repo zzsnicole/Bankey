@@ -143,5 +143,13 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.SessionAuthentication',
     )
 }
+CORS_ORIGIN_ALLOW_ALL = False
+CORS_ALLOW_CREDENTIALS = True
+CORS_ORIGIN_WHITELIST = (
+    'http://localhost:8100'
+)
 
-CORS_ORIGIN_ALLOW_ALL = True
+# Twilio authentication parameters
+TWILIO_SID = "ACf2e9c09c67553da245af1a7274d46980"
+TWILIO_AUTH_TOKEN = "9573bbd677851564e3151a328db81cdf"
+TWILIO_PHONE_NUMBER = "+13016850881"

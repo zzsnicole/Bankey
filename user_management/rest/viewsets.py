@@ -5,11 +5,6 @@ from django.contrib.auth import authenticate,login,logout
 from django.contrib.auth import update_session_auth_hash
 from django.conf import settings
 from django.http import Http404
-
-from user_management.models import *
-from .serializers import *
-from .permissions import *
-
 from rest_framework import viewsets
 from rest_framework.decorators import list_route
 from rest_framework.response import Response
@@ -17,6 +12,12 @@ from rest_framework.permissions import IsAdminUser, AllowAny, IsAuthenticated
 from rest_framework import generics
 from rest_framework.views import APIView
 from rest_framework import status
+
+from user_management.models import *
+from .serializers import *
+from .permissions import *
+
+from twilio.rest import Client
 
 
 class CountryViewSet(viewsets.ModelViewSet):
@@ -124,6 +125,61 @@ class ChangePassword(APIView):
             'success': True,
             'message': 'Successfully password changed'
         })
+
+
+class PhoneVerificationView(APIView):
+    """
+    Phone Verification
+    """
+    permission_classes = (IsAuthenticated,)
+
+    def get(self, request, format=None):
+        try:
+            random_string = ''.join([random.choice(string.ascii_letters + string.digits) for n in range(6)])
+            verification = PhoneVerification.objects.get(user=request.user, phone_no=request.user.phone_no)
+            if verification.status == 'V':
+                return Response({
+                    'success': True,
+                    'message': 'Verification already done.'
+                })
+            else:
+                verification.code = random_string
+                verification.verified_on = timezone.now()
+                verification.save()
+        except PhoneVerification.DoesNotExist:
+            verification = PhoneVerification.objects.create(user=request.user, phone_no=request.user.phone_no,\
+                                                            code = random_string)
+
+        client = Client(settings.TWILIO_SID, settings.TWILIO_AUTH_TOKEN)
+        message = client.messages.create(request.user.phone_no,
+            body="From bankey, your verification code is {}".format(verification.code),
+            from_=settings.TWILIO_PHONE_NUMBER)
+        return Response({
+                'success': True,
+                'message': 'Verification code successfully sent.'
+            })
+
+    def post(self, request, format=None):
+        try:
+            verification_code = request.data['verification_code']
+            verification = PhoneVerification.objects.get(user=request.user, phone_no=request.user.phone_no)
+            if verification.code == verification_code:
+                verification.status = 'V'
+                verification.save()
+                return Response({
+                'success': True,
+                'message': 'Successfully verified.'
+                })
+            else:
+                return Response({
+                'success': False,
+                'message': 'Fail to verified'
+                })
+        except Exception:
+            return Response({
+                'success': False,
+                'message': 'Something goes wrong, please contact support team.'
+            })
 
 
 class UserContactsViews(generics.ListCreateAPIView):
@@ -363,7 +419,6 @@ class TellerRatingsAndFeedbackViews(generics.ListCreateAPIView):
             })
         except Teller.DoesNotExist:
             raise Http404
-
 
 
 
