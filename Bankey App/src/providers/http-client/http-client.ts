@@ -19,9 +19,8 @@ export class HttpClientProvider {
 
 
   postService(endpoint, data) {
-      console.log(this.headers);
       return new Promise((resolve,reject) => {
-          this.http.post(this.apiUrl + endpoint, JSON.stringify(data),{headers:this.headers}).subscribe(data => {
+          this.http.post(this.apiUrl + endpoint, data,{headers:this.headers}).subscribe(data => {
               resolve(data);
           }, err => {
               reject(err);

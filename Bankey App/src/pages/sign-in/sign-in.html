@@ -5,14 +5,10 @@
   Ionic pages and navigation.
 -->
 <ion-content class="login-content" padding>
-    <ion-row class="logo-row">
-      <ion-col></ion-col>
-      <ion-col width-67>
-        <img src="../../assets/img/05_slide_logo.png"/>
-      </ion-col>
-      <ion-col></ion-col>
-    </ion-row>
-    <div class="login-box">
+
+    <img class="img-logo" src="assets/img/logo.png"/>
+    <h5 class = "primary-text-color" text-center>Sign in bankey</h5>
+    <div margin-top class="login-box">
 
       <form (ngSubmit)="login()" #loginForm="ngForm">
 
@@ -25,7 +21,7 @@
           </ion-item>
 
           <button ion-button class="submit-btn" full type="submit" [disabled]="!loginForm.form.valid">Log in</button>
-          <p text-center>If you don't have one,<a class="register-btn" block clear (click)="createAccount()">Make one Now!</a></p>
+          <p margin-top text-center>If you don't have one,<a class="register-btn" block clear (click)="createAccount()"> Make one Now!</a></p>
 
       </form>
     </div>

@@ -17,8 +17,8 @@ import {Camera} from '@ionic-native/camera';
 import {SocialSharing} from '@ionic-native/social-sharing';
 import {SignInPage} from "../pages/sign-in/sign-in";
 import {SignUpPage} from "../pages/sign-up/sign-up";
-import {HttpClientProvider} from '../providers/http-client/http-client';
 import {HttpClientModule } from '@angular/common/http';
+import {HttpClientProvider} from "../providers/http-client/http-client";
 
 @NgModule({
     declarations: [

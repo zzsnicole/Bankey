@@ -1,6 +1,6 @@
 {
   "name": "BankeyApp",
-  "app_id": "",
+  "app_id": "040a7d7c",
   "type": "ionic-angular",
   "integrations": {
     "cordova": {}

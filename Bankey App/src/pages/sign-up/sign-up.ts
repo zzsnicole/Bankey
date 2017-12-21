@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { HttpClientProvider } from '../../providers/http-client/http-client';
+import { AlertController } from 'ionic-angular';
 /**
  * Generated class for the SignUpPage page.
  *
@@ -20,7 +21,10 @@ export class SignUpPage {
                           name:'',
                           phone:'',
                           country:'' };
-  constructor(public navCtrl: NavController, public navParams: NavParams, public httpService: HttpClientProvider) {
+  constructor(public navCtrl: NavController,
+              public navParams: NavParams,
+              public httpService: HttpClientProvider,
+              public alertCtrl: AlertController) {
   }
 
   ionViewDidLoad() {
@@ -48,12 +52,25 @@ export class SignUpPage {
         }
     }
     console.log(apiParams);
-    this.httpService.postService('signup',apiParams).then((result) => {
+    this.httpService.postService('signup/',apiParams).then((result:any) => {
         console.log(result);
+        if(result.status == "A"){
+            this.showAlert();
+        }
     }, (err) => {
         console.log(err);
     });
   }
+
+
+    showAlert() {
+        let alert = this.alertCtrl.create({
+            title: 'Bankey',
+            subTitle: 'Your account craeted!',
+            buttons: ['OK']
+        });
+        alert.present();
+    }
 
   showLoading() {
   }
