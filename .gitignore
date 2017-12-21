@@ -1,5 +1,6 @@
 .idea
 *.pyc
 media/
+static/
 migrations/
 venv/
