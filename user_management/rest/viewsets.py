@@ -135,7 +135,7 @@ class PhoneVerificationView(APIView):
 
     def get(self, request, format=None):
         try:
-            random_string = ''.join([random.choice(string.ascii_letters + string.digits) for n in range(6)])
+            random_string = ''.join([random.choice(string.digits) for n in range(6)])
             verification = PhoneVerification.objects.get(user=request.user, phone_no=request.user.phone_no)
             if verification.status == 'V':
                 return Response({
