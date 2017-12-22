@@ -2,7 +2,8 @@ import { CreatePasswordPage } from './../create-password/create-password';
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { CountryCode } from "./CountryCode";
-
+import * as _ from 'lodash';
+import 'rxjs/add/observable/of';
 // import { CountryCode } from "./CountryCode";
 
 /**
@@ -45,14 +46,14 @@ export class MobilePage {
   public formatCountryList() {
     let formattedListArr = [];
 
-    // _.forEach(this.countryList, element => {
-    //   let filterListObj = {
-    //     "name": parseInt(element[2]),
-    //     "country": element[0],
-    //     "countryClass": element[1]
-    //   }
-    //   formattedListArr.push(filterListObj);
-    // });
+    _.forEach(this.countryList, element => {
+      let filterListObj = {
+        "name": parseInt(element[2]),
+        "country": element[0],
+        "countryClass": element[1]
+      }
+      formattedListArr.push(filterListObj);
+    });
 
     this.Country = formattedListArr;
   }

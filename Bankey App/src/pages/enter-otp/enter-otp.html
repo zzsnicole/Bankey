@@ -4,33 +4,29 @@
   See http://ionicframework.com/docs/components/#navigation for more info on
   Ionic pages and navigation.
 -->
-<ion-header>
-
-  <ion-navbar>
-    <ion-title>enter-otp</ion-title>
-  </ion-navbar>
-
-</ion-header>
-
 
 <ion-content padding>
-  <div class="header-label">
-    <h5>{{headerLabel}}</h5>
-    <div>We have sent it to +98234655272</div>
-  </div>
 
-  <div class="dash-row">
-    <input #input class="partitioned" [(ngModel)]="otp" (input)="onKeyup($event)" type="text" maxlength="6" length="6" />
-    
-  </div>
-  <input #inputHidden type="hidden" />
-  <div>
-    
-    <button ion-button icon-only color="primary" round (click)="goToNextPage()"> 
-        <ion-icon name="ios-arrow-forward"></ion-icon>
-      </button>
-  </div>
+    <ion-icon class="back-icon-size" text-lg-left color="primary" name="ios-arrow-back" (click)="goBack()"></ion-icon>
 
+    <div class="header-label">
+        <h5>{{headerLabel}}</h5>
+        <div>We have sent it to +98234655272</div>
+    </div>
+
+    <div class="dash-row">
+        <input #input class="partitioned" [(ngModel)]="otp" (input)="onKeyup($event)" type="text" maxlength="6"
+               length="6"/>
+
+    </div>
+    <input #inputHidden type="hidden"/>
+
+    <ion-row padding-top class="bottom-start-btn" justify-content-center style="display: grid;text-align: center;">
+        <button class="round-btn-with-text" ion-button icon-only color="secondary" round (click)="goToNextPage()">
+            <ion-icon name="ios-arrow-forward"></ion-icon>
+        </button>
+        Next
+    </ion-row>
 
 
 </ion-content>

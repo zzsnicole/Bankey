@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
-import { SignInPage } from "../sign-in/sign-in";
-import {SignUpPage} from "../sign-up/sign-up";
+import {MobilePage} from "../mobile/mobile";
 
 @Component({
   selector: 'page-home',
@@ -28,11 +27,16 @@ export class HomePage {
       title: "Transfer Money Around the Globe Instantly",
       description: "Securely send and receive money anytime and anywhere for FREE",
       image: "assets/img/03_slide.png",
+    },
+    {
+        title: "Pay with Bankey Anywhere",
+        description: "Use Bankey to pay for your bills or to shop online or at stores",
+        image: "assets/img/04_slide.png",
     }
   ];
 
   public goToNextPage(){
-    this.navCtrl.setRoot(SignInPage);
+    this.navCtrl.setRoot(MobilePage);
   }
 
 }

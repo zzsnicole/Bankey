@@ -52,5 +52,6 @@ export class EnterOtpPage {
   ionViewDidLoad() {
     console.log('ionViewDidLoad EnterOtpPage');
   }
-  
+
+
 }

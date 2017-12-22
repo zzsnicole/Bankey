@@ -52,4 +52,7 @@ export class PersonalDetailsPage {
     this.navCtrl.push(InviteFriendsPage)
   }
 
+  goBack(){
+      this.navCtrl.pop();
+  }
 }

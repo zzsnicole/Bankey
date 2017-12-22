@@ -35,6 +35,21 @@ page-home {
       color: #000000;
     }
   }
-
+  .bottom-start-btn{
+    display: grid;
+    position: absolute;
+    bottom: 10px;
+    margin: auto;
+    width: 100%;
+    z-index: 1000;
+  }
+  .swiper-pagination-fraction,
+  .swiper-pagination-custom,
+  .swiper-container-horizontal > .swiper-pagination-bullets {
+    bottom: 80px !important;
+  }
+  .ion-slides{
+    padding-bottom: 80px;
+  }
 }
 }
