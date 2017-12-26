@@ -19,6 +19,13 @@ import {SignInPage} from "../pages/sign-in/sign-in";
 import {SignUpPage} from "../pages/sign-up/sign-up";
 import {HttpClientModule } from '@angular/common/http';
 import {HttpClientProvider} from "../providers/http-client/http-client";
+import {CallTellerPage} from "../pages/call-teller/call-teller";
+import {HomeKeyPage} from "../pages/home-key/home-key";
+import {EnterAmountKeyPage} from "../pages/enter-amount-key/enter-amount-key";
+import {PersonalDetailKeyPage} from "../pages/personal-detail-key/personal-detail-key";
+import {PersonalDetailAddressKeyPage} from "../pages/personal-detail-address-key/personal-detail-address-key";
+import {PersonalDetailEmailKeyPage} from "../pages/personal-detail-email-key/personal-detail-email-key";
+import {InviteFriendsKeyPage} from "../pages/invite-friends-key/invite-friends-key";
 
 @NgModule({
     declarations: [
@@ -30,7 +37,14 @@ import {HttpClientProvider} from "../providers/http-client/http-client";
         CreatePasswordPage,
         EnterOtpPage,
         PersonalDetailsPage,
-        InviteFriendsPage
+        InviteFriendsPage,
+        CallTellerPage,
+        HomeKeyPage,
+        EnterAmountKeyPage,
+        PersonalDetailKeyPage,
+        PersonalDetailAddressKeyPage,
+        PersonalDetailEmailKeyPage,
+        InviteFriendsKeyPage
     ],
     imports: [
         BrowserModule,
@@ -49,7 +63,14 @@ import {HttpClientProvider} from "../providers/http-client/http-client";
         CreatePasswordPage,
         EnterOtpPage,
         PersonalDetailsPage,
-        InviteFriendsPage
+        InviteFriendsPage,
+        CallTellerPage,
+        HomeKeyPage,
+        EnterAmountKeyPage,
+        PersonalDetailKeyPage,
+        PersonalDetailAddressKeyPage,
+        PersonalDetailEmailKeyPage,
+        InviteFriendsKeyPage
     ],
     providers: [
         StatusBar,

@@ -4,11 +4,12 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
 import { HomePage } from '../pages/home/home';
+import {PersonalDetailAddressKeyPage} from "../pages/personal-detail-address-key/personal-detail-address-key";
 @Component({
   templateUrl: 'app.html'
 })
 export class BankeyApp {
-  rootPage:any = HomePage;
+  rootPage:any = PersonalDetailAddressKeyPage;
 
   constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen) {
     platform.ready().then(() => {
