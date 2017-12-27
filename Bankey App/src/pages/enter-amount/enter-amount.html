@@ -1,0 +1,48 @@
+<!--
+  Generated template for the EnterAmountPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+
+
+<ion-content padding>
+
+  <h6 text-center color="secondary" padding-top>Add Money</h6>
+
+  <ion-item>
+    <ion-label stacked>Enter Amount</ion-label>
+    <ion-input [ngModel]="enteredPasscode" type="number"></ion-input>
+  </ion-item>
+
+  <div class="" padding-top>
+
+    <div class="ILS_numbers-row">
+      <div (click)="digit(1)" class="ILS_digit">1</div>
+      <div (click)="digit(2)" class="ILS_digit">2</div>
+      <div (click)="digit(3)" class="ILS_digit">3</div>
+    </div>
+    <div class="ILS_numbers-row">
+      <div (click)="digit(4)" class="ILS_digit">4</div>
+      <div (click)="digit(5)" class="ILS_digit">5</div>
+      <div (click)="digit(6)" class="ILS_digit">6</div>
+    </div>
+    <div class="ILS_numbers-row">
+      <div (click)="digit(7)" class="ILS_digit">7</div>
+      <div (click)="digit(8)" class="ILS_digit">8</div>
+      <div (click)="digit(9)" class="ILS_digit">9</div>
+    </div>
+    <div class="ILS_numbers-row">
+      <div (click)="digit('00')" class="ILS_digit">00</div>
+      <div (click)="digit(0)" class="ILS_digit">0</div>
+      <div (click)="digit(-1)" class="ILS_digit"><ion-icon style="font-size: 1.0em;" name="backspace"></ion-icon></div>
+    </div>
+  </div>
+  <ion-row padding-top class="bottom-start-btn" justify-content-center style="display: grid;text-align: center;">
+    <button class="round-btn-with-text" ion-button icon-only color="secondary" round (click)="GoKeyList()">
+      <ion-icon name="ios-arrow-forward"></ion-icon>
+    </button>
+    Next
+  </ion-row>
+
+</ion-content>

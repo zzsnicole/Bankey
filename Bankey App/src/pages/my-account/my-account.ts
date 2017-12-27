@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import {PasscodeLoginPage} from "../passcode-login/passcode-login";
+import {KeyProfilePage} from "../key-profile/key-profile";
 
 /**
- * Generated class for the InviteFriendsKeyPage page.
+ * Generated class for the MyAccountPage page.
  *
  * See https://ionicframework.com/docs/components/#navigation for more info on
  * Ionic pages and navigation.
@@ -11,19 +11,19 @@ import {PasscodeLoginPage} from "../passcode-login/passcode-login";
 
 @IonicPage()
 @Component({
-  selector: 'page-invite-friends-key',
-  templateUrl: 'invite-friends-key.html',
+  selector: 'page-my-account',
+  templateUrl: 'my-account.html',
 })
-export class InviteFriendsKeyPage {
+export class MyAccountPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad InviteFriendsKeyPage');
+    console.log('ionViewDidLoad MyAccountPage');
   }
 
-  goLogin(){
-    this.navCtrl.push(PasscodeLoginPage);
+  GoProfile(){
+    this.navCtrl.push(KeyProfilePage);
   }
 }

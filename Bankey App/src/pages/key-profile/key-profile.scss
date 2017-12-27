@@ -1,0 +1,45 @@
+page-key-profile {
+  .photo-row {
+    display: flex;
+    margin-bottom: -37px;
+    z-index: 100000;
+    width: 100%;
+
+    .circle {
+      border: 3px solid #0aefcd;
+      display: flex;
+      background-color: #d8d8d8;
+      border-radius: 50%;
+      height: 80px;
+      width: 80px;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      ion-icon.photo {
+        font-size: 2.5em;
+      }
+      .camera-btn {
+        position: absolute;
+        right: 10px;
+        bottom: 10px;
+        background: transparent;
+
+        ion-icon.camera {
+          font-size: 1em;
+          color: #0472cb;
+        }
+      }
+    }
+  }
+  .center-btn-set{
+    flex: 1;
+    flex-direction: row;
+    justify-content: space-around;
+  }
+  .scroll-content{
+    padding: 0 !important;
+  }
+  h2{
+    color:#000000 !important;
+  }
+}

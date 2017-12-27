@@ -1,0 +1,71 @@
+<!--
+  Generated template for the PasscodeLoginPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-buttons end>
+      <button ion-button icon-only>
+        <ion-icon name="settings" color="primary"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+
+
+    <ion-row>
+      <div class="photo-row">
+        <ion-col col-8 style="padding-left: 50px;">
+          <h5>Achraf Alobaid</h5>
+        </ion-col>
+        <ion-col col-3 style="padding-right: 25px;">
+          <div class="circle">
+            <ion-icon class="photo" name="person"></ion-icon>
+            <img *ngIf="base64Image " [src]="base64Image">
+          </div>
+        </ion-col>
+      </div>
+    </ion-row>
+
+
+
+</ion-header>
+
+
+<ion-content padding>
+
+  <p text-center color="secondary" padding-top>Enter your passcode to log in!</p>
+
+  <div class="">
+    <div class="ILS_circles-row">
+      <div class="ILS_circle" [ngClass]=" enteredPasscode.length>0 ? 'ILS_full' : ''"></div>
+      <div class="ILS_circle" [ngClass]=" enteredPasscode.length>1 ? 'ILS_full' : ''"></div>
+      <div class="ILS_circle" [ngClass]=" enteredPasscode.length>2 ? 'ILS_full' : ''"></div>
+      <div class="ILS_circle" [ngClass]=" enteredPasscode.length>3 ? 'ILS_full' : ''"></div>
+    </div>
+
+    <div class="ILS_numbers-row">
+      <div (click)="digit(1)" class="ILS_digit">1</div>
+      <div (click)="digit(2)" class="ILS_digit">2</div>
+      <div (click)="digit(3)" class="ILS_digit">3</div>
+    </div>
+    <div class="ILS_numbers-row">
+      <div (click)="digit(4)" class="ILS_digit">4</div>
+      <div (click)="digit(5)" class="ILS_digit">5</div>
+      <div (click)="digit(6)" class="ILS_digit">6</div>
+    </div>
+    <div class="ILS_numbers-row">
+      <div (click)="digit(7)" class="ILS_digit">7</div>
+      <div (click)="digit(8)" class="ILS_digit">8</div>
+      <div (click)="digit(9)" class="ILS_digit">9</div>
+    </div>
+    <div class="ILS_numbers-row">
+      <div class="ILS_digit"></div>
+      <div (click)="digit(0)" class="ILS_digit">0</div>
+      <div (click)="digit(-1)" class="ILS_digit"><ion-icon style="font-size: 1.0em;" name="backspace"></ion-icon></div>
+    </div>
+  </div>
+
+</ion-content>

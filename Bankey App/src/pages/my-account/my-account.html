@@ -1,0 +1,79 @@
+<!--
+  Generated template for the MyAccountPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title > My Account </ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only>
+        <ion-icon name="settings" color="primary"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+
+
+  <ion-row>
+    <div class="photo-row">
+      <ion-col col-8 style="padding-left: 50px;">
+        <h5 (click)="GoProfile();">Achraf Alobaid</h5>
+      </ion-col>
+      <ion-col col-3 style="padding-right: 25px;">
+        <div class="circle">
+          <ion-icon class="photo" name="person"></ion-icon>
+          <img *ngIf="base64Image " [src]="base64Image">
+        </div>
+      </ion-col>
+    </div>
+  </ion-row>
+
+
+
+</ion-header>
+
+
+<ion-content padding>
+
+  <ion-row class="center-btn-set" style="padding-top: 40px;">
+    <p style="padding-top: 14px;">My Balance</p>
+
+    <ion-select>
+      <ion-option selected value="us">$</ion-option>
+      <ion-option value="india">Rs</ion-option>
+    </ion-select>
+  </ion-row>
+
+  <h1 class="amount-text" text-center>00.00</h1>
+
+  <div class="blue-background" margin-top>
+    <ion-item-divider class="btn-with-side-bar">Accepted request to add money from Pranav Patwardhan</ion-item-divider>
+  </div>
+  <div class="primary-bg-color" margin-top>
+    <button no-padding text-capitalize margin-top ion-button color="light" class="submit-btn btn-with-side-bar" full  >Messages</button>
+  </div>
+  <div class="primary-bg-color" margin-top>
+    <button no-padding text-capitalize margin-top ion-button color="light" class="submit-btn btn-with-side-bar" full >Transactions</button>
+  </div>
+  <ion-fab bottom style="width:100%">
+    <ion-row class="center-btn-set">
+
+      <ion-row padding-top class="bottom-start-btn" justify-content-center style="display: grid;text-align: center;">
+        <button ion-fab mini class="center-custom"><ion-icon name="remove"></ion-icon></button>
+        Withdraw
+      </ion-row>
+      <ion-row padding-top class="bottom-start-btn" justify-content-center style="display: grid;text-align: center;">
+        <button ion-fab mini class="center-custom"><ion-icon name="play"></ion-icon></button>
+        Send
+      </ion-row>
+      <ion-row padding-top class="bottom-start-btn" justify-content-center style="display: grid;text-align: center;">
+        <button ion-fab mini class="center-custom"><ion-icon name="add"></ion-icon></button>
+        Add
+      </ion-row>
+
+    </ion-row>
+  </ion-fab>
+
+</ion-content>

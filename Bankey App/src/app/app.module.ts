@@ -26,6 +26,13 @@ import {PersonalDetailKeyPage} from "../pages/personal-detail-key/personal-detai
 import {PersonalDetailAddressKeyPage} from "../pages/personal-detail-address-key/personal-detail-address-key";
 import {PersonalDetailEmailKeyPage} from "../pages/personal-detail-email-key/personal-detail-email-key";
 import {InviteFriendsKeyPage} from "../pages/invite-friends-key/invite-friends-key";
+import {PasscodeLoginPage} from "../pages/passcode-login/passcode-login";
+import {EnterAmountPage} from "../pages/enter-amount/enter-amount";
+import {SelectKeyPage} from "../pages/select-key/select-key";
+import {KeyRequestConfirmPage} from "../pages/key-request-confirm/key-request-confirm";
+import {ConfirmationCodePage} from "../pages/confirmation-code/confirmation-code";
+import {MyAccountPage} from "../pages/my-account/my-account";
+import {KeyProfilePage} from "../pages/key-profile/key-profile";
 
 @NgModule({
     declarations: [
@@ -44,7 +51,14 @@ import {InviteFriendsKeyPage} from "../pages/invite-friends-key/invite-friends-k
         PersonalDetailKeyPage,
         PersonalDetailAddressKeyPage,
         PersonalDetailEmailKeyPage,
-        InviteFriendsKeyPage
+        InviteFriendsKeyPage,
+        PasscodeLoginPage,
+        EnterAmountPage,
+        SelectKeyPage,
+        KeyRequestConfirmPage,
+        ConfirmationCodePage,
+        MyAccountPage,
+        KeyProfilePage
     ],
     imports: [
         BrowserModule,
@@ -70,7 +84,14 @@ import {InviteFriendsKeyPage} from "../pages/invite-friends-key/invite-friends-k
         PersonalDetailKeyPage,
         PersonalDetailAddressKeyPage,
         PersonalDetailEmailKeyPage,
-        InviteFriendsKeyPage
+        InviteFriendsKeyPage,
+        PasscodeLoginPage,
+        EnterAmountPage,
+        SelectKeyPage,
+        KeyRequestConfirmPage,
+        ConfirmationCodePage,
+        MyAccountPage,
+        KeyProfilePage
     ],
     providers: [
         StatusBar,

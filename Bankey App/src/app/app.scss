@@ -18,10 +18,13 @@
 // @import "assets/intl-tel-input.css";
 
 .primary-text-color{
-  color: #0aefcd;
+  color: color($colors, primary, base);
+}
+.primary-bg-color{
+  background-color: color($colors, primary, base)
 }
 .blue-background{
-  background-color:#3EAEFF;
+  background-color: color($colors, secondary, base);
 }
 .white-text-color{
   color:#ffffff;
@@ -29,8 +32,58 @@
 .back-icon-size{
   font-size: 1.8em;
 }
+.amount-text{
+  font-size: 3em;
+  margin: 0;
+  color: color($colors, primary, base);
+}
 .round-btn-with-text{
   display: inline;
   width: 38px;
   margin: auto;
+}
+.btn-with-side-bar {
+  padding: 0 !important;
+  margin: 0 2% 0 2% !important;
+  width: 96%;
+
+}
+.ILS_numbers-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  width: 100%;
+  height: 60px;
+}
+.ILS_circles-row {
+  padding-top: 15px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  width: 100%;
+  height: 50px;
+}
+.ILS_circle {
+  background-color: transparent !important;
+  border-radius: 50%;
+  width: 10px;
+  height: 10px;
+  border:  1px solid #0aefcd;
+  margin: 0 15px;
+}
+.ILS_full {
+  background-color: #0aefcd!important;
+}
+.ILS_digit {
+  margin: 0 14px;
+  width: 80px;
+  text-align: center;
+  color: #2a73e2;
+  font-size: 40px;
+}
+.ILS_digit.activated {
+  -webkit-animation-name: ILS_buttonPress;
+  animation-name: ILS_buttonPress;
+  -webkit-animation-duration: 0.3;
+  animation-duration: 0.3s;
 }
