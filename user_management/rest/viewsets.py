@@ -409,13 +409,32 @@ class SearchTellersView(generics.ListAPIView):
         return queryset
 
 
-class ChangeTellerActivationMode(generics.UpdateAPIView):
+class ChangeTellerActivationMode(generics.RetrieveUpdateAPIView):
     """
-    Update teller's service activation mode
+    Display and update teller's service activation mode
     """
     queryset = Teller.objects.filter(user__status='A')
     serializer_class = TellerSerializer
     permission_classes = (IsAuthenticated,)
+
+    def get(self, request, format=None):
+        try:
+            teller = Teller.objects.get(user=request.user)
+            logger.info("Now activation mode is {} for {} teller.".format(teller.service_activation, request.user.phone_no))
+            return Response({
+                'success': True,
+                'message': 'Successfully displayed.',
+                'data': {
+                    "activation_mode": teller.service_activation
+                }
+            })
+        except Exception as e:
+            logger.error("{}, error occured while displaying activation mode for teller.".format(e))
+            return Response({
+                'success': False,
+                'message': 'Error occured while displaying activation mode for teller.',
+                'data': {}
+            })
 
     def put(self, request, format=None):
         try:
