@@ -9,6 +9,8 @@ import {SplashScreen} from '@ionic-native/splash-screen';
 import {StatusBar} from '@ionic-native/status-bar';
 import {TypeaheadModule} from 'ngx-bootstrap';
 import {NgxIntlTelInputModule} from 'ngx-intl-tel-input';
+import {GoogleMaps} from '@ionic-native/google-maps';
+
 
 import {BankeyApp} from './app.component';
 import {HomePage} from '../pages/home/home';
@@ -98,6 +100,7 @@ import {KeyProfilePage} from "../pages/key-profile/key-profile";
         SplashScreen,
         Camera,
         SocialSharing,
+        GoogleMaps,
         {provide: ErrorHandler, useClass: IonicErrorHandler},
         HttpClientProvider
     ]

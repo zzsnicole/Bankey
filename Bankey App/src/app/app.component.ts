@@ -4,12 +4,12 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
 import { HomePage } from '../pages/home/home';
-import {ConfirmationCodePage} from "../pages/confirmation-code/confirmation-code";
+import {PasscodeLoginPage} from "../pages/passcode-login/passcode-login";
 @Component({
   templateUrl: 'app.html'
 })
 export class BankeyApp {
-  rootPage:any = HomePage;
+  rootPage:any = PasscodeLoginPage;
 
   constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen) {
     platform.ready().then(() => {

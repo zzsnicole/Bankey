@@ -15,7 +15,7 @@ import { NavController, NavParams } from 'ionic-angular';
 })
 export class CreatePasswordPage {
 
-	createPasswordLabel = "Create a Password for your Bankey account";
+	createPasswordLabel = "Create a passcode for your Bankey account";
 	enteredPasscode = '';
 	firstPassword = '';
 	confirmPassword = ''
@@ -31,7 +31,7 @@ export class CreatePasswordPage {
 		this.enteredPasscode += '' + d;
 		if (this.enteredPasscode.length == 4) {
 			if (this.firstPassword == '') {
-				this.createPasswordLabel = 'Re-enter your password again';
+				this.createPasswordLabel = 'Re-enter your passcode again';
 				this.firstPassword = this.enteredPasscode;
 				this.enteredPasscode = '';
 			} else {
