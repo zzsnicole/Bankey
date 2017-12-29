@@ -1,11 +1,9 @@
 <ion-content class="info-slides">
   <ion-slides pager autoplay=1000>
     <ion-slide *ngFor="let slide of slides">
-      <ion-toolbar>
-        <ion-buttons end>
-          <button ion-button color="secondary" >عربى</button>
-        </ion-buttons>
-      </ion-toolbar>
+      <div end text-right>
+        <button end ion-button clear>عربى</button>
+      </div>
       <img [src]="slide.image" class="slide-image" />
       <h2 class="slide-title" [innerHTML]="slide.title"></h2>
       <p [innerHTML]="slide.description"></p>

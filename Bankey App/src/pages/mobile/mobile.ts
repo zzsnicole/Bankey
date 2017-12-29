@@ -2,7 +2,7 @@ import { CreatePasswordPage } from './../create-password/create-password';
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { CountryCode } from "./CountryCode";
-import * as _ from 'lodash';
+import { SelectSearchable } from '../../components/select-searchable/select-searchable';
 import 'rxjs/add/observable/of';
 // import { CountryCode } from "./CountryCode";
 
@@ -12,16 +12,31 @@ import 'rxjs/add/observable/of';
  * See https://ionicframework.com/docs/components/#navigation for more info on
  * Ionic pages and navigation.
  */
+class Port {
+    public id: number;
+    public name: string;
+    public country: string;
+}
 
 @Component({
   selector: 'page-mobile',
   templateUrl: 'mobile.html',
 })
 export class MobilePage {
-
+  ports: Port[];
+  port: Port;
   constructor(public navCtrl: NavController, public navParams: NavParams) {
-
+      this.ports = [
+          { id: 0, name: 'Tokai', country: 'Japan' },
+          { id: 1, name: 'Vladivostok', country: 'Russia' },
+          { id: 2, name: 'Navlakhi', country: 'India' }
+      ];
   }
+
+  portChange(event: { component: SelectSearchable, value: any }) {
+      console.log('value:', event.value);
+  }
+
   public countryList = new CountryCode().allCountries;
 
   selected: string;
@@ -46,14 +61,14 @@ export class MobilePage {
   public formatCountryList() {
     let formattedListArr = [];
 
-    _.forEach(this.countryList, element => {
-      let filterListObj = {
-        "name": parseInt(element[2]),
-        "country": element[0],
-        "countryClass": element[1]
-      }
-      formattedListArr.push(filterListObj);
-    });
+    // _.forEach(this.countryList, element => {
+    //   let filterListObj = {
+    //     "name": parseInt(element[2]),
+    //     "country": element[0],
+    //     "countryClass": element[1]
+    //   }
+    //   formattedListArr.push(filterListObj);
+    // });
 
     this.Country = formattedListArr;
   }

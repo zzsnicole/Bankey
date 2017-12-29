@@ -16,7 +16,9 @@
 // automatically applied to the <body> element in the app.
 
 // @import "assets/intl-tel-input.css";
-
+ion-content{
+  background-color: #F0F0F0 !important;
+}
 .primary-text-color{
   color: color($colors, primary, base);
 }

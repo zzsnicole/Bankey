@@ -9,7 +9,7 @@ import {PasscodeLoginPage} from "../pages/passcode-login/passcode-login";
   templateUrl: 'app.html'
 })
 export class BankeyApp {
-  rootPage:any = PasscodeLoginPage;
+  rootPage:any = HomePage;
 
   constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen) {
     platform.ready().then(() => {

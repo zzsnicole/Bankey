@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, ElementRef, ViewChild, NgZone} from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import {KeyRequestConfirmPage} from "../key-request-confirm/key-request-confirm";
 import {
@@ -10,6 +10,8 @@ import {
     MarkerOptions,
     Marker
 } from '@ionic-native/google-maps';
+
+declare var google;
 /**
  * Generated class for the SelectKeyPage page.
  *
@@ -25,13 +27,43 @@ import {
 export class SelectKeyPage {
     keyLocationsList:any = [];
     map: GoogleMap;
-    constructor(public navCtrl: NavController, public navParams: NavParams, private googleMaps: GoogleMaps) {
+    @ViewChild('placeSearch')
+    public searchElementRef: ElementRef;
+    autoComplete:any;
+    constructor(public navCtrl: NavController,
+                public navParams: NavParams,
+                private googleMaps: GoogleMaps,
+                private ngZone: NgZone) {
     }
 
     ionViewDidLoad() {
-        this.getLocation();
-        this.loadMap();
+         this.getLocation();
+         this.loadMap();
+         this.autoComplete = new google.maps.places.Autocomplete(this.searchElementRef.nativeElement);
+
+         this.autoComplete.addListener("place_changed", () => {
+             this.ngZone.run(() => {
+                 //get the place result
+                 let place = this.autoComplete.getPlace();
+
+                 //verify result
+                 if (place.geometry === undefined || place.geometry === null) {
+                     return;
+                 }
+
+                 this.map.animateCamera({
+                     target: {lat:place.geometry.location.lat(), lng: place.geometry.location.lng()},
+                     zoom: 16,
+                     tilt: 60,
+                     bearing: 140,
+                     duration: 5000
+                 });
+             });
+         });
     }
+
+
+
     getLocation(){
         this.keyLocationsList = [
             ['Bondi Beach', -33.890542, 151.274856, 4],
@@ -69,8 +101,6 @@ export class SelectKeyPage {
                                     marker.showInfoWindow();
                                     marker.setIcon('assets/img/custom-marker-selected.png');
                                 });
-
-
 
                             // Catch the click event
                             marker.on(GoogleMapsEvent.INFO_CLICK, function() {

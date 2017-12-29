@@ -35,6 +35,7 @@ import {KeyRequestConfirmPage} from "../pages/key-request-confirm/key-request-co
 import {ConfirmationCodePage} from "../pages/confirmation-code/confirmation-code";
 import {MyAccountPage} from "../pages/my-account/my-account";
 import {KeyProfilePage} from "../pages/key-profile/key-profile";
+import { SelectSearchableModule } from '../components/select-searchable/select-searchable-module';
 
 @NgModule({
     declarations: [
@@ -67,7 +68,8 @@ import {KeyProfilePage} from "../pages/key-profile/key-profile";
         HttpClientModule,
         NgxIntlTelInputModule,
         TypeaheadModule.forRoot(),
-        IonicModule.forRoot(BankeyApp)
+        IonicModule.forRoot(BankeyApp),
+        SelectSearchableModule
     ],
     bootstrap: [IonicApp],
     entryComponents: [

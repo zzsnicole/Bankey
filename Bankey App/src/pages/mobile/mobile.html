@@ -20,9 +20,27 @@
 
     <ion-row>
       <ion-col col-3>
-        <input [(ngModel)]="selected" (typeaheadOnSelect)="typeaheadOnSelect($event)" [typeahead]="country" [typeaheadItemTemplate]="customItemTemplate" typeaheadOptionField="name"  class="form-control">
+        <ion-item>
+          <!--<input [(ngModel)]="selected" (typeaheadOnSelect)="typeaheadOnSelect($event)" [typeahead]="country" [typeaheadItemTemplate]="customItemTemplate" typeaheadOptionField="name"  class="form-control">
+          -->
+          <ion-item>
+            <select-searchable
+                    title="Port"
+                    [(ngModel)]="port"
+                    [items]="ports"
+                    itemValueField="id"
+                    itemTextField="name"
+                    [canSearch]="true"
+                    (onChange)="portChange($event)">
+            </select-searchable>
+          </ion-item>
+        </ion-item>
       </ion-col>
-      <ion-col col-8><input type="number" class="form-control"/></ion-col>
+      <ion-col col-8>
+        <ion-item>
+          <ion-input type="number" placeholder="Phone number" name="phonenumber" required></ion-input>
+        </ion-item>
+      </ion-col>
     </ion-row>
 
     <ion-row class="bottom-start-btn" justify-content-center style="display: grid;text-align: center;">

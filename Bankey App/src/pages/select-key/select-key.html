@@ -9,11 +9,12 @@
 <ion-content padding>
   <ion-icon class="back-icon-size" text-lg-left color="primary" name="ios-arrow-back" ></ion-icon>
   <h5 class = "primary-text-color" text-center>Select Key</h5>
-  <ion-item >
-    <ion-input text-center type="email" placeholder="Enter a name, place or street" name="place" ></ion-input>
-  </ion-item>
 
-  <div id="map_canvas" data-tap-disabled="true"></div>
+  <div id="pac-container">
+    <input id="pac-input" #placeSearch type="text"
+           placeholder="Enter a location">
+  </div>
+  <div id="map_canvas"></div>
 
 
 </ion-content>
