@@ -1,3 +1,5 @@
+import logging
+
 from django.http import Http404
 
 from user_management.models import *
@@ -10,6 +12,8 @@ from rest_framework.response import Response
 from rest_framework.permissions import IsAdminUser, AllowAny, IsAuthenticated
 from rest_framework.views import APIView
 from rest_framework import status
+
+logger = logging.getLogger("wallets_log")
 
 
 class CurrencyViewSet(viewsets.ModelViewSet):
@@ -58,14 +62,22 @@ class WalletViewSet(viewsets.ViewSet):
     def post(self, request, format=None):
         try:
             currency = Currency.objects.get(code=request.data['currency_code'])
-            UserWallet.objects.create(user=request.user, currency=currency, balance=0)
-
+            wallet = UserWallet.objects.create(user=request.user, currency=currency, balance=0)
+            logger.info("wallet created with {} currency for {} user".format(wallet.currency, \
+                                                                                wallet.user.phone_no))
+            serializer = UserWalletSerializer(wallet)
             return Response({
                 'success': True,
-                'message': 'Wallet successfully created'
+                'message': 'Wallet successfully created',
+                'data':serializer.data
             })
-        except Currency.DoesNotExist:
-            raise Http404
+        except Exception as e:
+            logger.error("{}, error occured while creating wallet for user.".format(e))
+            return Response({
+                'success': False,
+                'message': 'Fail to create wallet',
+                'data': {}
+            })
 
     def put(self, request, format=None):
         pass
@@ -75,11 +87,14 @@ class WalletViewSet(viewsets.ViewSet):
         try:
             wallet = UserWallet.objects.get(user=request.user, currency__code=request.data['currency_code'])
             wallet.delete()
+            logger.info("wallet with {} currency deleted for {} user".format(wallet.currency, \
+                                                                             wallet.user.phone_no))
             return Response({
                 'success': True,
                 'message': 'wallet deleted successfully'
             })
-        except UserWallet.DoesNotExist:
+        except Exception as e:
+            logger.error("{}, error occured while deleting wallet for user.".format(e))
             raise Http404
 
 
@@ -91,10 +106,17 @@ class ViewWalletBalance(APIView):
 
     def post(self, request, format=None):
         try:
-            wallet = UserWallet.objects.get(user=request.user, currency__code=request.data['currency_code'])
+            wallet = UserWallet.objects.get(user=request.user, currency__code=request.data['currency_code'], status='A')
             serializer = UserWalletSerializer(wallet)
-            return Response(serializer.data)
-        except UserWallet.DoesNotExist:
+            logger.info("viewed balance in the wallet for {} currency by {} user".format(wallet.currency, \
+                                                                             wallet.user.phone_no))
+            return Response({
+                'success': True,
+                'message': 'Balance successfully given.',
+                'data':serializer.data
+            })
+        except Exception as e:
+            logger.error("{}, error occured while checking wallet balance.".format(e))
             raise Http404
 
 
@@ -154,5 +176,4 @@ class TellerCashBalancesViewSet(viewsets.ViewSet):
             })
         except TellerCashBalances.DoesNotExist:
             raise Http404
-
 

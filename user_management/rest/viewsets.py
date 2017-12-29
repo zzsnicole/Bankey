@@ -1,23 +1,26 @@
 import random
 import string
+import logging
 
-from django.contrib.auth import authenticate,login,logout
-from django.contrib.auth import update_session_auth_hash
 from django.conf import settings
 from django.http import Http404
+from django.contrib.auth import authenticate,login,logout
+from django.contrib.auth import update_session_auth_hash
 from rest_framework import viewsets
 from rest_framework.decorators import list_route
 from rest_framework.response import Response
-from rest_framework.permissions import IsAdminUser, AllowAny, IsAuthenticated
 from rest_framework import generics
 from rest_framework.views import APIView
 from rest_framework import status
+from rest_framework.permissions import IsAdminUser, AllowAny, IsAuthenticated
 
-from user_management.models import *
 from .serializers import *
 from .permissions import *
+from user_management.models import *
 
 from twilio.rest import Client
+
+logger = logging.getLogger("users_log")
 
 
 class CountryViewSet(viewsets.ModelViewSet):
@@ -36,6 +39,23 @@ class CountryListView(generics.ListAPIView):
     queryset = Country.objects.filter(status='A')
     serializer_class = CountrySerializer
     permission_classes = (AllowAny,)
+
+    def get(self, request, *args, **kwargs):
+        try:
+            res = self.list(request, *args, **kwargs)
+            logger.info("List of countries are successfully retrieved.")
+            return Response({
+                'success': True,
+                'message': 'List of countries.',
+                'data': res.data
+            })
+        except Exception as e:
+            logger.error("{}, error occured while listing countries.".format(e))
+            return Response({
+                'success': False,
+                'message': 'Error occured while listing countries.',
+                'data':{}
+            })
 
 
 class UserViewSet(viewsets.ReadOnlyModelViewSet):
@@ -62,6 +82,23 @@ class Signup(generics.CreateAPIView):
     serializer_class = UserSerializer
     permission_classes = (AllowAny,)
 
+    def post(self, request, *args, **kwargs):
+        try:
+            user = self.create(request, *args, **kwargs)
+            logger.info("{} user is created successfully.".format(user.data['phone_no']))
+            return Response({
+                'success': True,
+                'message': 'User successfully created.',
+                'data':user.data
+            })
+        except Exception as e:
+            logger.exception("{}, error occured while signup.".format(e))
+            return Response({
+                'success': False,
+                'message': 'User fail to create.',
+                'data':{}
+            })
+
 
 class UserDetail(generics.RetrieveUpdateDestroyAPIView):
     """
@@ -71,6 +108,61 @@ class UserDetail(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = UserSerializer
     permission_classes = (IsAuthenticated,)
 
+    def get(self, request, *args, **kwargs):
+        return self.retrieve(request, *args, **kwargs)
+
+    def put(self, request, *args, **kwargs):
+        try:
+            res = self.update(request, *args, **kwargs)
+            logger.info("{} profile is updated successfully.".format(res.data['phone_no']))
+            return Response({
+                'success': True,
+                'message': 'Successfully updated.',
+                'data': res.data
+            })
+        except Exception as e:
+            logger.exception("{}, error occured while updating user profile.".format(e))
+            return Response({
+                'success': False,
+                'message': 'Error occured while updating user profile.',
+                'data':{}
+            })
+
+    def patch(self, request, *args, **kwargs):
+        try:
+            res = self.partial_update(request, *args, **kwargs)
+            logger.info("{} profile is updated successfully.".format(res.data['phone_no']))
+            return Response({
+                'success': True,
+                'message': 'Successfully updated.',
+                'data': res.data
+            })
+        except Exception as e:
+            logger.error("{}, error occured while updating user profile.".format(e))
+            return Response({
+                'success': False,
+                'message': 'Error occured while updating user profile.',
+                'data':{}
+            })
+
+    def delete(self, request, *args, **kwargs):
+        try:
+            user = User.objects.get(id=kwargs['pk'])
+            res = self.destroy(request, *args, **kwargs)
+            logger.info("{} is deleted successfully.".format(user.phone_no))
+            return Response({
+                'success': True,
+                'message': 'Successfully deleted.',
+                'data': {}
+            })
+        except Exception as e:
+            logger.error("{}, error occured while deleting user.".format(e))
+            return Response({
+                'success': False,
+                'message': 'Error occured while deleting user.',
+                'data':{}
+            })
+
 
 class Login(APIView):
     """
@@ -79,18 +171,31 @@ class Login(APIView):
     permission_classes = (AllowAny,)
 
     def post(self, request, format=None):
-        user = authenticate(request, email=request.data['email'],
-                            password=request.data['password'])
-        if user is not None:
-            login(request, user)
-            return Response({
-                'success': True,
-                'message': 'Successfully login'
-            })
-        else:
+        try:
+
+            user = authenticate(request, phone_no=request.data['mobile_number'],
+                                password=request.data['password'])
+            if user is not None:
+                login(request, user)
+                logger.info("{} is login successfully.".format(user.phone_no))
+                return Response({
+                    'success': True,
+                    'message': 'Successfully login.',
+                    'data':{}
+                })
+            else:
+                logger.info("wrong credentials used in login.")
+                return Response({
+                    'success': False,
+                    'message': 'Please check credentials.',
+                    'data':{}
+                })
+        except Exception as e:
+            logger.error("{}, error occured while login.".format(e))
             return Response({
                 'success': False,
-                'message': 'Fail to login'
+                'message': 'Error occured while login.',
+                'data':{}
             })
 
 
@@ -101,11 +206,22 @@ class Logout(APIView):
     permission_classes = (IsAuthenticated,)
 
     def get(self, request, format=None):
-        logout(request)
-        return Response({
-            'success': True,
-            'message': 'Successfully logout'
-        })
+        try:
+            phone_no = request.user.phone_no
+            logout(request)
+            logger.info("{} user is logout successfully.".format(phone_no))
+            return Response({
+                'success': True,
+                'message': 'Successfully logout.',
+                'data': {}
+            })
+        except Exception as e:
+            logger.error("{}, error occured while logout.".format(e))
+            return Response({
+                'success': False,
+                'message': 'Error occured while logout.',
+                'data':{}
+            })
 
 
 class ChangePassword(APIView):
@@ -115,70 +231,99 @@ class ChangePassword(APIView):
     permission_classes = (IsAuthenticated,)
 
     def post(self, request, format=None):
-        new_password = request.data['password']
-        user = request.user
-        user.set_password(new_password)
-        user.save()
+        try:
+            new_password = request.data['password']
+            user = request.user
+            user.set_password(new_password)
+            user.save()
 
-        update_session_auth_hash(request, user)  # Important!
-        return Response({
-            'success': True,
-            'message': 'Successfully password changed'
-        })
+            update_session_auth_hash(request, user)  # Important!
+            logger.info("{} changed password successfully.".format(user.phone_no))
+            return Response({
+                'success': True,
+                'message': 'Successfully password changed',
+                'data': {}
+            })
+        except Exception as e:
+            logger.error("{}, error occured while changing password.".format(e))
+            return Response({
+                'success': False,
+                'message': 'Error occured while changing password.',
+                'data':{}
+            })
+
+
+class PhoneVerificationRequestView(APIView):
+    """
+    Phone Verification request
+    """
+    def post(self, request, format=None):
+        try:
+            try:
+                random_string = ''.join([random.choice(string.digits) for n in range(6)])
+                verification = PhoneVerification.objects.get(phone_no=request.data['mobile_number'])
+                if verification.status == 'V':
+                    return Response({
+                        'success': True,
+                        'message': 'User Exist.',
+                        'data': {}
+                    })
+                else:
+                    verification.code = random_string
+                    verification.verified_on = timezone.now()
+                    verification.save()
+            except PhoneVerification.DoesNotExist:
+                verification = PhoneVerification.objects.create(phone_no=request.data['mobile_number'],\
+                                                                code = random_string)
+
+            client = Client(settings.TWILIO_SID, settings.TWILIO_AUTH_TOKEN)
+            message = client.messages.create(verification.phone_no,
+                body="From bankey, your verification code is {}".format(verification.code),
+                from_=settings.TWILIO_PHONE_NUMBER)
+            logger.info("Verification code successfully sent to {}.".format(verification.phone_no))
+
+            return Response({
+                    'success': True,
+                    'message': 'Verification code successfully sent.',
+                    'data': {}
+                })
+        except Exception as e:
+            logger.error("{}, error occured while mobile verification.".format(e))
+            return Response({
+                'success': False,
+                'message': 'Error occured while mobile verification.',
+                'data':{}
+            })
 
 
 class PhoneVerificationView(APIView):
-    """
-    Phone Verification
-    """
-    permission_classes = (IsAuthenticated,)
-
-    def get(self, request, format=None):
-        try:
-            random_string = ''.join([random.choice(string.digits) for n in range(6)])
-            verification = PhoneVerification.objects.get(user=request.user, phone_no=request.user.phone_no)
-            if verification.status == 'V':
-                return Response({
-                    'success': True,
-                    'message': 'Verification already done.'
-                })
-            else:
-                verification.code = random_string
-                verification.verified_on = timezone.now()
-                verification.save()
-        except PhoneVerification.DoesNotExist:
-            verification = PhoneVerification.objects.create(user=request.user, phone_no=request.user.phone_no,\
-                                                            code = random_string)
-
-        client = Client(settings.TWILIO_SID, settings.TWILIO_AUTH_TOKEN)
-        message = client.messages.create(request.user.phone_no,
-            body="From bankey, your verification code is {}".format(verification.code),
-            from_=settings.TWILIO_PHONE_NUMBER)
-        return Response({
-                'success': True,
-                'message': 'Verification code successfully sent.'
-            })
 
     def post(self, request, format=None):
         try:
             verification_code = request.data['verification_code']
-            verification = PhoneVerification.objects.get(user=request.user, phone_no=request.user.phone_no)
+            verification = PhoneVerification.objects.get(phone_no=request.data['mobile_number'])
             if verification.code == verification_code:
                 verification.status = 'V'
                 verification.save()
+                logger.info("Verification successfully completed for {}.".format(verification.phone_no))
                 return Response({
                 'success': True,
-                'message': 'Successfully verified.'
+                'message': 'Successfully verified.',
+                'data': {}
                 })
             else:
+                logger.info("Wrong verification code given for {}.".format(verification.phone_no))
                 return Response({
                 'success': False,
-                'message': 'Fail to verified'
+                'message': 'Fail to verified',
+                'data': {}
                 })
-        except Exception:
+        except Exception as e:
+            logger.error("{}, error occured while mobile verification.".format(e))
             return Response({
                 'success': False,
-                'message': 'Something goes wrong, please contact support team.'
+                'message': 'Something goes wrong, please contact support team.',
+                'data': {}
             })
 
 
@@ -197,15 +342,22 @@ class UserContactsViews(generics.ListCreateAPIView):
 
     def post(self, request, *args, **kwargs):
         try:
-            user = User.objects.get(email=request.data['email'], status='A')
+            user = User.objects.get(phone_no=request.data['mobile_number'], status='A')
             if user:
                 request.user.contacts.add(user)
+                logger.info("{} added into contacts of {} user.".format(user.phone_no, request.user.phone_no))
                 return Response({
                 'success': True,
-                'message': 'Successfully Added'
+                'message': 'Successfully Added',
+                'data':{}
                 })
-        except User.DoesNotExist:
-            raise Http404
+        except Exception as e:
+            logger.error("{}, error occured while adding contacts.".format(e))
+            return Response({
+                'success': False,
+                'message': 'Error occured while adding contacts.',
+                'data': {}
+            })
 
 
 class ServiceViewSet(viewsets.ModelViewSet):
@@ -257,26 +409,6 @@ class SearchTellersView(generics.ListAPIView):
         return queryset
 
 
-class AddTeller(generics.CreateAPIView):
-    """
-    Add teller
-    """
-    queryset = Teller.objects.filter(user__status='A')
-    serializer_class = TellerSerializer
-    permission_classes = (IsAuthenticated,)
-
-    def post(self, request, format=None):
-        try:
-            user = User.objects.get(email=request.data['email'], status='A')
-            Teller.objects.create(user=user, service_activation=request.data['service_activation'])
-            return Response({
-                'success': True,
-                'message': 'Teller successfully created'
-            })
-        except User.DoesNotExist:
-            raise Http404
-
-
 class ChangeTellerActivationMode(generics.UpdateAPIView):
     """
     Update teller's service activation mode
@@ -287,15 +419,29 @@ class ChangeTellerActivationMode(generics.UpdateAPIView):
 
     def put(self, request, format=None):
         try:
-            teller = Teller.objects.get(user__email=request.data['email'], user__status='A')
+            teller = Teller.objects.get(user=request.user)
+            if request.data['service_activation'] == True:
+                teller_service_charges = TellerServiceCharges.objects.filter(teller=teller)
+                if not teller_service_charges:
+                    return Response({
+                        'success': True,
+                        'message': 'Add services and charges first.'
+                    })
+
             teller.service_activation = request.data['service_activation']
             teller.save()
+            logger.info("Now activation mode is {} for {} teller.".format(teller.service_activation, request.user.phone_no))
             return Response({
                 'success': True,
-                'message': 'Teller updated successfully'
+                'message': 'Activation mode is successfully changed for teller.'
             })
-        except Teller.DoesNotExist:
-            raise Http404
+        except Exception as e:
+            logger.error("{}, error occured while changing activation mode for teller.".format(e))
+            return Response({
+                'success': False,
+                'message': 'Error occured while changing activation mode for teller.',
+                'data': {}
+            })
 
 
 class TellerServiceChargesViewSet(viewsets.ViewSet):
@@ -322,14 +468,16 @@ class TellerServiceChargesViewSet(viewsets.ViewSet):
             TellerServiceCharges.objects.create(teller=request.user.teller, service=service,\
                                                 min_charges=request.data['min_charges'], \
                                                 max_charges=request.data['max_charges'])
+            logger.info("{} service created successfully for {} teller.".format(service.name, request.user.phone_no))
             return Response({
                 'success': True,
                 'message': 'Successfully created'
             })
         except Exception as e:
+            logger.error("{}, error occured while creating service charges for teller.".format(e))
             return Response({
                 'success': False,
-                'message': 'Fail to create'
+                'message': 'Fail to create service charges'
             })
 
 
@@ -340,12 +488,18 @@ class TellerServiceChargesViewSet(viewsets.ViewSet):
             teller_service_charge.min_charges = request.data['min_charges']
             teller_service_charge.max_charges = request.data['max_charges']
             teller_service_charge.save()
+            logger.info("{} service updated successfully for {} teller.".format(request.data['service_code'],\
+                                                                                request.user.phone_no))
             return Response({
                 'success': True,
                 'message': 'Service charges updated successfully'
             })
-        except TellerServiceCharges.DoesNotExist:
-            raise Http404
+        except Exception as e:
+            logger.error("{}, error occured while updating service charges for teller.".format(e))
+            return Response({
+                'success': False,
+                'message': 'Fail to update service charges'
+            })
 
     def delete(self, request, format=None):
 
@@ -353,12 +507,18 @@ class TellerServiceChargesViewSet(viewsets.ViewSet):
             teller_service_charge = TellerServiceCharges.objects.get(teller=request.user.teller,\
                                                                     service__code=request.data['service_code'])
             teller_service_charge.delete()
+            logger.info("{} service deleted successfully for {} teller.".format(request.data['service_code'],\
+                                                                                request.user.phone_no))
             return Response({
                 'success': True,
                 'message': 'Service charges deleted successfully'
             })
-        except TellerServiceCharges.DoesNotExist:
-            raise Http404
+        except Exception as e:
+            logger.error("{}, error occured while deleting service charges for teller.".format(e))
+            return Response({
+                'success': False,
+                'message': 'Fail to delete service charges'
+            })
 
 
 class UserRatingsAndFeedbackViews(generics.ListCreateAPIView):
@@ -376,19 +536,25 @@ class UserRatingsAndFeedbackViews(generics.ListCreateAPIView):
 
     def post(self, request, *args, **kwargs):
         try:
-            user = User.objects.get(email=request.data['email'], status='A')
+            user = User.objects.get(phone_no=request.data['mobile_number'], status='A')
             UserRatingsAndFeedback.objects.create(
                 teller=request.user.teller,
                 user=user,
                 ratings=request.data['ratings'],
                 feedback=request.data['feedback']
             )
+            logger.info("Feedback is given from {} teller to {} user.".format(request.user.phone_no, \
+                                                                                user.phone_no))
             return Response({
             'success': True,
             'message': 'Successfully Added'
             })
-        except User.DoesNotExist:
-            raise Http404
+        except Exception as e:
+            logger.error("{}, error occured while sending feedback from teller to user.".format(e))
+            return Response({
+                'success': False,
+                'message': 'Error occured while sending feedback from teller to user.'
+            })
 
 
 class TellerRatingsAndFeedbackViews(generics.ListCreateAPIView):
@@ -406,19 +572,25 @@ class TellerRatingsAndFeedbackViews(generics.ListCreateAPIView):
 
     def post(self, request, *args, **kwargs):
         try:
-            teller = Teller.objects.get(user__email=request.data['email'], user__status='A')
+            teller = Teller.objects.get(user__phone_no=request.data['mobile_number'], user__status='A')
             TellerRatingsAndFeedback.objects.create(
                 user=request.user,
                 teller=teller,
                 ratings=request.data['ratings'],
                 feedback=request.data['feedback']
             )
+            logger.info("Feedback is given from {} user to {} teller.".format(request.user.phone_no, \
+                                                                                teller.user.phone_no))
             return Response({
             'success': True,
             'message': 'Successfully Added'
             })
-        except Teller.DoesNotExist:
-            raise Http404
+        except Exception as e:
+            logger.error("{}, error occured while sending feedback from user to teller.".format(e))
+            return Response({
+                'success': False,
+                'message': 'Error occured while sending feedback from user to teller.'
+            })
 
 
 

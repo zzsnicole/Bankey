@@ -11,13 +11,14 @@ class CountrySerializer(serializers.ModelSerializer):
     """
     class Meta:
         model = Country
-        fields = ('name', 'code', 'status')
+        fields = ('name', 'code', 'std_code', 'status')
 
 
 class AddressSerializer(serializers.ModelSerializer):
     """
     Address Serializer
     """
+    country = serializers.CharField(required=False, allow_blank=False, max_length=128)
 
     class Meta:
         model = Address
@@ -32,21 +33,22 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ('email', 'phone_no', 'password', 'first_name', 'last_name', 'date_joined',\
+        fields = ('email', 'phone_no', 'password', 'name', 'date_joined',\
                   'address', 'contacts', 'status', 'is_staff', 'is_superuser', 'photo')
 
     def create(self, validated_data):
         address_data = validated_data.pop('address')
         user = User.objects.create(**validated_data)
-        user.address = Address.objects.create(**address_data)
+        country = Country.objects.get(code=address_data['country'])
+        user.address = Address.objects.create(country=country)
         user.set_password(validated_data['password'])
         user.save()
+        Teller.objects.create(user=user)
         return user
 
     def update(self, instance, validated_data):
-        instance.phone_no = validated_data.get('phone_no', instance.phone_no)
-        instance.first_name = validated_data.get('first_name', instance.first_name)
-        instance.last_name = validated_data.get('last_name', instance.last_name)
+        instance.email = validated_data.get('email', instance.email)
+        instance.name = validated_data.get('name', instance.name)
         instance.photo = validated_data.get('photo', instance.photo)
         instance.save()
         address = instance.address
@@ -55,7 +57,7 @@ class UserSerializer(serializers.ModelSerializer):
         address.location = address_data.get('location', address.location)
         address.city_or_village = address_data.get('city_or_village', address.city_or_village)
         address.state = address_data.get('state', address.state)
-        address.country = address_data.get('country', address.country)
+        address.country = Country.objects.get(code=address_data.get('country', address.country))
         address.pin_code = address_data.get('pin_code', address.pin_code)
         address.save()
         return instance

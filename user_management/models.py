@@ -19,6 +19,7 @@ class Country(models.Model):
     """
     name = models.CharField(max_length=128, blank=False, null=False)
     code = models.CharField(max_length=128, unique=True, blank=False, null=False)
+    std_code = models.CharField(max_length=128, unique=True, blank=False, null=False)
     status = models.CharField(max_length=1, choices=settings.STATUS_CHOICES, default='A')
 
     def __str__(self):
@@ -41,8 +42,7 @@ class Address(models.Model):
     location = models.CharField(max_length=128, blank=True, null=True)
     city_or_village = models.CharField(max_length=128, blank=True, null=True)
     state = models.CharField(max_length=128, blank=True, null=True)
-    # country = models.ForeignKey('Country', related_name='address', blank=False, null=False)
-    country = models.CharField(max_length=128, blank=True, null=True)
+    country = models.ForeignKey('Country', related_name='address', blank=False, null=False)
     pin_code = models.PositiveIntegerField(blank=True, null=True)
     status = models.CharField(max_length=1, choices=settings.STATUS_CHOICES, default='A')
 
@@ -61,13 +61,12 @@ class User(AbstractBaseUser, PermissionsMixin):
     """
     User model
     """
-    email = models.EmailField(_('email address'), unique=True, blank=False, null=False)
-    phone_no = models.CharField(_('phone number'), validators=[RegexValidator(regex=r'^\+?1?\d{9,15}$',
+    phone_no = models.CharField(_('mobile number'), validators=[RegexValidator(regex=r'^\+?1?\d{9,15}$',
                                  message="Phone number must be entered in the format:\
                                   '+999999999'. Up to 15 digits allowed.")], max_length=15,\
                                   unique=True, blank=False, null=False)
-    first_name = models.CharField(_('first name'), max_length=30, blank=True)
-    last_name = models.CharField(_('last name'), max_length=30, blank=True)
+    email = models.EmailField(_('email address'), blank=True, null=True)
+    name = models.CharField(_('name'), max_length=30, blank=False, null=False)
     is_staff = models.BooleanField(
         _('staff status'),
         default=False,
@@ -82,15 +81,15 @@ class User(AbstractBaseUser, PermissionsMixin):
     objects = UserManager()
 
     EMAIL_FIELD = 'email'
-    USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['phone_no']
+    USERNAME_FIELD = 'phone_no'
+    REQUIRED_FIELDS = ['name']
 
     class Meta:
         verbose_name = _('user')
         verbose_name_plural = _('users')
 
     def __str__(self):
-        return self.email
+        return self.phone_no
 
     def delete(self):
         """
@@ -98,17 +97,6 @@ class User(AbstractBaseUser, PermissionsMixin):
         """
         self.status = 'D'
         self.save()
-
-    def get_full_name(self):
-        """
-        Returns the first_name plus the last_name, with a space in between.
-        """
-        full_name = '%s %s' % (self.first_name, self.last_name)
-        return full_name.strip()
-
-    def get_short_name(self):
-        "Returns the short name for the user."
-        return self.first_name
 
     def email_user(self, subject, message, from_email=None, **kwargs):
         """
@@ -121,61 +109,13 @@ class PhoneVerification(models.Model):
     """
     VerificationCode model for phone number verification
     """
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='user_phone_verification',\
-                             blank=False, null=False)
     phone_no = models.CharField(_('phone number'), validators=[RegexValidator(regex=r'^\+?1?\d{9,15}$',
                                  message="Phone number must be entered in the format:\
                                   '+999999999'. Up to 15 digits allowed.")], max_length=15,\
                                   unique=True, blank=False, null=False)
+    code = models.PositiveIntegerField(unique=True, blank=False, null=False)
     verified_on = models.DateTimeField(default=timezone.now)
-    code = models.CharField(max_length=64, unique=True, blank=False, null=False)
     status = models.CharField(max_length=1, choices=settings.VERIFICATION_STATUS, default='U')
-
-
-class UserCardInfo(models.Model):
-    """
-    User's credit or debit cards information
-    """
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='user_card_info',\
-                             blank=False, null=False)
-    card_campany_name = models.CharField(max_length=128, blank=False, null=False)  #visa, master
-    card_no = models.CharField(max_length=64, unique=True, blank=False, null=False)
-    cvv = models.PositiveIntegerField(blank=False, null=False)
-    expiry_date = models.CharField(max_length=7, blank=False, null=False) #month/year
-    status = models.CharField(max_length=1, choices=settings.STATUS_CHOICES, default='A')
-
-    def __str__(self):
-        return self.card_no
-
-    def delete(self):
-        """
-        Delete user's card information
-        """
-        self.status = 'D'
-        self.save()
-
-
-class UserBankInfo(models.Model):
-    """
-    User's banks information
-    """
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='user_bank_info',\
-                             blank=False, null=False)
-    account_no = models.CharField(max_length=64, blank=False, null=False)
-    bank_name = models.CharField(max_length=128, blank=True, null=True)
-    branch_name = models.CharField(max_length=128, blank=True, null=True)
-    IFSC = models.CharField(max_length=128, blank=False, null=False)
-    status = models.CharField(max_length=1, choices=settings.STATUS_CHOICES, default='A')
-
-    class Meta:
-        unique_together = ('IFSC','account_no')
-
-    def delete(self):
-        """
-        Delete user's bank account information
-        """
-        self.status = 'D'
-        self.save()
 
 
 class Teller(models.Model):

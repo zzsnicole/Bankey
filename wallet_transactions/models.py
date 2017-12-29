@@ -1,7 +1,7 @@
 from django.db import models
 from django.conf import settings
 
-from user_management.models import Teller, UserCardInfo, UserBankInfo
+from user_management.models import User, Teller, Country
 
 
 class Currency(models.Model):
@@ -84,11 +84,63 @@ class CashTransactionHistory(models.Model):
     teller_confirmation_code = models.CharField(max_length=128, blank=True, null=False)
 
 
+class UserCardInfo(models.Model):
+    """
+    User's credit or debit cards information
+    """
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='user_card_info',\
+                             blank=False, null=False)
+    card_campany_name = models.CharField(max_length=64, blank=False, null=False)  #visa, master
+    card_no = models.BigIntegerField(unique=True, blank=False, null=False)
+    cvv = models.PositiveSmallIntegerField(blank=False, null=False)
+    expiry_month = models.PositiveSmallIntegerField(blank=False, null=False)
+    expiry_year =  models.PositiveSmallIntegerField(blank=False, null=False)
+    status = models.CharField(max_length=1, choices=settings.STATUS_CHOICES, default='A')
+
+    def __str__(self):
+        card = '%s - %s' % (self.card_campany_name, self.card_no)
+        return card.strip()
+
+    def delete(self):
+        """
+        Delete user's card information
+        """
+        self.status = 'D'
+        self.save()
+
+
+class UserBankInfo(models.Model):
+    """
+    User's banks information
+    """
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='user_bank_info',\
+                             blank=False, null=False)
+    account_no = models.BigIntegerField(blank=False, null=False)
+    rounting_no = models.CharField(max_length=128, blank=False, null=False)
+    country = models.ForeignKey(Country, related_name='user_bank_country', blank=False, null=False)
+    currency = models.ForeignKey('Currency', related_name='user_bank_currency',blank=False, null=False)
+    status = models.CharField(max_length=1, choices=settings.STATUS_CHOICES, default='A')
+
+    class Meta:
+        unique_together = ('user', 'rounting_no', 'account_no')
+
+    def __str__(self):
+        account = '%s - %s' % (self.account_no, self.rounting_no)
+        return account.strip()
+
+    def delete(self):
+        """
+        Delete user's bank account information
+        """
+        self.status = 'D'
+        self.save()
+
+
 class CardTransactionHistory(models.Model):
     """
     CardTransactionHistory model
     """
-    user_card = models.ForeignKey(UserCardInfo, related_name='card_transaction',\
+    user_card = models.ForeignKey('UserCardInfo', related_name='card_transaction',\
                              blank=False, null=False)
     transaction = models.ForeignKey(Transaction, related_name='card_transaction',\
                              blank=False, null=False)
@@ -98,7 +150,7 @@ class NetBankingTransactionHistory(models.Model):
     """
     NetBankingTransactionHistory model
     """
-    user_bank = models.ForeignKey(UserBankInfo, related_name='net_banking_transaction',\
+    user_bank = models.ForeignKey('UserBankInfo', related_name='net_banking_transaction',\
                              blank=False, null=False)
     transaction = models.ForeignKey(Transaction, related_name='net_banking_transaction',\
                              blank=False, null=False)

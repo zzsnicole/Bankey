@@ -153,3 +153,67 @@ CORS_ORIGIN_WHITELIST = (
 TWILIO_SID = "ACf2e9c09c67553da245af1a7274d46980"
 TWILIO_AUTH_TOKEN = "9573bbd677851564e3151a328db81cdf"
 TWILIO_PHONE_NUMBER = "+13016850881"
+
+# Logs configuration
+LOG_ROOT = os.path.join(BASE_DIR, 'docs/logs/')
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'verbose': {
+            'format': '%(levelname)s %(asctime)s %(module)s %(process)d %(thread)d %(message)s'
+        },
+        'simple': {
+            'format': '%(levelname)s %(message)s'
+        },
+    },
+    'filters': {
+        'require_debug_true': {
+            '()': 'django.utils.log.RequireDebugTrue',
+        },
+        'require_debug_false': {
+            '()': 'django.utils.log.RequireDebugFalse',
+        },
+    },
+    'handlers': {
+        'console': {
+            'level': 'INFO',
+            'filters': ['require_debug_true'],
+            'class': 'logging.StreamHandler',
+            'formatter': 'simple'
+        },
+        'null': {
+            'class': 'logging.NullHandler',
+        },
+        'user_log_file': {
+            'level': 'DEBUG',
+            'filters': ['require_debug_true'],
+            'formatter': 'verbose',
+            'class': 'logging.FileHandler',
+            'filename': LOG_ROOT+'users.log',
+        },
+        'wallet_log_file': {
+            'level': 'DEBUG',
+            'filters': ['require_debug_true'],
+            'formatter': 'verbose',
+            'class': 'logging.FileHandler',
+            'filename': LOG_ROOT + 'wallets.log',
+        },
+    },
+    'loggers': {
+        'users_log': {
+            'handlers': ['user_log_file'],
+            'level': 'DEBUG',
+            'propagate': True,
+        },
+        'wallets_log': {
+            'handlers': ['wallet_log_file'],
+            'level': 'DEBUG',
+            'propagate': True,
+        },
+        'py.warnings': {
+            'handlers': ['console'],
+        },
+    },
+}
+

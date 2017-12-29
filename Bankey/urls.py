@@ -44,9 +44,9 @@ urlpatterns = [
     url(r'^api/login/$', Login.as_view(), name='login'),
     url(r'^api/logout/$', Logout.as_view(), name='logout'),
     url(r'^api/changepassword/$', ChangePassword.as_view(), name='change_password'),
+    url(r'^api/verificationrequest/$', PhoneVerificationRequestView.as_view(), name='phone_verification_request'),
     url(r'^api/phoneverification/$', PhoneVerificationView.as_view(), name='phone_verification'),
-    url(r'^api/teller/add/$', AddTeller.as_view(), name='add_teller'),
-    url(r'^api/teller/change/activationmode/$', ChangeTellerActivationMode.as_view(),\
+    url(r'^api/teller/activationmode/$', ChangeTellerActivationMode.as_view(),\
                                                             name='change_teller_activation_mode'),
     url(r'^api/walletbalance/$', ViewWalletBalance.as_view(), name='wallet_balance'),
     url(r'^api/searchtellers/$', SearchTellersView.as_view(), name='search_tellers'),
