@@ -1,4 +1,4 @@
-import { PersonalDetailsPage } from './../personal-details/personal-details';
+import { CreatePasswordPage } from './../create-password/create-password';
 import {
   Component, ViewChild
   , ElementRef
@@ -37,7 +37,7 @@ export class EnterOtpPage {
       // if(this.inputHidden){
       //   this.inputHidden.nativeElement.focus();
       // }
-      
+
       // var e = new Event('blur')
       // this.input.nativeElement.dispatchEvent(e);
     }
@@ -46,7 +46,7 @@ export class EnterOtpPage {
 
   goToNextPage() {
     console.log('next page');
-    this.navCtrl.push(PersonalDetailsPage);
+    this.navCtrl.push(CreatePasswordPage);
   }
 
   ionViewDidLoad() {

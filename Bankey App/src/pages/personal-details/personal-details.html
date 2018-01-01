@@ -18,14 +18,15 @@
 			<ion-icon class="photo" name="person"></ion-icon>
 			<img *ngIf="base64Image!=''" [src]="base64Image">
 			<button class="camera-btn"  (click)="openCamera()">
-				
+
             	<ion-icon class="camera" name="camera"></ion-icon>
           	</button>
 		</div>
 	</div>
 
 	<div class="input-row">
-		<input class="name" type="text">
+		  <!-- <ion-label stacked="" color="dark">Your Name</ion-label> -->
+			<ion-input text-center type="text" placeholder="Full Name" name="name" required></ion-input>
 	</div>
 
 	<ion-row padding-top class="bottom-start-btn" justify-content-center style="display: grid;text-align: center;">

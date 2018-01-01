@@ -23,7 +23,7 @@
                 [color]="isItemSelected(item) ? 'primary' : 'daek'"
                 item-left>
             </ion-icon>
-            <h2>{{selectComponent.formatItem(item)}}</h2>
+            <h2 style="color:black;">{{selectComponent.formatItem(item)}}</h2>
         </button>
     </ion-list>
     <div *ngIf="!filteredItems.length" margin>No items found.</div>

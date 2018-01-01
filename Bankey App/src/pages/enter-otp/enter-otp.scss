@@ -8,19 +8,21 @@ page-enter-otp {
         width: 300px;
         overflow: hidden;
     }
-    .partitioned {
-        
-        background-image: linear-gradient(to left, black 70%, rgba(255, 255, 255, 0) 0%);
-    background-size: 50px 1px;
-    width: 400px;
-    font-size: 24px;
-    letter-spacing: 37px;
-    border-width: 0px;
-    border-style: initial;
-    border-color: initial;
-    border-image: initial;
-    background-position: 31px bottom;
-    background-repeat: repeat-x;
+    $char-w: 1ch;
+    $gap: .5*$char-w;
+    $n-char: 6;
+    $in-w: $n-char*($char-w + $gap);
+
+    input {
+      display: block;
+      margin: 2em auto;
+      border: none;
+      padding: 5px;
+      width: 9.4ch;
+      background: repeating-linear-gradient(90deg, dimgrey 0, dimgrey 1ch, transparent 0, transparent 1.5ch) 5px 100%/8.5ch 2px no-repeat;
+      font: 5ch droid sans mono, consolas, monospace;
+      letter-spacing: 0.5ch;
+      background-color: #ffffff;
     }
 
 }

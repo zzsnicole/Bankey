@@ -42,7 +42,7 @@ export class SelectSearchable implements ControlValueAccessor, OnDestroy, OnChan
     @Input() canSearch = false;
     @Input() canReset = false;
     @Input() title: string;
-    @Input() searchPlaceholder: string = 'Enter 3 or more characters';
+    @Input() searchPlaceholder: string = 'Search country name';
     @Output() onChange: EventEmitter<any> = new EventEmitter();
     @Output() onSearch: EventEmitter<any> = new EventEmitter();
     @Input() itemTemplate: Function;
@@ -124,19 +124,20 @@ export class SelectSearchable implements ControlValueAccessor, OnDestroy, OnChan
         if (this.isNullOrWhiteSpace(value)) {
             return null;
         }
-
-        return this.itemTextField ? value[this.itemTextField] : value.toString();
+        // changed by pranav for select HostListener
+        return this.itemTextField ? '+' + value['id'] + ' - ' + value[this.itemTextField] : value.toString();
     }
 
     formatValue(): string {
         if (!this.value) {
             return null;
         }
-
+        //console.log(this.value);
         if (this.multiple) {
             return this.value.map(item => this.formatItem(item)).join(', ');
         } else {
-            return this.formatItem(this.value);
+          // change by pranav
+            return '+'+this.value['id'];
         }
     }
 

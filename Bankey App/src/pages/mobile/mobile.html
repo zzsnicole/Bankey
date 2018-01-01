@@ -12,38 +12,30 @@
   </div>
   <ion-grid>
     <ion-row class="phone-labels">
-      <ion-col col-3>Country 
-        <div *ngIf="selectedCountry" class="iti-flag pull-right" [ngClass]="selectedCountry?.countryClass"></div>
-      </ion-col>
-      <ion-col col-9>Phone Number</ion-col>
-    </ion-row>
-
-    <ion-row>
       <ion-col col-3>
-        <ion-item>
-          <!--<input [(ngModel)]="selected" (typeaheadOnSelect)="typeaheadOnSelect($event)" [typeahead]="country" [typeaheadItemTemplate]="customItemTemplate" typeaheadOptionField="name"  class="form-control">
-          -->
-          <ion-item>
+        <ion-label stacked="" color="dark">Country</ion-label>
+
             <select-searchable
-                    title="Port"
-                    [(ngModel)]="port"
-                    [items]="ports"
+                    title="Select Country"
+                    [(ngModel)]="selectedCountry"
+                    [items]="countryList"
                     itemValueField="id"
                     itemTextField="name"
                     [canSearch]="true"
-                    (onChange)="portChange($event)">
+                    (onChange)="countryChange($event)">
             </select-searchable>
-          </ion-item>
-        </ion-item>
+
+        <!-- <div *ngIf="selectedCountry" class="iti-flag pull-right" [ngClass]="selectedCountry?.countryClass"></div> -->
       </ion-col>
       <ion-col col-8>
-        <ion-item>
+        <ion-label left color="dark" stacked="">Phone Number</ion-label>
+        <ion-item style="padding-left: 0px;">
           <ion-input type="number" placeholder="Phone number" name="phonenumber" required></ion-input>
         </ion-item>
       </ion-col>
     </ion-row>
 
-    <ion-row class="bottom-start-btn" justify-content-center style="display: grid;text-align: center;">
+    <ion-row padding-top class="bottom-start-btn" justify-content-center style="display: grid;text-align: center;">
       <button class="round-btn-with-text" ion-button icon-only color="secondary" round (click)="goToNextPage()">
         <ion-icon name="ios-arrow-forward"></ion-icon>
       </button>
@@ -52,6 +44,3 @@
 
   </ion-grid>
 </ion-content>
-<ng-template #customItemTemplate let-model="item" let-index="index">
-  <h5>{{model.name}} -- {{model.country}}</h5>
-</ng-template>

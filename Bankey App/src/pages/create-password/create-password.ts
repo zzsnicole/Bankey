@@ -1,4 +1,4 @@
-import { EnterOtpPage } from './../enter-otp/enter-otp';
+import { PersonalDetailsPage } from './../personal-details/personal-details';
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 
@@ -28,7 +28,11 @@ export class CreatePasswordPage {
 	}
 
 	digit(d) {
-		this.enteredPasscode += '' + d;
+		if(d == -1){
+				this.delete();
+		}else{
+			  this.enteredPasscode += '' + d;
+		}
 		if (this.enteredPasscode.length == 4) {
 			if (this.firstPassword == '') {
 				this.createPasswordLabel = 'Re-enter your passcode again';
@@ -41,8 +45,7 @@ export class CreatePasswordPage {
 					this.firstPassword = '';
 					this.confirmPassword = '';
 				} else {
-					this.navCtrl.push(EnterOtpPage);
-					//this.createPasswordLabel = 'Password macthes';
+					this.navCtrl.push(PersonalDetailsPage);
 				}
 			}
 		}

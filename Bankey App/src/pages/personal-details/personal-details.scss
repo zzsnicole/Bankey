@@ -8,7 +8,7 @@ page-personal-details {
         display: flex;
         align-items: center;
         justify-content: center;
-            
+
         .circle {
             display: flex;
             background-color: #d8d8d8;
@@ -37,20 +37,12 @@ page-personal-details {
 
     .input-row {
         margin-top: 50px;
-        input.name {
-            border: none;
-            border-bottom: 1px solid #d8d8d8;
-            width: 100%;
-            font-size: 1.3em;
-        }
+        background-color: #ffffff;
     }
 
     .button-row{
         display: flex;
         align-items: center;
         justify-content: center;
-
-        
-
     }
 }
