@@ -441,10 +441,11 @@ class ChangeTellerActivationMode(generics.RetrieveUpdateAPIView):
             teller = Teller.objects.get(user=request.user)
             if request.data['service_activation'] == True:
                 teller_service_charges = TellerServiceCharges.objects.filter(teller=teller)
-                if not teller_service_charges:
+                bank_details = UserBankInfo.objects.filter(user=request.user)
+                if not teller_service_charges or not bank_details:
                     return Response({
                         'success': True,
-                        'message': 'Add services and charges first.'
+                        'message': 'First add charges and bank details in your account.'
                     })
 
             teller.service_activation = request.data['service_activation']

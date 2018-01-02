@@ -39,8 +39,8 @@ class Address(models.Model):
     Address model
     """
     line1 = models.CharField(max_length=128, blank=True, null=True)
-    location = models.CharField(max_length=128, blank=True, null=True)
-    city_or_village = models.CharField(max_length=128, blank=True, null=True)
+    line2 = models.CharField(max_length=128, blank=True, null=True)
+    city = models.CharField(max_length=128, blank=True, null=True)
     state = models.CharField(max_length=128, blank=True, null=True)
     country = models.ForeignKey('Country', related_name='address', blank=False, null=False)
     pin_code = models.PositiveIntegerField(blank=True, null=True)
@@ -75,6 +75,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     date_joined = models.DateTimeField(_('date joined'), default=timezone.now)
     photo = models.ImageField(upload_to='user_photos/', default='user_photos/no-photo.jpeg')
     address = models.ForeignKey('Address', related_name='user', blank=False, null=True)
+    birth_date = models.DateField('Birth Date', blank=True, null=True)
     contacts = models.ManyToManyField('self', related_name='user_contacts', blank=True)
     status = models.CharField(max_length=1, choices=settings.STATUS_CHOICES, default='A')
 
