@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { CountryCode } from "./CountryCode";
 import { SelectSearchable } from '../../components/select-searchable/select-searchable';
+import { HttpClientProvider } from "../../providers/http-client/http-client";
 
 /**
  * Generated class for the MobilePage page.
@@ -18,8 +19,11 @@ import { SelectSearchable } from '../../components/select-searchable/select-sear
 export class MobilePage {
   countryList:any;
   selectedCountry: any = '';
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
-    this.countryList = new CountryCode().allCountries;
+  mobileNumber: any = '';
+  constructor(public navCtrl: NavController,
+              public navParams: NavParams,
+              public httpClient: HttpClientProvider) {
+    //this.countryList = new CountryCode().allCountries;
     console.log(this.countryList);
   }
 
@@ -30,10 +34,46 @@ export class MobilePage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad MobilePage');
+    this.getCountry();
   }
 
-  goToNextPage() {
-    this.navCtrl.push(EnterOtpPage);
+  getCountry(){
+    this.httpClient.getService('listcountries/').then((result:any) => {
+        console.log(result);
+        if(result.success){
+            this.countryList = result.data;
+        }
+    }, (err) => {
+        console.log(err);
+    });
+  }
+
+  GetOtpForMobile() {
+
+    if(this.mobileNumber == ''){
+     //replace by alert controller of ionic
+      alert("pelase enter valid mobile number!")
+    }
+    var mobile_number = String(this.selectedCountry.std_code) + String(this.mobileNumber);
+
+    console.log(this.mobileNumber);
+
+    var otpRequestParams = {
+        "mobile_number": mobile_number
+    };
+    this.httpClient.postService('verificationrequest/',otpRequestParams).then((result:any) => {
+        console.log(result);
+        if(result.success){
+            this.navCtrl.push(EnterOtpPage);
+            localStorage.mobileNumber = otpRequestParams.mobile_number;
+        }else{
+            //replace by alert controller of ionic
+            alert(result.message);
+        }
+    }, (err) => {
+        console.log(err);
+    });
+
   }
 
   typeaheadOnSelect($event) {

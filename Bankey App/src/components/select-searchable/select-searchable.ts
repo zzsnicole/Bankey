@@ -125,7 +125,7 @@ export class SelectSearchable implements ControlValueAccessor, OnDestroy, OnChan
             return null;
         }
         // changed by pranav for select HostListener
-        return this.itemTextField ? '+' + value['id'] + ' - ' + value[this.itemTextField] : value.toString();
+        return this.itemTextField ? value['std_code'] + ' - ' + value[this.itemTextField] : value.toString();
     }
 
     formatValue(): string {
@@ -137,7 +137,7 @@ export class SelectSearchable implements ControlValueAccessor, OnDestroy, OnChan
             return this.value.map(item => this.formatItem(item)).join(', ');
         } else {
           // change by pranav
-            return '+'+this.value['id'];
+            return this.value['std_code'];
         }
     }
 

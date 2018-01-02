@@ -1,4 +1,6 @@
 import { CreatePasswordPage } from './../create-password/create-password';
+import { HttpClientProvider } from "../../providers/http-client/http-client";
+
 import {
   Component, ViewChild
   , ElementRef
@@ -19,19 +21,19 @@ import { NavController, NavParams } from 'ionic-angular';
 export class EnterOtpPage {
 
   headerLabel = 'Enter the 6-digit code';
-  enteredOTP = '';
-  otp = "";
-
+  otpCode = '';
 
   @ViewChild('input') input: ElementRef;
   @ViewChild('inputHidden') inputHidden: ElementRef;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController,
+              public navParams: NavParams,
+              public httpClient: HttpClientProvider) {
   }
 
   onKeyup(event) {
-    console.log(this.otp.length)
-    if (this.otp.length == 6) {
+    console.log(this.otpCode.length)
+    if (this.otpCode.length == 6) {
       // console.log('666')
       // debugger
       // if(this.inputHidden){
@@ -44,14 +46,37 @@ export class EnterOtpPage {
 
   }
 
-  goToNextPage() {
-    console.log('next page');
-    this.navCtrl.push(CreatePasswordPage);
+  ValidateOtpForMobile() {
+
+      if(this.otpCode = ''){
+          //replace by alert controller of ionic
+          alert("pelase enter OTP!")
+      }
+
+      var otpVerificationParams = {
+          "mobile_number":localStorage.mobileNumber,
+          "verification_code":this.otpCode
+      };
+      this.httpClient.postService('verificationrequest/',otpVerificationParams).then((result:any) => {
+          console.log(result);
+          if(result.success){
+              this.navCtrl.push(CreatePasswordPage);
+          }else{
+              //replace by alert controller of ionic
+              alert(result.message);
+          }
+      }, (err) => {
+          console.log(err);
+      });
+
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad EnterOtpPage');
   }
 
+  goBack(){
+    this.navCtrl.pop();
+  }
 
 }

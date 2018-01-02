@@ -29,9 +29,9 @@ export class HttpClientProvider {
       });
   }
 
-  getService(){
+  getService(endpoint){
       return new Promise(resolve => {
-          this.http.get(this.apiUrl+'/').subscribe(data => {
+          this.http.get(this.apiUrl + endpoint).subscribe(data => {
               resolve(data);
           }, err => {
               console.log(err);

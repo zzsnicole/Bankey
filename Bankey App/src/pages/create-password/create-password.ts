@@ -45,11 +45,16 @@ export class CreatePasswordPage {
 					this.firstPassword = '';
 					this.confirmPassword = '';
 				} else {
-					this.navCtrl.push(PersonalDetailsPage);
+					this.setPassword();
+
 				}
 			}
 		}
 	}
+
+    setPassword() {
+            this.navCtrl.push(PersonalDetailsPage,{"password_":this.enteredPasscode});
+    }
 
 	delete() {
 		this.enteredPasscode = this.enteredPasscode.slice(0, -1);

@@ -19,24 +19,23 @@
                     title="Select Country"
                     [(ngModel)]="selectedCountry"
                     [items]="countryList"
-                    itemValueField="id"
+                    itemValueField="std_code"
                     itemTextField="name"
                     [canSearch]="true"
                     (onChange)="countryChange($event)">
             </select-searchable>
 
-        <!-- <div *ngIf="selectedCountry" class="iti-flag pull-right" [ngClass]="selectedCountry?.countryClass"></div> -->
       </ion-col>
       <ion-col col-8>
         <ion-label left color="dark" stacked="">Phone Number</ion-label>
         <ion-item style="padding-left: 0px;">
-          <ion-input type="number" placeholder="Phone number" name="phonenumber" required></ion-input>
+          <ion-input type="tel" [(ngModel)]="mobileNumber" placeholder="Phone number" name="phonenumber" required></ion-input>
         </ion-item>
       </ion-col>
     </ion-row>
 
     <ion-row padding-top class="bottom-start-btn" justify-content-center style="display: grid;text-align: center;">
-      <button class="round-btn-with-text" ion-button icon-only color="secondary" round (click)="goToNextPage()">
+      <button class="round-btn-with-text" ion-button icon-only color="secondary" round (click)="GetOtpForMobile()">
         <ion-icon name="ios-arrow-forward"></ion-icon>
       </button>
       Next
