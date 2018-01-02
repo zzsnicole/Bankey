@@ -265,7 +265,7 @@ class PhoneVerificationRequestView(APIView):
                 verification = PhoneVerification.objects.get(phone_no=request.data['mobile_number'])
                 if verification.status == 'V':
                     return Response({
-                        'success': True,
+                        'success': False,
                         'message': 'User Exist.',
                         'data': {}
                     })
