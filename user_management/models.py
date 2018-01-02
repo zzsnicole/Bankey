@@ -47,7 +47,7 @@ class Address(models.Model):
     status = models.CharField(max_length=1, choices=settings.STATUS_CHOICES, default='A')
 
     def __str__(self):
-        return self.country
+        return self.country.code
 
     def delete(self):
         """
@@ -91,6 +91,9 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     def __str__(self):
         return self.phone_no
+
+    def get_short_name(self):
+        return self.name
 
     def delete(self):
         """

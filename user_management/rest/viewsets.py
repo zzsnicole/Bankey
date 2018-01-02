@@ -17,6 +17,7 @@ from rest_framework.permissions import IsAdminUser, AllowAny, IsAuthenticated
 from .serializers import *
 from .permissions import *
 from user_management.models import *
+from wallet_transactions.models import *
 
 from twilio.rest import Client
 
@@ -92,7 +93,7 @@ class Signup(generics.CreateAPIView):
                 'data':user.data
             })
         except Exception as e:
-            logger.exception("{}, error occured while signup.".format(e))
+            logger.error("{}, error occured while signup.".format(e))
             return Response({
                 'success': False,
                 'message': 'User fail to create.',
