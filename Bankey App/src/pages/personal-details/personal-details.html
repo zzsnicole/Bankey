@@ -26,11 +26,11 @@
 
 	<div class="input-row">
 		  <!-- <ion-label stacked="" color="dark">Your Name</ion-label> -->
-			<ion-input text-center type="text" placeholder="Full Name" name="name" required></ion-input>
+			<ion-input text-center [(ngModel)]="userInfo.name" type="text" placeholder="Full Name" name="name" required></ion-input>
 	</div>
 
 	<ion-row padding-top class="bottom-start-btn" justify-content-center style="display: grid;text-align: center;">
-		<button class="round-btn-with-text" ion-button icon-only color="secondary" round (click)="goToNextPage()">
+		<button class="round-btn-with-text" ion-button icon-only color="secondary" round (click)="signUp()">
 			<ion-icon name="ios-arrow-forward"></ion-icon>
 		</button>
 		Next

@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import {EnterOtpPage} from "../enter-otp/enter-otp";
 import {EnterAmountPage} from "../enter-amount/enter-amount";
-
+import { HttpClientProvider } from "../../providers/http-client/http-client";
 /**
  * Generated class for the PasscodeLoginPage page.
  *
@@ -16,12 +16,18 @@ import {EnterAmountPage} from "../enter-amount/enter-amount";
   templateUrl: 'passcode-login.html',
 })
 export class PasscodeLoginPage {
-
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  userInfo = {
+    "mobile_number": "",
+    "password": "",
+  }
+  constructor(public navCtrl: NavController,
+              public navParams: NavParams,
+              public httpClient: HttpClientProvider) {
   }
   enteredPasscode = '';
   firstPassword = '';
   ionViewDidLoad() {
+    this.userInfo.mobile_number = localStorage.mobileNumber;
     console.log('ionViewDidLoad PasscodeLoginPage');
   }
 
@@ -33,8 +39,26 @@ export class PasscodeLoginPage {
       }
 
       if (this.enteredPasscode.length == 4) {
-          this.navCtrl.push(EnterAmountPage);
+          this.userInfo.password = this.enteredPasscode;
+          this.signIn();
       }
+  }
+
+  signIn() {
+
+    this.httpClient.postService('login/',this.userInfo).then((result:any) => {
+        console.log(result);
+        if(result.success){
+            this.navCtrl.push(EnterAmountPage);
+            //localStorage.userData = result.data;
+        }else{
+            //replace by alert controller of ionic
+            alert(result.message);
+        }
+    }, (err) => {
+        console.log(err);
+    });
+
   }
 
   delete() {

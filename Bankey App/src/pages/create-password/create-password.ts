@@ -52,9 +52,9 @@ export class CreatePasswordPage {
 		}
 	}
 
-    setPassword() {
-            this.navCtrl.push(PersonalDetailsPage,{"password_":this.enteredPasscode});
-    }
+  setPassword() {
+          this.navCtrl.push(PersonalDetailsPage,{"password_":this.enteredPasscode});
+  }
 
 	delete() {
 		this.enteredPasscode = this.enteredPasscode.slice(0, -1);

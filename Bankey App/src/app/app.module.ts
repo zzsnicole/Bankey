@@ -10,7 +10,8 @@ import {StatusBar} from '@ionic-native/status-bar';
 import {TypeaheadModule} from 'ngx-bootstrap';
 import {NgxIntlTelInputModule} from 'ngx-intl-tel-input';
 import {GoogleMaps} from '@ionic-native/google-maps';
-
+import { FileTransfer } from '@ionic-native/file-transfer';
+import { File } from '@ionic-native/file';
 
 import {BankeyApp} from './app.component';
 import {HomePage} from '../pages/home/home';
@@ -103,6 +104,8 @@ import { SelectSearchableModule } from '../components/select-searchable/select-s
         Camera,
         SocialSharing,
         GoogleMaps,
+        FileTransfer,
+        File,
         {provide: ErrorHandler, useClass: IonicErrorHandler},
         HttpClientProvider
     ]

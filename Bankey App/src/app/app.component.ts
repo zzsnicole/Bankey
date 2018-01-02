@@ -5,6 +5,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 
 import { HomePage } from '../pages/home/home';
 import {PasscodeLoginPage} from "../pages/passcode-login/passcode-login";
+import {CreatePasswordPage} from "../pages/create-password/create-password";
 @Component({
   templateUrl: 'app.html'
 })
@@ -20,4 +21,3 @@ export class BankeyApp {
     });
   }
 }
-

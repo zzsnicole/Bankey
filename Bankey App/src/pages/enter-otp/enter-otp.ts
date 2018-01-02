@@ -48,16 +48,16 @@ export class EnterOtpPage {
 
   ValidateOtpForMobile() {
 
-      if(this.otpCode = ''){
+      if(this.otpCode == ''){
           //replace by alert controller of ionic
           alert("pelase enter OTP!")
       }
 
       var otpVerificationParams = {
           "mobile_number":localStorage.mobileNumber,
-          "verification_code":this.otpCode
+          "verification_code":Number(this.otpCode)
       };
-      this.httpClient.postService('verificationrequest/',otpVerificationParams).then((result:any) => {
+      this.httpClient.postService('phoneverification/',otpVerificationParams).then((result:any) => {
           console.log(result);
           if(result.success){
               this.navCtrl.push(CreatePasswordPage);

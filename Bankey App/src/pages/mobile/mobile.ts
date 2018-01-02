@@ -4,7 +4,7 @@ import { NavController, NavParams } from 'ionic-angular';
 import { CountryCode } from "./CountryCode";
 import { SelectSearchable } from '../../components/select-searchable/select-searchable';
 import { HttpClientProvider } from "../../providers/http-client/http-client";
-
+import { PasscodeLoginPage } from "./../passcode-login/passcode-login";
 /**
  * Generated class for the MobilePage page.
  *
@@ -68,7 +68,11 @@ export class MobilePage {
             localStorage.mobileNumber = otpRequestParams.mobile_number;
         }else{
             //replace by alert controller of ionic
-            alert(result.message);
+            if(result.message == "User Exist."){
+                this.navCtrl.push(PasscodeLoginPage);
+            }else{
+                alert(result.message);
+            }
         }
     }, (err) => {
         console.log(err);
