@@ -39,6 +39,9 @@ ion-content{
   margin: 0;
   color: color($colors, primary, base);
 }
+.circle img{
+  border-radius: 40px;
+}
 .round-btn-with-text{
   display: inline;
   width: 38px;

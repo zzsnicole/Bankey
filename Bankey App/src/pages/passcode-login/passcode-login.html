@@ -18,12 +18,12 @@
     <ion-row>
       <div class="photo-row">
         <ion-col col-8 style="padding-left: 50px;">
-          <h5>Pranav Test</h5>
+          <h5>{{userName}}</h5>
         </ion-col>
         <ion-col col-3 style="padding-right: 25px;">
           <div class="circle">
-            <ion-icon class="photo" name="person"></ion-icon>
-            <img *ngIf="profilePic " [src]="profilePic">
+            <ion-icon *ngIf="!profilePic" class="photo" name="person"></ion-icon>
+            <img *ngIf="profilePic" [src]="profilePic">
           </div>
         </ion-col>
       </div>
