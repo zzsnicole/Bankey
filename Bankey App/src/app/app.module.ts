@@ -37,6 +37,7 @@ import {ConfirmationCodePage} from "../pages/confirmation-code/confirmation-code
 import {MyAccountPage} from "../pages/my-account/my-account";
 import {KeyProfilePage} from "../pages/key-profile/key-profile";
 import { SelectSearchableModule } from '../components/select-searchable/select-searchable-module';
+import { CommonFunctionsProvider } from '../providers/common-functions/common-functions';
 
 @NgModule({
     declarations: [
@@ -107,7 +108,8 @@ import { SelectSearchableModule } from '../components/select-searchable/select-s
         FileTransfer,
         File,
         {provide: ErrorHandler, useClass: IonicErrorHandler},
-        HttpClientProvider
+        HttpClientProvider,
+        CommonFunctionsProvider
     ]
 })
 export class AppModule {

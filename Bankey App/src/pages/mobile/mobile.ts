@@ -5,6 +5,7 @@ import { CountryCode } from "./CountryCode";
 import { SelectSearchable } from '../../components/select-searchable/select-searchable';
 import { HttpClientProvider } from "../../providers/http-client/http-client";
 import { PasscodeLoginPage } from "./../passcode-login/passcode-login";
+import { CommonFunctionsProvider } from "../../providers/common-functions/common-functions";
 /**
  * Generated class for the MobilePage page.
  *
@@ -22,7 +23,8 @@ export class MobilePage {
   mobileNumber: any = '';
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
-              public httpClient: HttpClientProvider) {
+              public httpClient: HttpClientProvider,
+              public commonFn: CommonFunctionsProvider) {
     //this.countryList = new CountryCode().allCountries;
     console.log(this.countryList);
   }
@@ -50,9 +52,13 @@ export class MobilePage {
 
   GetOtpForMobile() {
 
-    if(this.mobileNumber == ''){
-     //replace by alert controller of ionic
-      alert("pelase enter valid mobile number!")
+    if(this.selectedCountry == ''){
+      this.commonFn.showAlert('Pelase select country!');
+      return false;
+    }
+    else if(this.mobileNumber == ''){
+      this.commonFn.showAlert('Pelase enter valid mobile number!');
+      return false;
     }
     var mobile_number = String(this.selectedCountry.std_code) + String(this.mobileNumber);
 
@@ -70,8 +76,8 @@ export class MobilePage {
             //replace by alert controller of ionic
             if(result.message == "User Exist."){
                 this.navCtrl.push(PasscodeLoginPage);
-            }else{
-                alert(result.message);
+            }else{                
+                this.commonFn.showAlert(result.message);
             }
         }
     }, (err) => {

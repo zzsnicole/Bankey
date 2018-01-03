@@ -1,6 +1,6 @@
 import { CreatePasswordPage } from './../create-password/create-password';
 import { HttpClientProvider } from "../../providers/http-client/http-client";
-
+import { CommonFunctionsProvider } from "../../providers/common-functions/common-functions";
 import {
   Component, ViewChild
   , ElementRef
@@ -28,20 +28,14 @@ export class EnterOtpPage {
 
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
-              public httpClient: HttpClientProvider) {
+              public httpClient: HttpClientProvider,
+              public commonFn: CommonFunctionsProvider) {
   }
 
   onKeyup(event) {
     console.log(this.otpCode.length)
     if (this.otpCode.length == 6) {
-      // console.log('666')
-      // debugger
-      // if(this.inputHidden){
-      //   this.inputHidden.nativeElement.focus();
-      // }
 
-      // var e = new Event('blur')
-      // this.input.nativeElement.dispatchEvent(e);
     }
 
   }
@@ -49,8 +43,8 @@ export class EnterOtpPage {
   ValidateOtpForMobile() {
 
       if(this.otpCode == ''){
-          //replace by alert controller of ionic
-          alert("pelase enter OTP!")
+          this.commonFn.showAlert("Please enter OTP!");
+          return false;
       }
 
       var otpVerificationParams = {
@@ -62,8 +56,7 @@ export class EnterOtpPage {
           if(result.success){
               this.navCtrl.push(CreatePasswordPage);
           }else{
-              //replace by alert controller of ionic
-              alert(result.message);
+              this.commonFn.showAlert(result.message);
           }
       }, (err) => {
           console.log(err);

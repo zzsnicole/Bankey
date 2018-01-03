@@ -5,6 +5,7 @@ import { Camera, CameraOptions } from '@ionic-native/camera';
 import { HttpClientProvider } from "../../providers/http-client/http-client";
 import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer';
 import { File } from '@ionic-native/file';
+import { CommonFunctionsProvider } from "../../providers/common-functions/common-functions";
 /**
  * Generated class for the PersonalDetailsPage page.
  *
@@ -36,7 +37,8 @@ export class PersonalDetailsPage {
                 public camera: Camera,
                 public httpClient: HttpClientProvider,
                 private transfer: FileTransfer,
-                private file: File) {
+                private file: File,
+                public commonFn: CommonFunctionsProvider) {
   }
 
   ionViewDidLoad() {
@@ -86,8 +88,8 @@ export class PersonalDetailsPage {
   signUp() {
 
     if(this.userInfo.name == ''){
-     //replace by alert controller of ionic
-      alert("pelase enter valid name!")
+      this.commonFn.showAlert("Please enter your name!");
+      return false;
     }
 
     this.httpClient.postService('signup/',this.userInfo).then((result:any) => {
@@ -96,8 +98,7 @@ export class PersonalDetailsPage {
             this.navCtrl.push(InviteFriendsPage)
             localStorage.userData = result.data;
         }else{
-            //replace by alert controller of ionic
-            alert(result.message);
+            this.commonFn.showAlert(result.message);
         }
     }, (err) => {
         console.log(err);
