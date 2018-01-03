@@ -75,7 +75,7 @@ export class MobilePage {
         }else{
             //replace by alert controller of ionic
             if(result.message == "User Exist."){
-                this.navCtrl.push(PasscodeLoginPage);
+                this.navCtrl.push(PasscodeLoginPage,{"userName":"","profilePic":""});
             }else{                
                 this.commonFn.showAlert(result.message);
             }

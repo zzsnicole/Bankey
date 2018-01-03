@@ -3,8 +3,6 @@ import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import { HttpClientProvider } from "../../providers/http-client/http-client";
-import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer';
-import { File } from '@ionic-native/file';
 import { CommonFunctionsProvider } from "../../providers/common-functions/common-functions";
 /**
  * Generated class for the PersonalDetailsPage page.
@@ -36,8 +34,6 @@ export class PersonalDetailsPage {
                 public navParams: NavParams,
                 public camera: Camera,
                 public httpClient: HttpClientProvider,
-                private transfer: FileTransfer,
-                private file: File,
                 public commonFn: CommonFunctionsProvider) {
   }
 
@@ -67,22 +63,22 @@ export class PersonalDetailsPage {
       // Handle error
     });
   }
-  upload() {
-  const fileTransfer: FileTransferObject = this.transfer.create();
+  // upload() {
+  // const fileTransfer: FileTransferObject = this.transfer.create();
+  //
+  // let options: FileUploadOptions = {
+  //    fileKey: 'file',
+  //    fileName: 'name.jpg',
+  //    headers: {}
+  // }
 
-  let options: FileUploadOptions = {
-     fileKey: 'file',
-     fileName: 'name.jpg',
-     headers: {}
-  }
-
-  fileTransfer.upload('<file path>', '<api endpoint>', options)
-   .then((data) => {
-     // success
-   }, (err) => {
-     // error
-   })
-  }
+  // fileTransfer.upload('<file path>', '<api endpoint>', options)
+  //  .then((data) => {
+  //    // success
+  //  }, (err) => {
+  //    // error
+  //  })
+  // }
 
 
   signUp() {
@@ -95,7 +91,7 @@ export class PersonalDetailsPage {
     this.httpClient.postService('signup/',this.userInfo).then((result:any) => {
         console.log(result);
         if(result.success){
-            this.navCtrl.push(InviteFriendsPage)
+            this.navCtrl.push(InviteFriendsPage,{"userName":result.data.name})
             localStorage.userData = result.data;
         }else{
             this.commonFn.showAlert(result.message);

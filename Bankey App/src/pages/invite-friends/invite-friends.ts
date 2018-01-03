@@ -24,12 +24,14 @@ export class InviteFriendsPage {
     url: 'https://www.website.com/foo/#bar?a=b',
     chooserTitle: 'Pick an app' // Android only, you can override the default share sheet title
   }
-
+  userName:any = '';
+  userNumber:any = '';
   constructor(public navCtrl: NavController, public navParams: NavParams, public socialSharing: SocialSharing) {
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad InviteFriendsPage');
+    this.userName = this.navParams.get("userName");
   }
 
   openSharing() {

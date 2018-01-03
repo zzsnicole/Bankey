@@ -16,6 +16,8 @@ import { HttpClientProvider } from "../../providers/http-client/http-client";
   templateUrl: 'passcode-login.html',
 })
 export class PasscodeLoginPage {
+  userName:any = '';
+  profilePic:any = '';
   userInfo = {
     "mobile_number": "",
     "password": "",
@@ -28,6 +30,8 @@ export class PasscodeLoginPage {
   firstPassword = '';
   ionViewDidLoad() {
     this.userInfo.mobile_number = localStorage.mobileNumber;
+    this.userName = this.navParams.get("userName");
+    this.profilePic = this.navParams.get("profilePic");
     console.log('ionViewDidLoad PasscodeLoginPage');
   }
 
