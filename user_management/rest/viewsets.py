@@ -179,10 +179,13 @@ class Login(APIView):
             if user is not None:
                 login(request, user)
                 logger.info("{} is login successfully.".format(user.phone_no))
+                count = User.objects.filter(status='A').count()
                 return Response({
                     'success': True,
                     'message': 'Successfully login.',
-                    'data':{}
+                    'data':{
+                        'count':count
+                    }
                 })
             else:
                 logger.info("wrong credentials used in login.")
@@ -264,10 +267,12 @@ class PhoneVerificationRequestView(APIView):
                 random_string = ''.join([random.choice(string.digits) for n in range(6)])
                 verification = PhoneVerification.objects.get(phone_no=request.data['mobile_number'])
                 if verification.status == 'V':
+                    user = User.objects.get(phone_no=request.data['mobile_number'])
+                    user_serializer = UserSerializer(user)
                     return Response({
                         'success': False,
                         'message': 'User Exist.',
-                        'data': {}
+                        'data': user_serializer.data
                     })
                 else:
                     verification.code = random_string

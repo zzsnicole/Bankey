@@ -20,6 +20,7 @@ class Country(models.Model):
     name = models.CharField(max_length=128, blank=False, null=False)
     code = models.CharField(max_length=128, unique=True, blank=False, null=False)
     std_code = models.CharField(max_length=128, unique=True, blank=False, null=False)
+    flag = models.ImageField(upload_to='country_flags/',blank=False, null=True)
     status = models.CharField(max_length=1, choices=settings.STATUS_CHOICES, default='A')
 
     def __str__(self):

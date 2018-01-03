@@ -11,7 +11,7 @@ class CountrySerializer(serializers.ModelSerializer):
     """
     class Meta:
         model = Country
-        fields = ('name', 'code', 'std_code', 'status')
+        fields = ('name', 'code', 'std_code', 'flag', 'status')
 
 
 class AddressSerializer(serializers.ModelSerializer):
