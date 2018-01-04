@@ -87,6 +87,7 @@ class Signup(generics.CreateAPIView):
         try:
             user = self.create(request, *args, **kwargs)
             user.data['user_id'] = User.objects.get(phone_no=user.data['phone_no']).id
+            user.data['count'] = User.objects.filter(status='A').count()
             logger.info("{} user is created successfully.".format(user.data['phone_no']))
             return Response({
                 'success': True,
