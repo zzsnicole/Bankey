@@ -13,7 +13,7 @@
   <ion-grid>
     <ion-row class="phone-labels">
       <ion-col col-3>
-        <ion-label stacked="" color="dark">Country</ion-label>
+        <ion-label stacked="" color="dark">Country <img *ngIf="selectedCountry.flag" src="{{selectedCountry.flag}}" width="20"/></ion-label>
 
             <select-searchable
                     title="Select Country"

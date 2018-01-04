@@ -7,8 +7,6 @@ import {ErrorHandler, NgModule} from '@angular/core';
 import {IonicApp, IonicErrorHandler, IonicModule} from 'ionic-angular';
 import {SplashScreen} from '@ionic-native/splash-screen';
 import {StatusBar} from '@ionic-native/status-bar';
-import {TypeaheadModule} from 'ngx-bootstrap';
-import {NgxIntlTelInputModule} from 'ngx-intl-tel-input';
 import {GoogleMaps} from '@ionic-native/google-maps';
 
 import {BankeyApp} from './app.component';
@@ -66,8 +64,6 @@ import { CommonFunctionsProvider } from '../providers/common-functions/common-fu
     imports: [
         BrowserModule,
         HttpClientModule,
-        NgxIntlTelInputModule,
-        TypeaheadModule.forRoot(),
         IonicModule.forRoot(BankeyApp),
         SelectSearchableModule
     ],
