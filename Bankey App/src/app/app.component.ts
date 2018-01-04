@@ -6,6 +6,13 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { HomePage } from '../pages/home/home';
 import {PasscodeLoginPage} from "../pages/passcode-login/passcode-login";
 import {CreatePasswordPage} from "../pages/create-password/create-password";
+import {PersonalDetailEmailKeyPage} from "../pages/personal-detail-email-key/personal-detail-email-key";
+import {PersonalDetailsPage} from "../pages/personal-details/personal-details";
+import {InviteFriendsPage} from "../pages/invite-friends/invite-friends";
+import {EnterAmountPage} from "../pages/enter-amount/enter-amount";
+import {KeyProfilePage} from "../pages/key-profile/key-profile";
+import {ConfirmationCodePage} from "../pages/confirmation-code/confirmation-code";
+
 @Component({
   templateUrl: 'app.html'
 })

@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import {ConfirmationCodePage} from "../confirmation-code/confirmation-code";
+import {KeyRequestConfirmPage} from "../key-request-confirm/key-request-confirm";
 
 /**
  * Generated class for the KeyProfilePage page.
@@ -14,12 +16,20 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
   templateUrl: 'key-profile.html',
 })
 export class KeyProfilePage {
-
+  ratingValue = 4;
   constructor(public navCtrl: NavController, public navParams: NavParams) {
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad KeyProfilePage');
+  }
+
+  GoConfirmpage(){
+    this.navCtrl.push(KeyRequestConfirmPage);
+  }
+
+  onModelChange(e){
+    console.log(e);
   }
 
 }

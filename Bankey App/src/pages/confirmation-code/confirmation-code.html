@@ -5,16 +5,15 @@
   Ionic pages and navigation.
 -->
 <ion-content padding>
-  <ion-icon class="back-icon-size" text-lg-left color="primary" name="ios-arrow-back" (click)="goBack()"></ion-icon>
-  <ion-card>
+  <ion-icon style="position: absolute;" padding class="back-icon-size" text-lg-left color="primary" name="ios-arrow-back" (click)="goBack()"></ion-icon>
 
-    <ion-card-header>
-      Confirmation Code
-    </ion-card-header>
+  <h6 text-center class="secondary-text-color custom-place" margin-top>Confirmation Code</h6>
 
-    <ion-card-content>
+  <ion-card style="margin-top: 40px;">
+
+    <ion-card-content style="margin:30px 5px;text-align: center;">
       Your confirmation code is
-      A2c45694
+      <p class="secondary-text-color" style="font-weight: 600;">A2c45694</p>
     </ion-card-content>
 
   </ion-card>

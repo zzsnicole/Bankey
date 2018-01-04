@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import {ConfirmationCodePage} from "../confirmation-code/confirmation-code";
+import {MyAccountPage} from "../my-account/my-account";
 
 /**
  * Generated class for the KeyRequestConfirmPage page.
@@ -24,6 +25,11 @@ export class KeyRequestConfirmPage {
   }
 
   Confirm() {
-    this.navCtrl.push(ConfirmationCodePage);
+    if(this.navParams.get("accepted")){
+        this.navCtrl.push(ConfirmationCodePage);
+    }else{
+        this.navCtrl.push(MyAccountPage);
+    }
+
   }
 }

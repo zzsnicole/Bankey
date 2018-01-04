@@ -8,6 +8,7 @@ import {IonicApp, IonicErrorHandler, IonicModule} from 'ionic-angular';
 import {SplashScreen} from '@ionic-native/splash-screen';
 import {StatusBar} from '@ionic-native/status-bar';
 import {GoogleMaps} from '@ionic-native/google-maps';
+import { File } from '@ionic-native/file';
 
 import {BankeyApp} from './app.component';
 import {HomePage} from '../pages/home/home';
@@ -34,6 +35,9 @@ import {MyAccountPage} from "../pages/my-account/my-account";
 import {KeyProfilePage} from "../pages/key-profile/key-profile";
 import { SelectSearchableModule } from '../components/select-searchable/select-searchable-module';
 import { CommonFunctionsProvider } from '../providers/common-functions/common-functions';
+import {PendingRequestPage} from "../pages/pending-request/pending-request";
+import {TransactionReferencePage} from "../pages/transaction-reference/transaction-reference";
+import { Ionic2RatingModule } from 'ionic2-rating';
 
 @NgModule({
     declarations: [
@@ -59,13 +63,16 @@ import { CommonFunctionsProvider } from '../providers/common-functions/common-fu
         KeyRequestConfirmPage,
         ConfirmationCodePage,
         MyAccountPage,
-        KeyProfilePage
+        KeyProfilePage,
+        PendingRequestPage,
+        TransactionReferencePage
     ],
     imports: [
         BrowserModule,
         HttpClientModule,
         IonicModule.forRoot(BankeyApp),
-        SelectSearchableModule
+        SelectSearchableModule,
+        Ionic2RatingModule
     ],
     bootstrap: [IonicApp],
     entryComponents: [
@@ -91,7 +98,9 @@ import { CommonFunctionsProvider } from '../providers/common-functions/common-fu
         KeyRequestConfirmPage,
         ConfirmationCodePage,
         MyAccountPage,
-        KeyProfilePage
+        KeyProfilePage,
+        PendingRequestPage,
+        TransactionReferencePage
     ],
     providers: [
         StatusBar,
@@ -99,6 +108,7 @@ import { CommonFunctionsProvider } from '../providers/common-functions/common-fu
         Camera,
         SocialSharing,
         GoogleMaps,
+        File,
         {provide: ErrorHandler, useClass: IonicErrorHandler},
         HttpClientProvider,
         CommonFunctionsProvider

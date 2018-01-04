@@ -4,6 +4,7 @@ import { NavController, NavParams } from 'ionic-angular';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import { HttpClientProvider } from "../../providers/http-client/http-client";
 import { CommonFunctionsProvider } from "../../providers/common-functions/common-functions";
+import { File } from '@ionic-native/file';
 /**
  * Generated class for the PersonalDetailsPage page.
  *
@@ -11,6 +12,10 @@ import { CommonFunctionsProvider } from "../../providers/common-functions/common
  * Ionic pages and navigation.
  */
 
+function _window() : any {
+    // return the global native browser window object
+    return window;
+}
 
 @Component({
   selector: 'page-personal-details',
@@ -29,12 +34,14 @@ export class PersonalDetailsPage {
     "address": {
     "country": "USA"
     }
-  }
+  };
+  public window = window;
   constructor(  public navCtrl: NavController,
                 public navParams: NavParams,
                 public camera: Camera,
                 public httpClient: HttpClientProvider,
-                public commonFn: CommonFunctionsProvider) {
+                public commonFn: CommonFunctionsProvider,
+                private file: File) {
   }
 
   ionViewDidLoad() {
@@ -63,22 +70,29 @@ export class PersonalDetailsPage {
       // Handle error
     });
   }
-  // upload() {
-  // const fileTransfer: FileTransferObject = this.transfer.create();
-  //
-  // let options: FileUploadOptions = {
-  //    fileKey: 'file',
-  //    fileName: 'name.jpg',
-  //    headers: {}
-  // }
-
-  // fileTransfer.upload('<file path>', '<api endpoint>', options)
-  //  .then((data) => {
-  //    // success
-  //  }, (err) => {
-  //    // error
-  //  })
-  // }
+   upload() {
+       // _window().requestFileSystem(LocalFileSystem.PERSISTENT, 0, function (fs) {
+       //     console.log('file system open: ' + fs.name);
+       //     fs.root.getFile('bot.png', { create: true, exclusive: false }, function (fileEntry) {
+       //         fileEntry.file(function (file) {
+       //             var reader = new FileReader();
+       //             reader.onloadend = function() {
+       //                 // Create a blob based on the FileReader "result", which we asked to be retrieved as an ArrayBuffer
+       //                 var blob = new Blob([new Uint8Array(this.result)], { type: "image/png" });
+       //                 var oReq = new XMLHttpRequest();
+       //                 oReq.open("POST", "http://mysweeturl.com/upload_handler", true);
+       //                 oReq.onload = function (oEvent) {
+       //                     // all done!
+       //                 };
+       //                 // Pass the blob in to XHR's send method
+       //                 oReq.send(blob);
+       //             };
+       //             // Read the file as an ArrayBuffer
+       //             reader.readAsArrayBuffer(file);
+       //         }, function (err) { console.error('error getting fileentry file!' + err); });
+       //     }, function (err) { console.error('error getting file! ' + err); });
+       // }, function (err) { console.error('error getting persistent fs! ' + err); });
+   }
 
 
   signUp() {

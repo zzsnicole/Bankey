@@ -1,5 +1,5 @@
 import {Component, ElementRef, ViewChild, NgZone} from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-angular';
 import {KeyRequestConfirmPage} from "../key-request-confirm/key-request-confirm";
 import {
     GoogleMaps,
@@ -10,6 +10,7 @@ import {
     MarkerOptions,
     Marker
 } from '@ionic-native/google-maps';
+import {KeyProfilePage} from "../key-profile/key-profile";
 
 declare var google;
 /**
@@ -33,10 +34,12 @@ export class SelectKeyPage {
     constructor(public navCtrl: NavController,
                 public navParams: NavParams,
                 private googleMaps: GoogleMaps,
-                private ngZone: NgZone) {
+                private ngZone: NgZone,
+                public loadingCtrl: LoadingController) {
     }
 
     ionViewDidLoad() {
+         this.presentLoadingCustom();
          this.getLocation();
          this.loadMap();
          this.autoComplete = new google.maps.places.Autocomplete(this.searchElementRef.nativeElement);
@@ -60,6 +63,26 @@ export class SelectKeyPage {
                  });
              });
          });
+    }
+
+    presentLoadingCustom() {
+        let loading = this.loadingCtrl.create({
+            spinner: 'hide',
+            content: `
+      <div class="loading-text">
+      <img class="img-logo" src="assets/img/logo.png"/>
+       Looking for Keys..
+      </div>
+       
+      `,
+            duration: 2000
+        });
+
+        loading.onDidDismiss(() => {
+            console.log('Dismissed loading');
+        });
+
+        loading.present();
     }
 
 
@@ -146,6 +169,6 @@ export class SelectKeyPage {
     }
 
   GoConfirmKey() {
-    this.navCtrl.push(KeyRequestConfirmPage);
+    this.navCtrl.push(KeyProfilePage);
   }
 }

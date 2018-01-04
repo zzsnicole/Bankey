@@ -22,6 +22,9 @@ ion-content{
 .primary-text-color{
   color: color($colors, primary, base);
 }
+.secondary-text-color{
+  color: color($colors, secondary, base) !important;
+}
 .primary-bg-color{
   background-color: color($colors, primary, base)
 }

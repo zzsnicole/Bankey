@@ -15,7 +15,7 @@ import {SelectKeyPage} from "../select-key/select-key";
   templateUrl: 'enter-amount.html',
 })
 export class EnterAmountPage {
-  enteredPasscode:string ='';
+  enteredAmount:string ='40';
   constructor(public navCtrl: NavController, public navParams: NavParams) {
   }
 
@@ -27,17 +27,17 @@ export class EnterAmountPage {
       if(d == -1){
           this.delete();
       }else{
-          this.enteredPasscode += '' + String(d);
+          this.enteredAmount += '' + String(d);
       }
   }
 
   delete() {
-      this.enteredPasscode = this.enteredPasscode.slice(0, -1);
+      this.enteredAmount = this.enteredAmount.slice(0, -1);
 
   }
 
   clear() {
-      this.enteredPasscode = "";
+      this.enteredAmount = "";
   };
 
   GoKeyList() {

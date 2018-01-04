@@ -4,4 +4,20 @@ page-select-key {
     width: 100%;
     position: relative;
   }
+  .custom-overlay{
+    position: absolute;
+    padding-top: 100px;
+    text-align: center;
+    background-color: red;
+  }
+  .loading-wrapper {
+    border-radius: 2px;
+    max-width: 280px;
+    max-height: 90%;
+    color: rgba(0, 0, 0, 0.5);
+    background: red;
+    -webkit-box-shadow: 0 16px 20px rgba(0, 0, 0, 0.4);
+    box-shadow: 0 16px 20px rgba(0, 0, 0, 0.4);
+    padding: 24px;
+  }
 }

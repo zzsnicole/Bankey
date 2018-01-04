@@ -8,12 +8,22 @@
 
 <ion-content padding>
 
-  <h6 text-center color="secondary" padding-top>Add Money</h6>
+  <ion-icon style="position: absolute;" padding class="back-icon-size" text-lg-left color="primary" name="ios-arrow-back" (click)="goBack()"></ion-icon>
 
-  <ion-item>
-    <ion-label stacked>Enter Amount</ion-label>
-    <ion-input [ngModel]="enteredPasscode" type="number"></ion-input>
-  </ion-item>
+  <h6 text-center class="secondary-text-color custom-place" margin-top>Add Money</h6>
+
+  <ion-card class="custom-card">
+    <ion-item class="right-select-set">
+      <ion-select>
+        <ion-option selected value="us">$</ion-option>
+        <ion-option value="india">Rs</ion-option>
+      </ion-select>
+    </ion-item>
+    <ion-card-content text-center>
+      <ion-label class="enter-amount-text">{{enteredAmount}}</ion-label>
+      <p class="your-balance-text" margin-top>Your Balance: $00.00</p>
+    </ion-card-content>
+  </ion-card>
 
   <div class="" padding-top>
 
@@ -44,5 +54,4 @@
     </button>
     Next
   </ion-row>
-
 </ion-content>

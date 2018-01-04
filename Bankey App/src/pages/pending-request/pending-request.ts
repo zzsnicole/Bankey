@@ -1,10 +1,9 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import {MyAccountPage} from "../my-account/my-account";
-import {TransactionReferencePage} from "../transaction-reference/transaction-reference";
 
 /**
- * Generated class for the ConfirmationCodePage page.
+ * Generated class for the PendingRequestPage page.
  *
  * See https://ionicframework.com/docs/components/#navigation for more info on
  * Ionic pages and navigation.
@@ -12,19 +11,19 @@ import {TransactionReferencePage} from "../transaction-reference/transaction-ref
 
 @IonicPage()
 @Component({
-  selector: 'page-confirmation-code',
-  templateUrl: 'confirmation-code.html',
+  selector: 'page-pending-request',
+  templateUrl: 'pending-request.html',
 })
-export class ConfirmationCodePage {
+export class PendingRequestPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad ConfirmationCodePage');
+    console.log('ionViewDidLoad PendingRequestPage');
   }
 
   Confirm() {
-    this.navCtrl.push(TransactionReferencePage);
+      this.navCtrl.push(MyAccountPage,{"acceptedrequest":true});
   }
 }
