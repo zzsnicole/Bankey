@@ -86,6 +86,7 @@ class Signup(generics.CreateAPIView):
     def post(self, request, *args, **kwargs):
         try:
             user = self.create(request, *args, **kwargs)
+            user.data['user_id'] = User.objects.get(phone_no=user.data['phone_no']).id
             logger.info("{} user is created successfully.".format(user.data['phone_no']))
             return Response({
                 'success': True,
@@ -122,7 +123,7 @@ class UserDetail(generics.RetrieveUpdateDestroyAPIView):
                 'data': res.data
             })
         except Exception as e:
-            logger.exception("{}, error occured while updating user profile.".format(e))
+            logger.error("{}, error occured while updating user profile.".format(e))
             return Response({
                 'success': False,
                 'message': 'Error occured while updating user profile.',
@@ -184,6 +185,7 @@ class Login(APIView):
                     'success': True,
                     'message': 'Successfully login.',
                     'data':{
+                        'user_id': request.user.id,
                         'count':count
                     }
                 })
