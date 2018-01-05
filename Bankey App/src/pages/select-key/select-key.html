@@ -7,20 +7,26 @@
 
 
 <ion-content padding>
-  <ion-icon class="back-icon-size" text-lg-left color="primary" name="ios-arrow-back" ></ion-icon>
-  <h5 class = "primary-text-color" text-center>Select Key</h5>
 
-  <div id="pac-container">
+  <ion-icon style="position: absolute;" class="back-icon-size" text-lg-left color="primary" name="ios-arrow-back" (click)="goBack()"></ion-icon>
+
+  <h6 text-center class="secondary-text-color custom-place" margin-top>Select Key</h6>
+  <!-- <div id="pac-container">
     <input id="pac-input" #placeSearch type="text"
            placeholder="Enter a location">
-  </div>
+  </div> -->
+  <ion-item id="pac-container">
+    <ion-input text-center id="pac-input" #placeSearch type="text"
+           placeholder="Enter a location"></ion-input>
+  </ion-item>
+
   <div id="map_canvas"></div>
 
 
 </ion-content>
 <ion-footer>
   <ion-row padding-top class="bottom-start-btn" justify-content-center style="display: grid;text-align: center;">
-    <button class="round-btn-with-text" ion-button icon-only color="secondary" round (click)="GoConfirmKey()">
+    <button ion-fab color="secondary" round (click)="GoConfirmKey()">
       <ion-icon name="ios-arrow-forward"></ion-icon>
     </button>
     Next

@@ -37,7 +37,7 @@ $colors: (
   primary:    #0aefcd,
   secondary:  #3EAEFF,
   danger:     #f53d3d,
-  light:      #f4f4f4,
+  light:      #ffffff,
   dark:       #222
 );
 
@@ -72,6 +72,7 @@ $colors: (
 
 @import "ionic.theme.default";
 
+$fab-size :50px;
 
 // Ionicons
 // --------------------------------------------------

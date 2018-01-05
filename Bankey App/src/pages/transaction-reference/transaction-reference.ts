@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
-
+import { IonicPage, NavController, NavParams, PopoverController } from 'ionic-angular';
+import { RateKeyPopoverPage} from "../../pages/rate-key-popover/rate-key-popover"
 /**
  * Generated class for the TransactionReferencePage page.
  *
@@ -15,11 +15,19 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class TransactionReferencePage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController,
+              public navParams: NavParams,
+              public popoverCtrl: PopoverController) {
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad TransactionReferencePage');
   }
-
+  ShowRating(){
+    this.presentPopover();
+  }
+  presentPopover() {
+      let popover = this.popoverCtrl.create(RateKeyPopoverPage);
+      popover.present();
+  }
 }

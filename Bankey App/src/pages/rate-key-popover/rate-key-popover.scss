@@ -1,0 +1,30 @@
+page-rate-key-popover {
+  ion-content{
+    background: #2f2e2e !important;
+  }
+  .popover-content{
+    background: none !important;
+    width:250px !important;
+    position: relative !important;
+  }
+  p{
+    color: #ffffff;
+  }
+  ul {
+    padding: 0px;
+
+    &.rating li {
+      padding: 0 !important;
+      background: none;
+      color:color($colors, primary, base);
+
+      ion-icon {
+        font-size: 30px;
+      }
+    }
+  }
+  .scroll-content{
+    padding: 0 !important;
+    margin: auto;
+  }
+}

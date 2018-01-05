@@ -12,6 +12,8 @@ import {InviteFriendsPage} from "../pages/invite-friends/invite-friends";
 import {EnterAmountPage} from "../pages/enter-amount/enter-amount";
 import {KeyProfilePage} from "../pages/key-profile/key-profile";
 import {ConfirmationCodePage} from "../pages/confirmation-code/confirmation-code";
+import {EnterOtpPage} from "../pages/enter-otp/enter-otp";
+import {TransactionReferencePage} from "../pages/transaction-reference/transaction-reference"
 
 @Component({
   templateUrl: 'app.html'

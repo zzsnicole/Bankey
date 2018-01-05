@@ -69,11 +69,10 @@ export class SelectKeyPage {
         let loading = this.loadingCtrl.create({
             spinner: 'hide',
             content: `
+        <img style="margin:auto;" class="img-logo" width="30" src="assets/img/logo.png"/>
       <div class="loading-text">
-      <img class="img-logo" src="assets/img/logo.png"/>
        Looking for Keys..
       </div>
-       
       `,
             duration: 2000
         });

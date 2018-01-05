@@ -10,8 +10,8 @@
     <ion-icon class="back-icon-size" text-lg-left color="primary" name="ios-arrow-back" (click)="goBack()"></ion-icon>
 
     <div class="header-label">
-        <h5>{{headerLabel}}</h5>
-        <div>We have sent it to +98234655272</div>
+        <h5 class="secondary-text-color">{{headerLabel}}</h5>
+        <p text-center>We have sent it to +98234655272</p>
     </div>
 
     <div class="dash-row" style="margin:auto;">
@@ -20,9 +20,9 @@
 
     </div>
     <input #inputHidden type="hidden"/>
-
+    <p text-center> You can resend your code if it does not arrive in 00:41</p>
     <ion-row padding-top class="bottom-start-btn" justify-content-center style="display: grid;text-align: center;">
-        <button class="round-btn-with-text" ion-button icon-only color="secondary" round (click)="ValidateOtpForMobile()">
+        <button ion-fab color="secondary" round (click)="ValidateOtpForMobile()">
             <ion-icon name="ios-arrow-forward"></ion-icon>
         </button>
         Next

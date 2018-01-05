@@ -37,6 +37,7 @@ import { SelectSearchableModule } from '../components/select-searchable/select-s
 import { CommonFunctionsProvider } from '../providers/common-functions/common-functions';
 import {PendingRequestPage} from "../pages/pending-request/pending-request";
 import {TransactionReferencePage} from "../pages/transaction-reference/transaction-reference";
+import {RateKeyPopoverPage} from "../pages/rate-key-popover/rate-key-popover";
 import { Ionic2RatingModule } from 'ionic2-rating';
 
 @NgModule({
@@ -65,7 +66,8 @@ import { Ionic2RatingModule } from 'ionic2-rating';
         MyAccountPage,
         KeyProfilePage,
         PendingRequestPage,
-        TransactionReferencePage
+        TransactionReferencePage,
+        RateKeyPopoverPage
     ],
     imports: [
         BrowserModule,
@@ -100,7 +102,8 @@ import { Ionic2RatingModule } from 'ionic2-rating';
         MyAccountPage,
         KeyProfilePage,
         PendingRequestPage,
-        TransactionReferencePage
+        TransactionReferencePage,
+        RateKeyPopoverPage
     ],
     providers: [
         StatusBar,

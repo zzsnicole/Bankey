@@ -12,9 +12,9 @@
   </div>
   <ion-grid>
     <ion-row class="phone-labels">
-      <ion-col col-3>
-        <ion-label stacked="" color="dark">Country <img *ngIf="selectedCountry.flag" src="{{selectedCountry.flag}}" width="20"/></ion-label>
-
+      <ion-col col-3 no-padding style="margin-right: 5px;">
+        <ion-label no-margin stacked="" color="dark" style="display:inline-block;">Country </ion-label>
+        <img *ngIf="selectedCountry.flag" src="{{selectedCountry.flag}}" width="14"/>
             <select-searchable
                     title="Select Country"
                     [(ngModel)]="selectedCountry"
@@ -26,8 +26,8 @@
             </select-searchable>
 
       </ion-col>
-      <ion-col col-8>
-        <ion-label left color="dark" stacked="">Phone Number</ion-label>
+      <ion-col col-8 no-padding>
+        <ion-label no-margin left color="dark" stacked="">Phone Number</ion-label>
         <ion-item style="padding-left: 0px;">
           <ion-input type="tel" [(ngModel)]="mobileNumber" placeholder="Phone number" name="phonenumber" required></ion-input>
         </ion-item>
@@ -35,11 +35,11 @@
     </ion-row>
 
     <ion-row padding-top class="bottom-start-btn" justify-content-center style="display: grid;text-align: center;">
-      <button class="round-btn-with-text" ion-button icon-only color="secondary" round (click)="GetOtpForMobile()">
+      <button ion-fab color="secondary" round (click)="GetOtpForMobile()">
         <ion-icon name="ios-arrow-forward"></ion-icon>
       </button>
       Next
     </ion-row>
-
+   <p text-center>By entering your phone number, you agree to our <a>Terms and Conditions</a></p>
   </ion-grid>
 </ion-content>
