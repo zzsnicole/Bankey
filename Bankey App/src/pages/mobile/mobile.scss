@@ -2,9 +2,13 @@ page-mobile {
     .phone-labels{
       font-size: 12px;
     }
-    .select-searchable .item-cover {
+    .select-searchable .item-cover-default-md {
       margin-top: 14px;
       height: 75%;
+    }
+    .select-searchable .item-cover-default-ios{
+      margin-top: 20px;
+      height: 69%;
     }
     .select-searchable .select-searchable-icon {
       padding-top: 30px;
