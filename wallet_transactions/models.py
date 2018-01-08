@@ -90,7 +90,7 @@ class UserCardInfo(models.Model):
     """
     user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='user_card_info',\
                              blank=False, null=False)
-    card_campany_name = models.CharField(max_length=64, blank=False, null=False)  #visa, master
+    card_type = models.CharField(max_length=64, blank=False, null=False)  #visa or master
     card_no = models.BigIntegerField(unique=True, blank=False, null=False)
     cvv = models.PositiveSmallIntegerField(blank=False, null=False)
     expiry_month = models.PositiveSmallIntegerField(blank=False, null=False)
@@ -117,6 +117,7 @@ class UserBankInfo(models.Model):
                              blank=False, null=False)
     account_no = models.BigIntegerField(blank=False, null=False)
     rounting_no = models.CharField(max_length=128, blank=False, null=False)
+    account_type = models.CharField(max_length=64, blank=False, null=False, default='individual') #individual or company or joint
     country = models.ForeignKey(Country, related_name='user_bank_country', blank=False, null=False)
     currency = models.ForeignKey('Currency', related_name='user_bank_currency',blank=False, null=False)
     status = models.CharField(max_length=1, choices=settings.STATUS_CHOICES, default='A')
