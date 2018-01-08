@@ -109,7 +109,7 @@ class UserDetail(generics.RetrieveUpdateDestroyAPIView):
     """
     queryset = User.objects.filter(status='A')
     serializer_class = UserSerializer
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (IsSelf,)
 
     def get(self, request, *args, **kwargs):
         return self.retrieve(request, *args, **kwargs)
