@@ -9,6 +9,7 @@ import {SplashScreen} from '@ionic-native/splash-screen';
 import {StatusBar} from '@ionic-native/status-bar';
 import {GoogleMaps} from '@ionic-native/google-maps';
 import { File } from '@ionic-native/file';
+import {Contacts} from "@ionic-native/contacts";
 
 import {BankeyApp} from './app.component';
 import {HomePage} from '../pages/home/home';
@@ -39,6 +40,11 @@ import {PendingRequestPage} from "../pages/pending-request/pending-request";
 import {TransactionReferencePage} from "../pages/transaction-reference/transaction-reference";
 import {RateKeyPopoverPage} from "../pages/rate-key-popover/rate-key-popover";
 import { Ionic2RatingModule } from 'ionic2-rating';
+import {LoadingModalPage} from "../pages/loading-modal/loading-modal";
+import {ContactListPage} from "../pages/contact-list/contact-list";
+import {AddContactPage} from "../pages/add-contact/add-contact";
+import {SettingPage} from "../pages/setting/setting";
+import {SendConfirmPage} from "../pages/send-confirm/send-confirm";
 
 @NgModule({
     declarations: [
@@ -67,7 +73,12 @@ import { Ionic2RatingModule } from 'ionic2-rating';
         KeyProfilePage,
         PendingRequestPage,
         TransactionReferencePage,
-        RateKeyPopoverPage
+        RateKeyPopoverPage,
+        LoadingModalPage,
+        ContactListPage,
+        AddContactPage,
+        SettingPage,
+        SendConfirmPage
     ],
     imports: [
         BrowserModule,
@@ -103,7 +114,12 @@ import { Ionic2RatingModule } from 'ionic2-rating';
         KeyProfilePage,
         PendingRequestPage,
         TransactionReferencePage,
-        RateKeyPopoverPage
+        RateKeyPopoverPage,
+        LoadingModalPage,
+        ContactListPage,
+        AddContactPage,
+        SettingPage,
+        SendConfirmPage
     ],
     providers: [
         StatusBar,
@@ -112,6 +128,7 @@ import { Ionic2RatingModule } from 'ionic2-rating';
         SocialSharing,
         GoogleMaps,
         File,
+        Contacts,
         {provide: ErrorHandler, useClass: IonicErrorHandler},
         HttpClientProvider,
         CommonFunctionsProvider

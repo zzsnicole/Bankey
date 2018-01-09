@@ -1,5 +1,5 @@
-import {Component, ElementRef, ViewChild, NgZone} from '@angular/core';
-import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-angular';
+import {Component, ElementRef, ViewChild, NgZone, EventEmitter, Output} from '@angular/core';
+import {IonicPage, NavController, NavParams, ModalController } from 'ionic-angular';
 import {KeyRequestConfirmPage} from "../key-request-confirm/key-request-confirm";
 import {
     GoogleMaps,
@@ -11,6 +11,8 @@ import {
     Marker
 } from '@ionic-native/google-maps';
 import {KeyProfilePage} from "../key-profile/key-profile";
+import {LoadingModalPage} from "../loading-modal/loading-modal";
+import {MobilePage} from "../mobile/mobile";
 
 declare var google;
 /**
@@ -31,15 +33,17 @@ export class SelectKeyPage {
     @ViewChild('placeSearch')
     public searchElementRef: ElementRef;
     autoComplete:any;
+    overlayHidden: boolean = false;
+    @Output() close: EventEmitter<any> = new EventEmitter();
     constructor(public navCtrl: NavController,
                 public navParams: NavParams,
                 private googleMaps: GoogleMaps,
                 private ngZone: NgZone,
-                public loadingCtrl: LoadingController) {
-    }
+                public modalCtrl: ModalController) {
 
+    }
     ionViewDidLoad() {
-         this.presentLoadingCustom();
+         this.presentOverlay();
          this.getLocation();
          this.loadMap();
          this.autoComplete = new google.maps.places.Autocomplete(this.searchElementRef.nativeElement);
@@ -64,24 +68,11 @@ export class SelectKeyPage {
              });
          });
     }
+    presentOverlay() {
 
-    presentLoadingCustom() {
-        let loading = this.loadingCtrl.create({
-            spinner: 'hide',
-            content: `
-        <img style="margin:auto;" class="img-logo" width="30" src="assets/img/logo.png"/>
-      <div class="loading-text">
-       Looking for Keys..
-      </div>
-      `,
-            duration: 2000
-        });
-
-        loading.onDidDismiss(() => {
-            console.log('Dismissed loading');
-        });
-
-        loading.present();
+        // this.loadingModal = this.modalCtrl.create(LoadingModalPage);
+        // this.loadingModal.present();
+         setTimeout(() => {this.overlayHidden = true;},1000)
     }
 
 

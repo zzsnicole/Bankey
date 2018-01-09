@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import {PersonalDetailKeyPage} from "../personal-detail-key/personal-detail-key";
+import {MyAccountPage} from "../my-account/my-account";
 
 /**
- * Generated class for the EnterAmountKeyPage page.
+ * Generated class for the SendConfirmPage page.
  *
  * See https://ionicframework.com/docs/components/#navigation for more info on
  * Ionic pages and navigation.
@@ -11,19 +11,20 @@ import {PersonalDetailKeyPage} from "../personal-detail-key/personal-detail-key"
 
 @IonicPage()
 @Component({
-  selector: 'page-enter-amount-key',
-  templateUrl: 'enter-amount-key.html',
+  selector: 'page-send-confirm',
+  templateUrl: 'send-confirm.html',
 })
-export class EnterAmountKeyPage {
-  
+export class SendConfirmPage {
+
   constructor(public navCtrl: NavController, public navParams: NavParams) {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad EnterAmountKeyPage');
+    console.log('ionViewDidLoad SendConfirmPage');
   }
 
-  GoPersonalDetailKey(){
-    this.navCtrl.push(PersonalDetailKeyPage);
+  Confirm(){
+    this.navCtrl.push(MyAccountPage);
   }
+
 }

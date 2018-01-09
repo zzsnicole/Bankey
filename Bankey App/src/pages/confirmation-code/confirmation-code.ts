@@ -16,8 +16,11 @@ import {TransactionReferencePage} from "../transaction-reference/transaction-ref
   templateUrl: 'confirmation-code.html',
 })
 export class ConfirmationCodePage {
-
+  pageTitle = "Confirmation Code";
+  messageText = "Your confirmation code is";
+  codeText = "A2c45694";
   constructor(public navCtrl: NavController, public navParams: NavParams) {
+
   }
 
   ionViewDidLoad() {
@@ -25,6 +28,6 @@ export class ConfirmationCodePage {
   }
 
   Confirm() {
-    this.navCtrl.push(TransactionReferencePage);
+          this.navCtrl.push(TransactionReferencePage);
   }
 }

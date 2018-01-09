@@ -1,5 +1,5 @@
 <!--
-  Generated template for the ConfirmationCodePage page.
+  Generated template for the SendConfirmPage page.
 
   See http://ionicframework.com/docs/components/#navigation for more info on
   Ionic pages and navigation.
@@ -7,17 +7,20 @@
 <ion-content padding>
   <ion-icon style="position: absolute;" padding class="back-icon-size" text-lg-left color="primary" name="ios-arrow-back" (click)="goBack()"></ion-icon>
 
-  <h6 text-center class="secondary-text-color custom-place" margin-top>{{pageTitle}}</h6>
+  <h6 text-center class="secondary-text-color custom-place" margin-top>Confirm</h6>
 
-  <ion-card style="margin-top: 40px !important;">
 
-    <ion-card-content style="margin:30px 5px;text-align: center;">
-      {{messageText}}
-      <p class="secondary-text-color" style="font-weight: 600;">{{codeText}}</p>
+  <ion-card style="margin-top:40px !important;padding-bottom: 80px;">
+
+    <ion-card-content text-center>
+      You are sending $40 to <span class="secondary-text-color">Jamal Alsaado</span>
     </ion-card-content>
 
   </ion-card>
-
+  <ion-item style="margin-top:50px; !important;">
+    <ion-label text-left stacked>Add Note</ion-label>
+    <ion-textarea type="text" placeholder=""></ion-textarea>
+  </ion-item>
 
   <ion-row padding-top justify-content-center style="display: grid;">
     <button ion-fab color="primary" round (click)="Confirm()">

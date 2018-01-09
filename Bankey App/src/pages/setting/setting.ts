@@ -1,9 +1,8 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import {PersonalDetailKeyPage} from "../personal-detail-key/personal-detail-key";
 
 /**
- * Generated class for the EnterAmountKeyPage page.
+ * Generated class for the SettingPage page.
  *
  * See https://ionicframework.com/docs/components/#navigation for more info on
  * Ionic pages and navigation.
@@ -11,19 +10,18 @@ import {PersonalDetailKeyPage} from "../personal-detail-key/personal-detail-key"
 
 @IonicPage()
 @Component({
-  selector: 'page-enter-amount-key',
-  templateUrl: 'enter-amount-key.html',
+  selector: 'page-setting',
+  templateUrl: 'setting.html',
 })
-export class EnterAmountKeyPage {
-  
+export class SettingPage {
+
   constructor(public navCtrl: NavController, public navParams: NavParams) {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad EnterAmountKeyPage');
+    console.log('ionViewDidLoad SettingPage');
   }
-
-  GoPersonalDetailKey(){
-    this.navCtrl.push(PersonalDetailKeyPage);
+  goBack(){
+    this.navCtrl.pop();
   }
 }

@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import {EnterOtpPage} from "../enter-otp/enter-otp";
 import {EnterAmountPage} from "../enter-amount/enter-amount";
 import { HttpClientProvider } from "../../providers/http-client/http-client";
+import {SettingPage} from "../setting/setting";
 /**
  * Generated class for the PasscodeLoginPage page.
  *
@@ -73,4 +74,8 @@ export class PasscodeLoginPage {
   clear() {
       this.enteredPasscode = "";
   };
+
+  GoSettingPage(){
+      this.navCtrl.push(SettingPage);
+  }
 }

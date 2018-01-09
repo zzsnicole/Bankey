@@ -4,6 +4,7 @@ import {KeyProfilePage} from "../key-profile/key-profile";
 import {PendingRequestPage} from "../pending-request/pending-request";
 import {ConfirmationCodePage} from "../confirmation-code/confirmation-code";
 import {KeyRequestConfirmPage} from "../key-request-confirm/key-request-confirm";
+import {ContactListPage} from "../contact-list/contact-list";
 
 /**
  * Generated class for the MyAccountPage page.
@@ -39,5 +40,8 @@ export class MyAccountPage {
           this.navCtrl.push(PendingRequestPage);
       }
 
+  }
+  GoContactList(){
+    this.navCtrl.push(ContactListPage);
   }
 }

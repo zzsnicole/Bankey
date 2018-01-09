@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import {SelectKeyPage} from "../select-key/select-key";
+import {KeyRequestConfirmPage} from "../key-request-confirm/key-request-confirm";
+import {SendConfirmPage} from "../send-confirm/send-confirm";
 
 /**
  * Generated class for the EnterAmountPage page.
@@ -16,7 +18,11 @@ import {SelectKeyPage} from "../select-key/select-key";
 })
 export class EnterAmountPage {
   enteredAmount:string ='40';
+  pageTitle:string = "Add Money";
   constructor(public navCtrl: NavController, public navParams: NavParams) {
+      if(this.navParams.get("send")){
+          this.pageTitle = "Enter Amount"
+      }
   }
 
   ionViewDidLoad() {
@@ -41,7 +47,11 @@ export class EnterAmountPage {
   };
 
   GoKeyList() {
-      this.navCtrl.push(SelectKeyPage);
+      if(this.navParams.get("send")){
+          this.navCtrl.push(SendConfirmPage,{"send":true});
+      }else{
+          this.navCtrl.push(SelectKeyPage);
+      }
   }
 
 }

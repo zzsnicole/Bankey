@@ -5,7 +5,10 @@
   Ionic pages and navigation.
 -->
 
-
+<div class="my-overlay" padding [hidden]="overlayHidden">
+  <h2 class="white-text-color" style="margin: auto;padding-top: 30px;" text-center>Looking for keys...</h2>
+  <img style="margin:auto;" class="img-logo" width="30" src="assets/img/logo.png"/>
+</div>
 <ion-content padding>
 
   <ion-icon style="position: absolute;" class="back-icon-size" text-lg-left color="primary" name="ios-arrow-back" (click)="goBack()"></ion-icon>

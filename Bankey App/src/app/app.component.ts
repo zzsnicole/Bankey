@@ -14,12 +14,14 @@ import {KeyProfilePage} from "../pages/key-profile/key-profile";
 import {ConfirmationCodePage} from "../pages/confirmation-code/confirmation-code";
 import {EnterOtpPage} from "../pages/enter-otp/enter-otp";
 import {TransactionReferencePage} from "../pages/transaction-reference/transaction-reference"
+import {SelectKeyPage} from "../pages/select-key/select-key";
+import {MyAccountPage} from "../pages/my-account/my-account";
 
 @Component({
   templateUrl: 'app.html'
 })
 export class BankeyApp {
-  rootPage:any = HomePage;
+  rootPage:any = MyAccountPage;
 
   constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen) {
     platform.ready().then(() => {
