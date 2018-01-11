@@ -96,11 +96,11 @@ export class PersonalDetailsPage {
         };
         oFReader.readAsDataURL(event.target.files[0]);
         this.FormData.append("phone_no",localStorage.mobileNumber);
-        this.FormData.append("photo",event.target.files[0].name);
-
+        this.FormData.append("photo",event.target.files[0]);
+        //this.fileUpload();
     }
     fileUpload(){
-        this.httpClient.putService('uploadphoto/',FormData).then((result:any) => {
+        this.httpClient.putService('uploadphoto/',this.FormData).then((result:any) => {
             console.log(result);
             if(result.success){
                 localStorage.imageData = this.imagePath;

@@ -8,7 +8,7 @@ import {
     GoogleMapOptions,
     CameraPosition,
     MarkerOptions,
-    Marker
+    Marker, HtmlInfoWindow
 } from '@ionic-native/google-maps';
 import {KeyProfilePage} from "../key-profile/key-profile";
 import {LoadingModalPage} from "../loading-modal/loading-modal";
@@ -89,6 +89,31 @@ export class SelectKeyPage {
 
 
     loadKeyMarkerOnMap = function(){
+        let htmlInfoWindow = new HtmlInfoWindow();
+        let frame:HTMLElement = document.createElement('div');
+        frame.innerHTML = [
+            '<div class="info-wrapper">',
+            '<ion-grid><ion-row>',
+            '<ion-col><img src="assets/img/user-image.png"> </ion-col>',
+            '<ion-col col-auto class="text-wrapper">',
+            '<h6>Fadi Abdallah</h6>',
+            '<p>Service Charge:<strong> 4 L.L</strong></p>',
+            '<p><strong>3 min </strong>away</p>',
+            '<p>Rate: *****</p>',
+            '</ion-col>',
+            '<ion-col class="btn-wrapper">',
+            '<h6>View Detail</h6>',
+            '</ion-col>',
+            '</ion-row></ion-grid>',
+            '</div>'
+        ].join("");
+        htmlInfoWindow.setBackgroundColor('#4584E1');
+        //
+        frame.addEventListener("click",()=>{
+            alert(0);
+        });
+        htmlInfoWindow.setContent(frame,{width:"280px",height:"100px"});
+
         for (let keyLocation of this.keyLocationsList) {
             // Wait the MAP_READY before using any methods.
             console.log(keyLocation);
@@ -99,23 +124,19 @@ export class SelectKeyPage {
 
                     // Now you can use all methods safely.
                     this.map.addMarker({
-                        title: keyLocation[0],
                         icon: 'assets/img/custom-marker.png',
-                        animation: 'DROP',
                         position: {
                             lat: keyLocation[1],
                             lng: keyLocation[2]
-                        },
-                        style:{
-                            color:"red"
                         }
                     })
                         .then(marker => {
                             marker.on(GoogleMapsEvent.MARKER_CLICK)
                                 .subscribe(() => {
                                     // Show the info window
-                                    marker.showInfoWindow();
+                                   // marker.showInfoWindow();
                                     marker.setIcon('assets/img/custom-marker-selected.png');
+                                    htmlInfoWindow.open(marker);
                                 });
 
                             // Catch the click event

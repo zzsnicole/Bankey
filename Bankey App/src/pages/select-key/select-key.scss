@@ -34,4 +34,30 @@ page-select-key {
     display: block;
     margin: 0 auto;
   }
+
+  .info-wrapper ion-row{
+    width: 100%;
+    display: inline-flex;
+  }
+  .info-wrapper img{
+    margin: 5px;
+    border-radius: 40px;
+    width:45px;
+  }
+  .text-wrapper{
+    padding:5px;
+    margin-left: 5px;
+  }
+  .text-wrapper h6,p{
+    margin: 2px;
+    color: #000000;
+  }
+  .btn-wrapper h6{
+    padding: 5px;
+    margin: auto;
+    color: #ffffff;
+  }
+  .btn-wrapper{
+    margin: auto;
+  }
 }
