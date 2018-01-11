@@ -44,4 +44,7 @@ export class MyAccountPage {
   GoContactList(){
     this.navCtrl.push(ContactListPage);
   }
+  goBack(){
+    this.navCtrl.pop();
+  }
 }

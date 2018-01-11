@@ -32,4 +32,8 @@ export class KeyRequestConfirmPage {
     }
 
   }
+
+  goBack(){
+      this.navCtrl.pop();
+  }
 }

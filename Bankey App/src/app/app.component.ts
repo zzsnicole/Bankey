@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Platform } from 'ionic-angular';
+import {Platform, Select} from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
@@ -16,12 +16,13 @@ import {EnterOtpPage} from "../pages/enter-otp/enter-otp";
 import {TransactionReferencePage} from "../pages/transaction-reference/transaction-reference"
 import {SelectKeyPage} from "../pages/select-key/select-key";
 import {MyAccountPage} from "../pages/my-account/my-account";
+import {HomeKeyPage} from "../pages/home-key/home-key";
 
 @Component({
   templateUrl: 'app.html'
 })
 export class BankeyApp {
-  rootPage:any = MyAccountPage;
+  rootPage:any = SelectKeyPage;
 
   constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen) {
     platform.ready().then(() => {

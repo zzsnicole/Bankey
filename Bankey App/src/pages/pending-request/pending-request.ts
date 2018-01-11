@@ -26,4 +26,7 @@ export class PendingRequestPage {
   Confirm() {
       this.navCtrl.push(MyAccountPage,{"acceptedrequest":true});
   }
+  goBack(){
+      this.navCtrl.pop();
+  }
 }

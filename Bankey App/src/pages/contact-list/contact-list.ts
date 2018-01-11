@@ -34,7 +34,9 @@ export class ContactListPage {
           .then(data => {
               console.log(data);
               this.allContacts = data.map((contact)=>{
-                return [contact.name["formatted"],contact.phoneNumbers[0].value];
+                return {"name":contact.name["formatted"],
+                        "phoneNumber":contact.phoneNumbers[0].value,
+                        "photo":(contact.photos != null)?contact.photos[0].value:null};
               });
               console.log(this.allContacts);
       });

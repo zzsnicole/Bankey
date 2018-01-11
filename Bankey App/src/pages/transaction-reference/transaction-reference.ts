@@ -30,4 +30,7 @@ export class TransactionReferencePage {
       let popover = this.popoverCtrl.create(RateKeyPopoverPage);
       popover.present();
   }
+  goBack(){
+      this.navCtrl.pop();
+  }
 }

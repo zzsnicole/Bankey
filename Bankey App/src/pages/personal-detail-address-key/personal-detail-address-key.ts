@@ -26,4 +26,8 @@ export class PersonalDetailAddressKeyPage {
   goToEmailPage(){
     this.navCtrl.push(PersonalDetailEmailKeyPage);
   }
+
+  goBack(){
+    this.navCtrl.pop();
+  }
 }

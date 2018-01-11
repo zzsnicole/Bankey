@@ -31,5 +31,8 @@ export class KeyProfilePage {
   onModelChange(e){
     console.log(e);
   }
+  goBack(){
+      this.navCtrl.pop();
+  }
 
 }

@@ -43,6 +43,6 @@ export class HomeKeyPage {
   ];
 
   public goToNextPage(){
-      this.navCtrl.setRoot(EnterAmountKeyPage);
+      this.navCtrl.push(EnterAmountKeyPage);
   }
 }

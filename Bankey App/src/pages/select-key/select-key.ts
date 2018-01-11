@@ -105,6 +105,9 @@ export class SelectKeyPage {
                         position: {
                             lat: keyLocation[1],
                             lng: keyLocation[2]
+                        },
+                        style:{
+                            color:"red"
                         }
                     })
                         .then(marker => {
@@ -160,5 +163,8 @@ export class SelectKeyPage {
 
   GoConfirmKey() {
     this.navCtrl.push(KeyProfilePage);
+  }
+  goBack(){
+    this.navCtrl.pop();
   }
 }

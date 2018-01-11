@@ -26,8 +26,10 @@ export class ConfirmationCodePage {
   ionViewDidLoad() {
     console.log('ionViewDidLoad ConfirmationCodePage');
   }
-
   Confirm() {
-          this.navCtrl.push(TransactionReferencePage);
+    this.navCtrl.push(TransactionReferencePage);
+  }
+  goBack(){
+        this.navCtrl.pop();
   }
 }

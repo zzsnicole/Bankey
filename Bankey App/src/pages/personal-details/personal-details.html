@@ -15,10 +15,10 @@
 
 	<div class="photo-row">
 		<div class="circle">
-			<ion-icon class="photo" name="person"></ion-icon>
-			<img *ngIf="base64Image!=''" [src]="base64Image">
-			<button class="camera-btn"  (click)="openCamera()">
-
+			<ion-icon *ngIf="this.imagePath ==''" class="photo" name="person"></ion-icon>
+			<img *ngIf="this.imagePath!=''" [src]="this.imagePath">
+			<button *ngIf="this.imagePath ==''" class="camera-btn" (click)="file.click()">
+				<input type="file" (change)="fileSelect($event)" accept="image/*" #file style="display:none;">
             	<ion-icon class="camera" name="camera"></ion-icon>
           	</button>
 		</div>

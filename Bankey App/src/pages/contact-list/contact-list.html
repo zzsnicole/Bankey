@@ -22,10 +22,11 @@
   <ion-list (click)="GoEnterAmount();">
     <ion-item *ngFor="let contact of allContacts">
       <ion-avatar item-start>
-        <img src="assets/img/user-image.png">
+        <img *ngIf="contact.photos == null" src="assets/img/user-image.png">
+        <img *ngIf="contact.photos != null" src="{{contact.photos}}">
       </ion-avatar>
-      <h2>{{contact[0]}}</h2>
-      <p>{{contact[1]}}</p>
+      <h2>{{contact.name}}</h2>
+      <p>{{contact.phoneNumber}}</p>
     </ion-item>
   </ion-list>
 

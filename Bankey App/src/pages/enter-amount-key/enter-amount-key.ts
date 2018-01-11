@@ -26,4 +26,7 @@ export class EnterAmountKeyPage {
   GoPersonalDetailKey(){
     this.navCtrl.push(PersonalDetailKeyPage);
   }
+  goBack(){
+    this.navCtrl.pop();
+  }
 }

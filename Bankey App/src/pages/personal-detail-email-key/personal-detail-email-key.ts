@@ -26,5 +26,7 @@ export class PersonalDetailEmailKeyPage {
   goInviteFriends(){
     this.navCtrl.push(InviteFriendsKeyPage);
   }
-
+  goBack(){
+      this.navCtrl.pop();
+  }
 }

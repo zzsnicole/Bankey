@@ -15,8 +15,7 @@ export class HttpClientProvider {
 
 
   private headers = new HttpHeaders().set('Content-Type','application/json');
-
-
+  private headers_1 = new HttpHeaders().set("Authorization","Basic KzE1NzEzMzUzNjkwOjEyMzQ=");
 
   postService(endpoint, data) {
       return new Promise((resolve,reject) => {
@@ -38,5 +37,16 @@ export class HttpClientProvider {
           });
       });
   }
+
+    putService(endpoint, data) {
+        return new Promise((resolve,reject) => {
+            this.http.put(this.apiUrl + endpoint, data,{headers:this.headers_1}).subscribe(data => {
+                resolve(data);
+            }, err => {
+                reject(err);
+                console.log(err);
+            });
+        });
+    }
 
 }
