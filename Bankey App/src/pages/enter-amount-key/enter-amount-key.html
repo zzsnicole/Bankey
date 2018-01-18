@@ -12,12 +12,20 @@
   <p text-center>Add money using your debit card</p>
 
   <ion-item margin-top>
-    <ion-input type="number" placeholder="Debit Card Number">
+    <ion-input type="number" [(ngModel)]="card.number" placeholder="Debit Card Number">
     </ion-input>
     <button ion-button clear color="dark" type="button" item-right >
       <ion-icon name="camera">
       </ion-icon>
     </button>
+  </ion-item>
+  <ion-item>
+    <ion-label>ExpiryDate</ion-label>
+    <ion-datetime [(ngModel)]="ExpiryDate" displayFormat="MM/YYYY"></ion-datetime>
+  </ion-item>
+  <ion-item>
+    <ion-input type="number" [(ngModel)]="card.cvv" placeholder="CVV Number">
+    </ion-input>
   </ion-item>
 
   <ion-row padding-top class="bottom-start-btn" justify-content-center style="display: grid;text-align: center;">

@@ -16,6 +16,12 @@ page-passcode-login {
       align-items: center;
       justify-content: center;
       position: relative;
+      img{
+      width: 75px;
+      height: 75px;
+      border-radius: 50px;
+      max-width: 200%;
+      }
       ion-icon.photo {
         font-size: 2.5em;
       }
