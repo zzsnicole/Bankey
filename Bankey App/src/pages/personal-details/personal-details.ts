@@ -37,10 +37,13 @@ export class PersonalDetailsPage {
   };
   imagePath = "";
   cameraOption: any = {
-      quality: 100,
+      quality: 20,
       sourceType: '',
       saveToPhotoAlbum: false,
       correctOrientation: true,
+      destinationType: this.camera.DestinationType.DATA_URL,
+      encodingType: this.camera.EncodingType.JPEG,
+      mediaType: this.camera.MediaType.PICTURE,
   };
   FormData:any= formdata;
   public window = window;
@@ -62,7 +65,7 @@ export class PersonalDetailsPage {
 
   }
 
-    presentActionSheet = function(type) {
+    presentActionSheet = function() {
         let actionSheet = this.actionSheetCtrl.create({
             title: 'Select Image Source',
             buttons: [{
@@ -90,17 +93,23 @@ export class PersonalDetailsPage {
         //     console.log(result);
         // })
         var oFReader = new FileReader();
-
+        var params ={
+            "phone_no":localStorage.mobileNumber,
+            "imagePath":''
+        }
         oFReader.onload = (event:any) => {
             this.imagePath = event.target.result;
+            params.imagePath = event.target.result.replace(/^data:image\/[a-z]+;base64,/, "");
+            this.fileUpload(params);
         };
         oFReader.readAsDataURL(event.target.files[0]);
-        this.FormData.append("phone_no",localStorage.mobileNumber);
-        this.FormData.append("photo",event.target.files[0]);
-        //this.fileUpload();
+        // this.FormData.append("phone_no",localStorage.mobileNumber);
+        // this.FormData.append("photo",event.target.files[0].name);
+
+
     }
-    fileUpload(){
-        this.httpClient.putService('uploadphoto/',this.FormData).then((result:any) => {
+    fileUpload(params){
+        this.httpClient.putService('uploadphoto/',JSON.stringify(params)).then((result:any) => {
             console.log(result);
             if(result.success){
                 localStorage.imageData = this.imagePath;
@@ -119,7 +128,7 @@ export class PersonalDetailsPage {
         // Get the data of an image
         this.camera.getPicture(this.cameraOption).then((imagePath) => {
             // Special handling for Android library
-            console.log(imagePath);
+            //console.log(imagePath);
             if (this.platform.is('android') && sourceType === this.camera.PictureSourceType.PHOTOLIBRARY) {
                 // this.filePath.resolveNativePath(imagePath)
                 //     .then(filePath => {
@@ -128,9 +137,15 @@ export class PersonalDetailsPage {
                 //         this.copyFileToLocalDir(correctPath, currentName, this.createFileName(), type);
                 //     });
             } else {
-                var currentName = imagePath.substr(imagePath.lastIndexOf('/') + 1);
-                var correctPath = imagePath.substr(0, imagePath.lastIndexOf('/') + 1);
-                this.upload(correctPath,currentName);
+                // var currentName = imagePath.substr(imagePath.lastIndexOf('/') + 1);
+                // var correctPath = imagePath.substr(0, imagePath.lastIndexOf('/') + 1);
+                // this.upload(correctPath,currentName);
+                let base64Image = 'data:image/jpeg;base64,' + imagePath;
+                this.imagePath = base64Image;
+                this.fileUpload({
+                    "phone_no":"+15713353690",
+                    "photo":imagePath
+                })
             }
         }, (err) => {
             //alert('Error while selecting image.');
@@ -139,24 +154,24 @@ export class PersonalDetailsPage {
    upload(imagepath,fileName) {
 
        this.file.readAsArrayBuffer(imagepath,fileName).then((result)=>{
+
+
+           this.FormData.append("phone_no",localStorage.mobileNumber);
+
                    //console.log(imagepath);
                    // Create a blob based on the FileReader "result", which we asked to be retrieved as an ArrayBuffer
-                   //var blob = new Blob([new Uint8Array(result)], { type: "image/png" });
+                   var blob = new Blob([new Uint8Array(result)], { type: "image/png" });
+                   this.FormData.append("photo",blob);
+
                    var oReq = new XMLHttpRequest();
                    oReq.open("PUT", "http://54.91.82.248/api/uploadphoto/", true);
-                   oReq.setRequestHeader("Content-type","form-data");
-                   oReq.setRequestHeader("Authorization","Basic KzE1NzEzMzUzNjkwOjEyMzQ=");
-                   // oReq.setRequestHeader("Username","+15713353690");
-                   // oReq.setRequestHeader("Password","1234");
+                   oReq.setRequestHeader("Content-type","multipart/form-data");
                    oReq.onload = function (result) {
                        // all done!
                         console.log(result);
                    };
                    // Pass the blob in to XHR's send method
-                   oReq.send({
-                       "photo":imagepath,
-                       "phone_no":"+15713353690"
-                   });
+                   oReq.send(this.FormData);
         },(err)=>{
             console.log(err);
         })
@@ -177,7 +192,7 @@ export class PersonalDetailsPage {
             this.navCtrl.push(InviteFriendsPage,{"userName":result.data.name})
             localStorage.userData = result.data;
             if(this.imagePath){
-                this.fileUpload();
+                //this.fileUpload();
             }
 
         }else{
