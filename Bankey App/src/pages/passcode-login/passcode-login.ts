@@ -76,6 +76,6 @@ export class PasscodeLoginPage {
   };
 
   GoSettingPage(){
-      this.navCtrl.push(SettingPage);
+    //  this.navCtrl.push(SettingPage);
   }
 }

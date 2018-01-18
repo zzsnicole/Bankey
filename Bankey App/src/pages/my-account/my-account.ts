@@ -5,6 +5,7 @@ import {PendingRequestPage} from "../pending-request/pending-request";
 import {ConfirmationCodePage} from "../confirmation-code/confirmation-code";
 import {KeyRequestConfirmPage} from "../key-request-confirm/key-request-confirm";
 import {ContactListPage} from "../contact-list/contact-list";
+import {SettingPage} from "../setting/setting";
 
 /**
  * Generated class for the MyAccountPage page.
@@ -46,5 +47,9 @@ export class MyAccountPage {
   }
   goBack(){
     this.navCtrl.pop();
+  }
+
+  GoSettingPage(){
+    this.navCtrl.push(SettingPage);
   }
 }

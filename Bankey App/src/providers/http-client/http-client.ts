@@ -14,7 +14,7 @@ export class HttpClientProvider {
   }
 
 
-  private headers = new HttpHeaders().set('Content-Type','application/json');
+  private headers = new HttpHeaders().set('Content-Type','application/json').set("authorization", "Basic KzE1NzEzMzUzNjkwOjEyMzQ=");
 
   postService(endpoint, data) {
       return new Promise((resolve,reject) => {
@@ -29,7 +29,7 @@ export class HttpClientProvider {
 
   getService(endpoint){
       return new Promise(resolve => {
-          this.http.get(this.apiUrl + endpoint).subscribe(data => {
+          this.http.get(this.apiUrl + endpoint,{headers:this.headers}).subscribe(data => {
               resolve(data);
           }, err => {
               console.log(err);

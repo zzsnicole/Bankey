@@ -23,20 +23,30 @@
         Edit Profile
     </button>
     <button ion-item>
+      Share with friends
+    </button>
+    <button ion-item>
       Become a Key
-    </button>
-    <button ion-item>
-      Invite Friends
-    </button>
-    <button ion-item>
-      Link your bank account
-    </button>
-    <button ion-item>
-      Terms and Conditions
     </button>
     <ion-item>
       <ion-label> GPS</ion-label>
       <ion-toggle checked="false"></ion-toggle>
     </ion-item>
+    <button ion-item>
+      Link your bank account
+    </button>
+    <ion-item>
+      <ion-label> Key Service</ion-label>
+      <ion-toggle [(ngModel)]="KeyServiceStatus" (ionChange)="updateStatusOfKeyService();"></ion-toggle>
+    </ion-item>
+    <button ion-item (click)="ChangePage('terms-condition');" >
+      Terms and Conditions
+    </button>
+    <button ion-item (click)="ChangePage('privacy-policy')">
+      Privacy Policy
+    </button>
+    <button ion-item (click)="SignOut();" >
+      Sign Out
+    </button>
   </ion-list>
 </ion-content>

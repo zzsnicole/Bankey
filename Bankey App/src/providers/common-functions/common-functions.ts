@@ -15,27 +15,31 @@ export class CommonFunctionsProvider {
     console.log('Hello CommonFunctionsProvider Provider');
   }
 
-  showConfirm() {
-   let confirm = this.alertCtrl.create({
-     title: 'Use this lightsaber?',
-     message: 'Do you agree to use this lightsaber to do good across the intergalactic galaxy?',
-     buttons: [
-       {
-         text: 'Disagree',
-         handler: () => {
-           console.log('Disagree clicked');
-         }
-       },
-       {
-         text: 'Agree',
-         handler: () => {
-           console.log('Agree clicked');
-         }
-       }
-     ]
-   });
-   confirm.present();
- }
+  showConfirm(title,button1,button2,alertText) {
+    return new Promise((resolve,reject) => {
+        let confirm = this.alertCtrl.create({
+            title: title,
+            message: alertText,
+            buttons: [
+                {
+                    text: button1,
+                    handler: () => {
+                        console.log('Disagree clicked');
+                        resolve(button1);
+                    }
+                },
+                {
+                    text: button2,
+                    handler: () => {
+                        console.log('Agree clicked');
+                        resolve(button2);
+                    }
+                }
+            ]
+        });
+        confirm.present();
+    });
+  }
 
  showAlert(alertText) {
    let alert = this.alertCtrl.create({

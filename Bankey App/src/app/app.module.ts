@@ -45,6 +45,8 @@ import {ContactListPage} from "../pages/contact-list/contact-list";
 import {AddContactPage} from "../pages/add-contact/add-contact";
 import {SettingPage} from "../pages/setting/setting";
 import {SendConfirmPage} from "../pages/send-confirm/send-confirm";
+import {TermsAndConditionPage} from "../pages/terms-and-condition/terms-and-condition";
+import {PrivacyPolicyPage} from "../pages/privacy-policy/privacy-policy";
 
 @NgModule({
     declarations: [
@@ -78,7 +80,9 @@ import {SendConfirmPage} from "../pages/send-confirm/send-confirm";
         ContactListPage,
         AddContactPage,
         SettingPage,
-        SendConfirmPage
+        SendConfirmPage,
+        TermsAndConditionPage,
+        PrivacyPolicyPage
     ],
     imports: [
         BrowserModule,
@@ -119,7 +123,9 @@ import {SendConfirmPage} from "../pages/send-confirm/send-confirm";
         ContactListPage,
         AddContactPage,
         SettingPage,
-        SendConfirmPage
+        SendConfirmPage,
+        TermsAndConditionPage,
+        PrivacyPolicyPage
     ],
     providers: [
         StatusBar,
