@@ -47,6 +47,7 @@ import {SettingPage} from "../pages/setting/setting";
 import {SendConfirmPage} from "../pages/send-confirm/send-confirm";
 import {TermsAndConditionPage} from "../pages/terms-and-condition/terms-and-condition";
 import {PrivacyPolicyPage} from "../pages/privacy-policy/privacy-policy";
+import {SetServiceFeePage} from "../pages/set-service-fee/set-service-fee";
 
 @NgModule({
     declarations: [
@@ -82,7 +83,8 @@ import {PrivacyPolicyPage} from "../pages/privacy-policy/privacy-policy";
         SettingPage,
         SendConfirmPage,
         TermsAndConditionPage,
-        PrivacyPolicyPage
+        PrivacyPolicyPage,
+        SetServiceFeePage
     ],
     imports: [
         BrowserModule,
@@ -125,7 +127,8 @@ import {PrivacyPolicyPage} from "../pages/privacy-policy/privacy-policy";
         SettingPage,
         SendConfirmPage,
         TermsAndConditionPage,
-        PrivacyPolicyPage
+        PrivacyPolicyPage,
+        SetServiceFeePage
     ],
     providers: [
         StatusBar,

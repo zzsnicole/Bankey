@@ -15,12 +15,25 @@ import {PersonalDetailEmailKeyPage} from "../personal-detail-email-key/personal-
   templateUrl: 'personal-detail-address-key.html',
 })
 export class PersonalDetailAddressKeyPage {
-
+  addressInfo = {
+    "line1": "",
+    "line2": "",
+    "city": "",
+    "state": "",
+    "country": "US",
+    "pin_code": ""
+  };
+  userInfo:any;
   constructor(public navCtrl: NavController, public navParams: NavParams) {
   }
 
   ionViewDidLoad() {
+    this.userInfo = this.navParams.get("userInfo");
     console.log('ionViewDidLoad PersonalDetailAddressKeyPage');
+  }
+
+  Submit(){
+    this.navCtrl.push(PersonalDetailEmailKeyPage,{"userInfo":this.userInfo,"addressInfo":this.addressInfo});
   }
 
   goToEmailPage(){

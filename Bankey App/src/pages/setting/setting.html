@@ -20,12 +20,12 @@
   </ion-card>
   <ion-list >
     <button ion-item>
-        Edit Profile
+      Edit Profile
     </button>
     <button ion-item>
       Share with friends
     </button>
-    <button ion-item>
+    <button ion-item (click)="ChangePage('become-key');" >
       Become a Key
     </button>
     <ion-item>
@@ -37,7 +37,7 @@
     </button>
     <ion-item>
       <ion-label> Key Service</ion-label>
-      <ion-toggle [(ngModel)]="KeyServiceStatus" (ionChange)="updateStatusOfKeyService();"></ion-toggle>
+      <ion-toggle [(ngModel)]="KeyServiceStatus" (click)="updateStatusOfKeyService($event);"></ion-toggle>
     </ion-item>
     <button ion-item (click)="ChangePage('terms-condition');" >
       Terms and Conditions

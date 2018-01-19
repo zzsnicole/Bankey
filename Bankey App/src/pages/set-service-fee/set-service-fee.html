@@ -1,0 +1,35 @@
+<!--
+  Generated template for the SetServiceFeePage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+
+<ion-content padding>
+  <ion-icon style="position: absolute;" class="back-icon-size" text-lg-left color="primary" name="ios-arrow-back" (click)="goBack()"></ion-icon>
+
+  <h6 text-center class="secondary-text-color custom-place">Setting up Service Fee</h6>
+
+  <p class="gray-text-color small-font" text-center>Service fee varies from 0.00 up to 3%. You can set up your minimum fee</p>
+
+  <div class="center-fee-text" text-center>
+    <h1>
+      {{feeValue.toFixed(2)}} <p>&#x25;</p>
+
+        <div class="up-down-btn">
+          <span (click)="addFee();">&#x25B2;</span>
+          <span (click)="minusFee();">&#x25BC;</span>
+        </div>
+    </h1>
+  </div>
+
+  <p text-center>Minimum $2</p>
+  <div bottom>
+    <ion-row bottom padding-top class="bottom-start-btn" justify-content-center style="display: grid;text-align: center;">
+      <button ion-fab color="secondary" round (click)="GoPersonDetail()">
+        <ion-icon name="ios-arrow-forward"></ion-icon>
+      </button>
+      Next
+    </ion-row>
+  </div>
+</ion-content>

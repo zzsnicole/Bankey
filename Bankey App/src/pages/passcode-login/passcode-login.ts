@@ -4,6 +4,7 @@ import {EnterOtpPage} from "../enter-otp/enter-otp";
 import {EnterAmountPage} from "../enter-amount/enter-amount";
 import { HttpClientProvider } from "../../providers/http-client/http-client";
 import {SettingPage} from "../setting/setting";
+import {CommonFunctionsProvider} from "../../providers/common-functions/common-functions";
 /**
  * Generated class for the PasscodeLoginPage page.
  *
@@ -25,7 +26,8 @@ export class PasscodeLoginPage {
   }
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
-              public httpClient: HttpClientProvider) {
+              public httpClient: HttpClientProvider,
+              public commanFn: CommonFunctionsProvider) {
   }
   enteredPasscode = '';
   firstPassword = '';
@@ -55,10 +57,11 @@ export class PasscodeLoginPage {
         console.log(result);
         if(result.success){
             this.navCtrl.push(EnterAmountPage);
+            localStorage.userObject = JSON.stringify(result.data);
             //localStorage.userData = result.data;
         }else{
             //replace by alert controller of ionic
-            alert(result.message);
+            this.commanFn.showAlert(result.message);
         }
     }, (err) => {
         console.log(err);
@@ -77,5 +80,15 @@ export class PasscodeLoginPage {
 
   GoSettingPage(){
     //  this.navCtrl.push(SettingPage);
+  }
+
+  ResetPass() {
+      this.commanFn.showConfirm('Reset Password',"Yes","No","Are you sure you want to reset password.").then(
+          result =>{
+              if(result == "Yes"){
+                    
+              }
+          }
+      )
   }
 }

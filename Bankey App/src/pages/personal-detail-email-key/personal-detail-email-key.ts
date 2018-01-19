@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import {InviteFriendsKeyPage} from "../invite-friends-key/invite-friends-key";
+import {HttpClientProvider} from "../../providers/http-client/http-client";
+import {CommonFunctionsProvider} from "../../providers/common-functions/common-functions";
 
 /**
  * Generated class for the PersonalDetailEmailKeyPage page.
@@ -15,16 +17,46 @@ import {InviteFriendsKeyPage} from "../invite-friends-key/invite-friends-key";
   templateUrl: 'personal-detail-email-key.html',
 })
 export class PersonalDetailEmailKeyPage {
-
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  email_id:String= "";
+  userInfo:any;
+  addressInfo:any;
+  constructor(public navCtrl: NavController,
+              public navParams: NavParams,
+              public httpClient: HttpClientProvider,
+              public commonFn: CommonFunctionsProvider ) {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad PersonalDetailEmailKeyPage');
+      this.userInfo = this.navParams.get("userInfo");
+      this.addressInfo = this.navParams.get("addressInfo");
+      console.log('ionViewDidLoad PersonalDetailEmailKeyPage');
   }
 
-  goInviteFriends(){
-    this.navCtrl.push(InviteFriendsKeyPage);
+  Submit(){
+    if(!this.email_id || this.email_id == ''){
+        this.commonFn.showAlert("Please enter Email ID");
+    }
+    this.DoSignUP();
+  }
+
+  DoSignUP(){
+      let params = {
+          "email":this.email_id,
+          "name": this.userInfo.name,
+          "birth_date": this.userInfo.birth_date,
+          "address":this.addressInfo
+      }
+      console.log(params);
+      this.httpClient.postService("teller/",params).then(
+          (result:any) => {
+            console.log(result);
+            if(result.success){
+                this.navCtrl.push(InviteFriendsKeyPage);
+            }
+          },
+          err => {
+            console.log(err);
+          });
   }
   goBack(){
       this.navCtrl.pop();

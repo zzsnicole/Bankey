@@ -1,0 +1,33 @@
+page-set-service-fee {
+  .custom-place{
+    margin-top: 40px;
+  }
+  .center-fee-text{
+    padding-left: 75px;
+    padding-top: 120px;
+  }
+  .center-fee-text h1{
+    display: inline-flex;
+    font-size: 45px;
+    color: color($colors,secondary,base);
+    font-weight: 800;
+  }
+
+  .center-fee-text p{
+    padding: 0;
+    margin: 0;
+    line-height: 1;
+    font-size: 25px;
+  }
+
+  .up-down-btn{
+    margin-top: -19px;
+    display: grid;
+    padding-left: 12px;
+    color: color($colors,primary,base);
+  }
+  .up-down-btn span{
+    padding: 5px;
+    font-size: 30px;
+  }
+}

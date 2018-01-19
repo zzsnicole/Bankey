@@ -49,7 +49,8 @@ export class EnterOtpPage {
 
       var otpVerificationParams = {
           "mobile_number":localStorage.mobileNumber,
-          "verification_code":Number(this.otpCode)
+          "verification_code":Number(this.otpCode),
+          "process":"signup"
       };
       this.httpClient.postService('phoneverification/',otpVerificationParams).then((result:any) => {
           console.log(result);

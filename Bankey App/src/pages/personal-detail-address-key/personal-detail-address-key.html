@@ -13,23 +13,23 @@
     <h5 padding-top class = "primary-text-color" text-center>Your address</h5>
 
     <ion-item padding-top>
-        <ion-input placeholder="Country"></ion-input>
+        <ion-input [(ngModel)]="addressInfo.country" placeholder="Country"></ion-input>
     </ion-item>
 
     <ion-item padding-top>
-        <ion-input placeholder="Address line"></ion-input>
+        <ion-input [(ngModel)]="addressInfo.line1" placeholder="Address line 1"></ion-input>
     </ion-item>
 
     <ion-item padding-top>
-        <ion-input placeholder="Address line 2"></ion-input>
+        <ion-input [(ngModel)]="addressInfo.line2" placeholder="Address line 2"></ion-input>
     </ion-item>
 
     <ion-item padding-top>
-        <ion-input placeholder="City"></ion-input>
+        <ion-input [(ngModel)]="addressInfo.city" placeholder="City"></ion-input>
     </ion-item>
 
     <ion-row padding-top class="bottom-start-btn" justify-content-center style="display: grid;text-align: center;">
-        <button ion-fab color="secondary" round (click)="goToEmailPage()">
+        <button ion-fab color="secondary" round (click)="Submit()">
           <ion-icon name="ios-arrow-forward"></ion-icon>
         </button>
          Next

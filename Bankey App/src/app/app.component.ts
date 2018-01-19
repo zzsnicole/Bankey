@@ -17,12 +17,14 @@ import {TransactionReferencePage} from "../pages/transaction-reference/transacti
 import {SelectKeyPage} from "../pages/select-key/select-key";
 import {MyAccountPage} from "../pages/my-account/my-account";
 import {HomeKeyPage} from "../pages/home-key/home-key";
+import {SetServiceFeePage} from "../pages/set-service-fee/set-service-fee";
+import {InviteFriendsKeyPage} from "../pages/invite-friends-key/invite-friends-key";
 
 @Component({
   templateUrl: 'app.html'
 })
 export class BankeyApp {
-  rootPage:any = SelectKeyPage;
+  rootPage:any = InviteFriendsKeyPage;
 
   constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen) {
     platform.ready().then(() => {

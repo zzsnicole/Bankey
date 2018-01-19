@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import {PersonalDetailKeyPage} from "../personal-detail-key/personal-detail-key";
+import {SetServiceFeePage} from "../set-service-fee/set-service-fee";
 /**
  * Generated class for the EnterAmountKeyPage page.
  *
@@ -35,7 +36,7 @@ export class EnterAmountKeyPage {
       this.card["expMonth"] = this.ExpiryDate.split("-")[1];
       this.card["expYear"] = this.ExpiryDate.split("-")[0];
     }
-    this.navCtrl.push(PersonalDetailKeyPage);
+    this.navCtrl.push(SetServiceFeePage);
   }
   goBack(){
     this.navCtrl.pop();

@@ -24,16 +24,16 @@
   </div>
 
   <ion-item margin-top>
-    <ion-input placeholder="Legal Full Name"></ion-input>
+    <ion-input [(ngModel)]="userInfo.name" placeholder="Legal Full Name"></ion-input>
   </ion-item>
 
   <ion-item>
     <ion-label>Birth Date</ion-label>
-    <ion-datetime displayFormat="MM/DD/YYYY"></ion-datetime>
+    <ion-datetime [(ngModel)]="userInfo.birth_date" displayFormat="MM/DD/YYYY"></ion-datetime>
   </ion-item>
 
   <ion-row padding-top class="bottom-start-btn" justify-content-center style="display: grid;text-align: center;">
-    <button ion-fab color="secondary" round (click)="goToAddressPage()">
+    <button ion-fab color="secondary" round (click)="Submit()">
       <ion-icon name="ios-arrow-forward"></ion-icon>
     </button>
     Next

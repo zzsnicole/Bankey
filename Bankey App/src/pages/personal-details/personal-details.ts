@@ -27,12 +27,7 @@ export class PersonalDetailsPage {
     "password": "",
     "name": "",
     "address": {
-        "line1": null,
-        "line2": null,
-        "city": null,
-        "state": null,
-        "country": "USA",
-        "pin_code": null
+        "country": "US",
     }
   };
   imagePath = "";

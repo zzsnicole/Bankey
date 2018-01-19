@@ -13,11 +13,11 @@
   <p text-center>We will only use it to communicate change with you</p>
 
   <ion-item margin-top>
-    <ion-input type="email" placeholder="Email"></ion-input>
+    <ion-input type="email" [(ngModel)]="email_id" placeholder="Email"></ion-input>
   </ion-item>
 
   <ion-row padding-top class="bottom-start-btn" justify-content-center style="display: grid;text-align: center;">
-    <button ion-fab color="secondary" round (click)="goInviteFriends()">
+    <button ion-fab color="secondary" round (click)="Submit()">
       <ion-icon name="ios-arrow-forward"></ion-icon>
     </button>
     Next

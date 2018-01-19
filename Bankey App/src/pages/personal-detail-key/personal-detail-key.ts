@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import {InviteFriendsPage} from "../invite-friends/invite-friends";
 import {Camera, CameraOptions} from "@ionic-native/camera";
 import {PersonalDetailAddressKeyPage} from "../personal-detail-address-key/personal-detail-address-key";
+import {CommonFunctionsProvider} from "../../providers/common-functions/common-functions";
 
 /**
  * Generated class for the PersonalDetailKeyPage page.
@@ -19,12 +20,31 @@ import {PersonalDetailAddressKeyPage} from "../personal-detail-address-key/perso
 export class PersonalDetailKeyPage {
 
     headerLabel = 'Your personal details';
-
-    constructor(public navCtrl: NavController, public navParams: NavParams, public camera: Camera) {
+    userInfo ={
+        name:"",
+        birth_date:""
+    }
+    constructor(public navCtrl: NavController,
+                public navParams: NavParams,
+                public camera: Camera,
+                public commonFn: CommonFunctionsProvider) {
     }
 
     ionViewDidLoad() {
         console.log('ionViewDidLoad PersonalDetailKey Page');
+    }
+
+    Submit(){
+        if(this.userInfo.name == ""){
+            this.commonFn.showAlert("Please enter Name");
+            return false;
+        }
+        else if(this.userInfo.birth_date == ""){
+            this.commonFn.showAlert("Please enter Birth Date");
+            return false;
+        }
+        console.log(this.userInfo);
+        this.navCtrl.push(PersonalDetailAddressKeyPage,{"userInfo":this.userInfo});
     }
 
     options: CameraOptions = {
@@ -47,7 +67,7 @@ export class PersonalDetailKeyPage {
     }
 
     goToAddressPage() {
-        this.navCtrl.push(PersonalDetailAddressKeyPage);
+
     }
 
     goBack(){

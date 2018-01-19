@@ -5,6 +5,7 @@ import {PrivacyPolicyPage} from "../privacy-policy/privacy-policy";
 import {MobilePage} from "../mobile/mobile";
 import {CommonFunctionsProvider} from "../../providers/common-functions/common-functions";
 import {HttpClientProvider} from "../../providers/http-client/http-client";
+import {HomeKeyPage} from "../home-key/home-key";
 
 /**
  * Generated class for the SettingPage page.
@@ -40,9 +41,9 @@ export class SettingPage {
           }
       )
   }
-  updateStatusOfKeyService (){
+  updateStatusOfKeyService (e){
       let displayKeyword = "ON"
-      if(this.KeyServiceStatus){
+      if(!this.KeyServiceStatus){
           displayKeyword = "OFF"
       }
       this.commonFn.showConfirm("Turning Key Service "+displayKeyword,"Yes","No","Are you sure you want to turn Key Service"+displayKeyword+"?").then(
@@ -57,6 +58,8 @@ export class SettingPage {
                       }
                   )
 
+              }else{
+                  this.KeyServiceStatus = !this.KeyServiceStatus;
               }
           }
       )
@@ -73,6 +76,9 @@ export class SettingPage {
         case "privacy-policy":
           this.navCtrl.push(PrivacyPolicyPage);
           break;
+        case "become-key":
+            this.navCtrl.push(HomeKeyPage);
+            break;
     }
   }
   SignOut(){
