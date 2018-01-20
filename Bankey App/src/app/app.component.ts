@@ -19,6 +19,7 @@ import {MyAccountPage} from "../pages/my-account/my-account";
 import {HomeKeyPage} from "../pages/home-key/home-key";
 import {SetServiceFeePage} from "../pages/set-service-fee/set-service-fee";
 import {InviteFriendsKeyPage} from "../pages/invite-friends-key/invite-friends-key";
+import {PersonalDetailKeyPage} from "../pages/personal-detail-key/personal-detail-key";
 
 @Component({
   templateUrl: 'app.html'

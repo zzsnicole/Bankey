@@ -24,11 +24,12 @@
   </div>
 
   <ion-item margin-top>
-    <ion-input [(ngModel)]="userInfo.name" placeholder="Legal Full Name"></ion-input>
+    <ion-label stacked>Legal Full Name</ion-label>
+    <ion-input [(ngModel)]="userInfo.name" placeholder=""></ion-input>
   </ion-item>
 
   <ion-item>
-    <ion-label>Birth Date</ion-label>
+    <ion-label stacked>Birth Date</ion-label>
     <ion-datetime [(ngModel)]="userInfo.birth_date" displayFormat="MM/DD/YYYY"></ion-datetime>
   </ion-item>
 

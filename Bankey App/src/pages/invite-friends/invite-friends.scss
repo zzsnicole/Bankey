@@ -8,6 +8,7 @@ page-invite-friends {
         display: flex;
         align-content: center;
         justify-content: center;
+        margin: 50px 0;
     }
 
     .text-row{
@@ -16,7 +17,7 @@ page-invite-friends {
         text-align: center;
 
         .bold-text{
-            padding: 10px 0;
+            padding: 50px 0;
             display: inline-block;
             font-weight: bold;
         }
