@@ -35,13 +35,13 @@ ion-content{
   color:#ffffff;
 }
 .gray-text-color{
-  color: gray;
+  color: gray !important;
 }
 .small-font{
   font-size: 12px;
 }
 .back-icon-size{
-  font-size: 1.8em;
+  font-size: 2.0em;
 }
 .amount-text{
   font-size: 3em;
@@ -64,6 +64,11 @@ ion-content{
 }
 ion-row button{
   margin: auto;
+}
+.header-label {
+  color: #0472cb;
+  padding: 10px 10%;
+  text-align: center;
 }
 .ILS_numbers-row {
   display: flex;

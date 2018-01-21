@@ -5,22 +5,29 @@
   Ionic pages and navigation.
 -->
 
-<div class="my-overlay" padding [hidden]="overlayHidden">
-  <h2 class="white-text-color" style="margin: auto;padding-top: 30px;" text-center>Looking for keys...</h2>
-  <img style="margin:auto;" class="img-logo" width="30" src="assets/img/logo.png"/>
-</div>
-<ion-content padding>
 
-  <ion-icon style="position: absolute;" class="back-icon-size" text-lg-left color="primary" name="ios-arrow-back" (click)="goBack()"></ion-icon>
+<ion-content padding no-bounce>
+  <div class="my-overlay" padding [hidden]="overlayHidden">
+    <h2 class="white-text-color" style="margin: auto;padding-top: 30px;" text-center>Looking for keys...</h2>
+    <img style="margin:auto;" class="img-logo" width="30" src="assets/img/logo.png"/>
+  </div>
+  <ion-icon class="back-icon-size" text-lg-left color="primary" name="ios-arrow-back" (click)="goBack()"></ion-icon>
 
-  <h6 text-center class="secondary-text-color custom-place" margin-top>Select Key</h6>
+  <div class="header-label">
+    <h5>Select Key</h5>
+  </div>
+
   <!-- <div id="pac-container">
     <input id="pac-input" #placeSearch type="text"
            placeholder="Enter a location">
   </div> -->
   <ion-item id="pac-container">
-    <ion-input text-center id="pac-input" #placeSearch type="text"
-           placeholder="Enter a location"></ion-input>
+    <button ion-button clear color="dark" type="button" item-left >
+      <ion-icon name="search">
+      </ion-icon>
+    </button>
+    <ion-input id="pac-input" #placeSearch type="text"
+           placeholder="Enter a name, place or street"></ion-input>
   </ion-item>
 
   <div id="map_canvas"></div>
@@ -28,7 +35,7 @@
 
 </ion-content>
 <ion-footer>
-  <ion-row padding-top class="bottom-start-btn" justify-content-center style="display: grid;text-align: center;">
+  <ion-row class="bottom-start-btn" justify-content-center style="display: grid;text-align: center;">
     <button ion-fab color="secondary" round (click)="GoConfirmKey()">
       <ion-icon name="ios-arrow-forward"></ion-icon>
     </button>

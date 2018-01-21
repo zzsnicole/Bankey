@@ -38,4 +38,11 @@ page-passcode-login {
       }
     }
   }
+  .toolbar-background{
+   width: 98%;
+   left: 1%;
+  }
+  ion-navbar{
+    background-color: color($colors,primary,base);
+  }
 }

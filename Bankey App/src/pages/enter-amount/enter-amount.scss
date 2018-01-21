@@ -15,11 +15,22 @@ page-enter-amount {
     margin: 0;
     margin-top: 20px;
   }
+  .header-label{
+    margin-top: -26px;
+    padding-bottom: 0;
+  }
+  .back-icon-size{
+    padding-left: 15px;
+  }
   .scroll-content{
-    padding: 0 !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
   }
   .custom-place{
     display: inline-block;
     width: 100%;
+  }
+  .your-balance-text{
+    font-weight: 800;
   }
 }

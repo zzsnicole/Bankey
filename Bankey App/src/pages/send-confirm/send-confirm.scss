@@ -1,9 +1,17 @@
 page-send-confirm {
-  .scroll-content{
-    padding:0 !important;
-  }
   ion-card{
     margin: 0 !important;
     width:100% !important;
+  }
+  .back-icon-size{
+    padding-left: 15px;
+  }
+  .scroll-content{
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+  ion-card-content p{
+    font-size: 20px !important;
+    margin-top: 20px;
   }
 }

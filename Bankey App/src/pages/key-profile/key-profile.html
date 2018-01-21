@@ -31,11 +31,14 @@
 <!--</ion-header>-->
 
 <ion-content padding>
-  <ion-icon style="position: absolute;" padding class="back-icon-size" text-lg-left color="primary" name="ios-arrow-back" (click)="goBack()"></ion-icon>
 
-  <h6 text-center class="secondary-text-color custom-place" margin-top>Key Profile</h6>
+  <ion-icon class="back-icon-size" text-lg-left color="primary" name="ios-arrow-back" (click)="goBack()"></ion-icon>
 
-  <ion-card style="margin-top:40px !important;">
+  <div class="header-label">
+    <h5>Fadi Abdallah</h5>
+  </div>
+
+  <ion-card>
     <div class="photo-row">
       <div class="circle">
         <ion-icon class="photo" name="person"></ion-icon>
@@ -43,10 +46,12 @@
       </div>
     </div>
     <ion-card-content>
-      <h5 class="title">Achraf Alobaid</h5>
-      <p style="color: #3EAEFF !important;" text-left>Alhamra, Beirut</p>
+      <h5 class="title">Fadi </h5>
+      <h5 class="title"><b>Abdallah</b></h5>
+
+      <p class="address-text" text-left>Alhamra, Beirut</p>
       <div style="display: inline-block;">
-        <p text-left>Rate:</p>
+        <p class="rate-text"ctext-left>Rate:</p>
       </div>
       <rating [(ngModel)]="ratingValue"
         readOnly="false"

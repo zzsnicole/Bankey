@@ -8,9 +8,11 @@
 
 <ion-content padding>
 
-  <ion-icon style="position: absolute;" padding class="back-icon-size" text-lg-left color="primary" name="ios-arrow-back" (click)="goBack()"></ion-icon>
+  <ion-icon class="back-icon-size" text-lg-left color="primary" name="ios-arrow-back" (click)="goBack()"></ion-icon>
 
-  <h6 text-center class="secondary-text-color custom-place" margin-top>{{pageTitle}}</h6>
+  <div class="header-label">
+    <h5>{{pageTitle}}</h5>
+  </div>
 
   <ion-card class="custom-card">
     <ion-item class="right-select-set">
@@ -21,7 +23,7 @@
     </ion-item>
     <ion-card-content text-center>
       <ion-label class="enter-amount-text">{{enteredAmount}}</ion-label>
-      <p class="your-balance-text" margin-top>Your Balance: $00.00</p>
+      <p class="your-balance-text gray-text-color" margin-top>Your Balance: $00.00</p>
     </ion-card-content>
   </ion-card>
 
