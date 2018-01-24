@@ -10,9 +10,9 @@
   </div>
 
   <div class="text-row">
-    <div>Your are number 150 on the list</div>
+    <div>Your are number {{userListNumber}} on the list</div>
     <div class="bold-text"  >
-      You are on the list, Moataz!
+      You are on the list, {{userName}}!
     </div>
 
     <div class="description">
@@ -21,7 +21,7 @@
   </div>
 
   <ion-row justify-content-center style="display: grid;text-align:center;">
-    <button ion-fab color="secondary" round (click)="goLogin()">
+    <button ion-fab color="secondary" round (click)="goMyAccount()">
       <ion-icon name="ios-arrow-forward"></ion-icon>
     </button>
     Login

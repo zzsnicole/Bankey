@@ -44,14 +44,15 @@ export class PersonalDetailEmailKeyPage {
           "email":this.email_id,
           "name": this.userInfo.name,
           "birth_date": this.userInfo.birth_date,
-          "address":this.addressInfo
+          "address":this.addressInfo,
+          "fee":Number(localStorage.feeValue)
       }
       console.log(params);
       this.httpClient.postService("teller/",params).then(
           (result:any) => {
             console.log(result);
             if(result.success){
-                this.navCtrl.push(InviteFriendsKeyPage);
+                this.navCtrl.push(InviteFriendsKeyPage,{"userName":this.userInfo.name,"userListNumber":result.data.count});
             }
           },
           err => {

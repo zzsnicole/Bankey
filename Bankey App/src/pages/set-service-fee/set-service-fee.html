@@ -23,7 +23,15 @@
     </h1>
   </div>
 
-  <p text-center>Minimum $2</p>
+  <p text-center>Minimum Amount</p>
+
+
+    <ion-row style="justify-content: center;">
+      <ion-col  style="max-width:50px;" *ngFor='let number of [1,2,3,4,5];' (click)="numberBtn(number)">
+        <button ion-fab mini [color]="(number == numberBtnValue) ? 'primary' : 'light'" class="center-custom">${{number}}</button>
+      </ion-col>
+    </ion-row>
+
   <div bottom>
     <ion-row bottom padding-top class="bottom-start-btn" justify-content-center style="display: grid;text-align: center;">
       <button ion-fab color="secondary" round (click)="GoPersonDetail()">

@@ -8,3 +8,4 @@ build/
 platforms/
 plugins/
 .DS_Store
+.sourcemaps

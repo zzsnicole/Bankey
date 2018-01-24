@@ -22,7 +22,7 @@ export class EnterOtpPage {
 
   headerLabel = 'Enter the 6-digit code';
   otpCode = '';
-
+  isPassChange:any = false;
   @ViewChild('input') input: ElementRef;
   @ViewChild('inputHidden') inputHidden: ElementRef;
 
@@ -32,6 +32,10 @@ export class EnterOtpPage {
               public commonFn: CommonFunctionsProvider) {
   }
 
+  ionViewDidLoad() {
+      console.log('ionViewDidLoad EnterOtpPage');
+      this.isPassChange = this.navParams.get("pass_change");
+  }
   onKeyup(event) {
     console.log(this.otpCode.length)
     if (this.otpCode.length == 6) {
@@ -50,12 +54,12 @@ export class EnterOtpPage {
       var otpVerificationParams = {
           "mobile_number":localStorage.mobileNumber,
           "verification_code":Number(this.otpCode),
-          "process":"signup"
+          "process":(this.isPassChange)?"forgotpassword":"signup"
       };
       this.httpClient.postService('phoneverification/',otpVerificationParams).then((result:any) => {
           console.log(result);
           if(result.success){
-              this.navCtrl.push(CreatePasswordPage);
+              this.navCtrl.push(CreatePasswordPage,{"pass_change":this.isPassChange});
           }else{
               this.commonFn.showAlert(result.message);
           }
@@ -63,10 +67,6 @@ export class EnterOtpPage {
           console.log(err);
       });
 
-  }
-
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad EnterOtpPage');
   }
 
   goBack(){

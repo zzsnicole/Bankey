@@ -3,6 +3,7 @@ import { NavController, NavParams } from 'ionic-angular';
 import { SocialSharing } from '@ionic-native/social-sharing';
 import {CreatePasswordPage} from "../create-password/create-password";
 import {CallTellerPage} from "../call-teller/call-teller";
+import {MobilePage} from "../mobile/mobile";
 
 /**
  * Generated class for the InviteFriendsPage page.
@@ -49,7 +50,7 @@ export class InviteFriendsPage {
   }
 
   goKeyUserSliderPage() {
-      this.navCtrl.push(CallTellerPage);
+      this.navCtrl.push(MobilePage);
   }
 
 }

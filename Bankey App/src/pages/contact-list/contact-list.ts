@@ -43,8 +43,8 @@ export class ContactListPage {
   }
 
   OpenAddContactModal(){
-    //this.loadingModal = this.modalCtrl.create(AddContactPage);
-    //this.loadingModal.present();
+    this.loadingModal = this.modalCtrl.create(AddContactPage);
+    this.loadingModal.present();
   }
   GoEnterAmount(){
     this.navCtrl.push(EnterAmountPage,{"send":true});

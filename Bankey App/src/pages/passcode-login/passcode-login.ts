@@ -5,6 +5,7 @@ import {EnterAmountPage} from "../enter-amount/enter-amount";
 import { HttpClientProvider } from "../../providers/http-client/http-client";
 import {SettingPage} from "../setting/setting";
 import {CommonFunctionsProvider} from "../../providers/common-functions/common-functions";
+import {MobilePage} from "../mobile/mobile";
 /**
  * Generated class for the PasscodeLoginPage page.
  *
@@ -35,6 +36,7 @@ export class PasscodeLoginPage {
     this.userInfo.mobile_number = localStorage.mobileNumber;
     this.userName = this.navParams.get("userName");
     this.profilePic = this.navParams.get("profilePic");
+      console.log(this.navParams.get("test"))
     console.log('ionViewDidLoad PasscodeLoginPage');
   }
 
@@ -86,7 +88,14 @@ export class PasscodeLoginPage {
       this.commanFn.showConfirm('Reset Password',"Yes","No","Are you sure you want to reset password.").then(
           result =>{
               if(result == "Yes"){
-                    
+                  this.httpClient.postService("forgotpasswordrequest/",{"mobile_number":this.userInfo.mobile_number}).then(
+                      (result:any) =>{
+                          console.log(result);
+                          if(result.success){
+                              this.navCtrl.push(EnterOtpPage,{"pass_change":true});
+                          }
+                      }
+                  )
               }
           }
       )

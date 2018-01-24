@@ -7,7 +7,7 @@
 <ion-content padding>
   <ion-icon style="position: absolute;" padding class="back-icon-size" text-lg-left color="primary" name="ios-arrow-back" (click)="goBack()"></ion-icon>
 
-  <h6 text-center class="secondary-text-color custom-place" margin-top>Settings</h6>
+  <h5 text-center class="secondary-text-color custom-place" margin-top>Settings</h5>
 
   <ion-card style="margin-top:20px !important;">
     <div class="photo-row">
@@ -19,7 +19,7 @@
     <h5 class="title">Achraf Alobaid</h5>
   </ion-card>
   <ion-list >
-    <button ion-item>
+    <button ion-item (click)="ChangePage('edit-profile');">
       Edit Profile
     </button>
     <button ion-item>

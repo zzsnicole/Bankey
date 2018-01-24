@@ -1,10 +1,11 @@
 import { InviteFriendsPage } from './../invite-friends/invite-friends';
 import { Component } from '@angular/core';
-import { NavController, NavParams, ActionSheetController, Platform } from 'ionic-angular';
+import { NavController, NavParams, ActionSheetController, Platform, normalizeURL } from 'ionic-angular';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import { HttpClientProvider } from "../../providers/http-client/http-client";
 import { CommonFunctionsProvider } from "../../providers/common-functions/common-functions";
 import { File } from '@ionic-native/file';
+import {DomSanitizer} from '@angular/platform-browser';
 /**
  * Generated class for the PersonalDetailsPage page.
  *
@@ -36,11 +37,11 @@ export class PersonalDetailsPage {
       sourceType: '',
       saveToPhotoAlbum: false,
       correctOrientation: true,
-      destinationType: this.camera.DestinationType.DATA_URL,
+      destinationType: this.platform.is('ios') ? this.camera.DestinationType.DATA_URL : this.camera.DestinationType.DATA_URL,
       encodingType: this.camera.EncodingType.JPEG,
       mediaType: this.camera.MediaType.PICTURE,
   };
-  FormData:any= formdata;
+  CameraParams:any;
   public window = window;
   constructor(  public navCtrl: NavController,
                 public navParams: NavParams,
@@ -49,7 +50,8 @@ export class PersonalDetailsPage {
                 public commonFn: CommonFunctionsProvider,
                 private file: File,
                 public actionSheetCtrl: ActionSheetController,
-                public platform: Platform) {
+                public platform: Platform,
+                public _DomSanitizer: DomSanitizer) {
   }
 
   ionViewDidLoad() {
@@ -108,6 +110,7 @@ export class PersonalDetailsPage {
             console.log(result);
             if(result.success){
                 localStorage.imageData = this.imagePath;
+                this.navCtrl.push(InviteFriendsPage);
             }else{
                 this.commonFn.showAlert(result.message);
             }
@@ -124,6 +127,7 @@ export class PersonalDetailsPage {
         this.camera.getPicture(this.cameraOption).then((imagePath) => {
             // Special handling for Android library
             //console.log(imagePath);
+
             if (this.platform.is('android') && sourceType === this.camera.PictureSourceType.PHOTOLIBRARY) {
                 // this.filePath.resolveNativePath(imagePath)
                 //     .then(filePath => {
@@ -131,47 +135,58 @@ export class PersonalDetailsPage {
                 //         let currentName = imagePath.substring(imagePath.lastIndexOf('/') + 1, imagePath.lastIndexOf('?'));
                 //         this.copyFileToLocalDir(correctPath, currentName, this.createFileName(), type);
                 //     });
+                let base64Image = 'data:image/jpeg;base64,' + imagePath;
+                this.imagePath = base64Image;
+                this.CameraParams = {
+                    "phone_no":"+15713353690",
+                    "photo":imagePath
+                }
             } else {
+
+                let base64Image = 'data:image/jpeg;base64,' + imagePath;
+                this.imagePath = base64Image;
+                this.CameraParams = {
+                    "phone_no":"+15713353690",
+                    "photo":imagePath
+                }
+                //this.fileUpload(this.CameraParams);
+                //file:///Users/webwerks/Library/Developer/CoreSimulator/Devices/9353B417-E8E3-4784-AEB9-68D35EA71781/data/Containers/Data/Application/B687241E-3386-404E-ABFD-09B09B22BB6A/tmp/cdv_photo_005.jpg
+
                 // var currentName = imagePath.substr(imagePath.lastIndexOf('/') + 1);
                 // var correctPath = imagePath.substr(0, imagePath.lastIndexOf('/') + 1);
                 // this.upload(correctPath,currentName);
-                let base64Image = 'data:image/jpeg;base64,' + imagePath;
-                this.imagePath = base64Image;
-                this.fileUpload({
-                    "phone_no":"+15713353690",
-                    "photo":imagePath
-                })
+
             }
         }, (err) => {
             //alert('Error while selecting image.');
         });
   }
-   upload(imagepath,fileName) {
-
-       this.file.readAsArrayBuffer(imagepath,fileName).then((result)=>{
-
-
-           this.FormData.append("phone_no",localStorage.mobileNumber);
-
-                   //console.log(imagepath);
-                   // Create a blob based on the FileReader "result", which we asked to be retrieved as an ArrayBuffer
-                   var blob = new Blob([new Uint8Array(result)], { type: "image/png" });
-                   this.FormData.append("photo",blob);
-
-                   var oReq = new XMLHttpRequest();
-                   oReq.open("PUT", "http://54.91.82.248/api/uploadphoto/", true);
-                   oReq.setRequestHeader("Content-type","multipart/form-data");
-                   oReq.onload = function (result) {
-                       // all done!
-                        console.log(result);
-                   };
-                   // Pass the blob in to XHR's send method
-                   oReq.send(this.FormData);
-        },(err)=>{
-            console.log(err);
-        })
-
-   }
+   // upload(imagepath,fileName) {
+   //
+   //     this.file.readAsArrayBuffer(imagepath,fileName).then((result)=>{
+   //
+   //
+   //         this.FormData.append("phone_no",localStorage.mobileNumber);
+   //
+   //                 //console.log(imagepath);
+   //                 // Create a blob based on the FileReader "result", which we asked to be retrieved as an ArrayBuffer
+   //                 var blob = new Blob([new Uint8Array(result)], { type: "image/png" });
+   //                 this.FormData.append("photo",blob);
+   //
+   //                 var oReq = new XMLHttpRequest();
+   //                 oReq.open("PUT", "http://54.91.82.248/api/uploadphoto/", true);
+   //                 oReq.setRequestHeader("Content-type","multipart/form-data");
+   //                 oReq.onload = function (result) {
+   //                     // all done!
+   //                      console.log(result);
+   //                 };
+   //                 // Pass the blob in to XHR's send method
+   //                 oReq.send(this.FormData);
+   //      },(err)=>{
+   //          console.log(err);
+   //      })
+   //
+   // }
 
 
   signUp() {
@@ -187,7 +202,7 @@ export class PersonalDetailsPage {
             this.navCtrl.push(InviteFriendsPage,{"userName":result.data.name})
             localStorage.userData = result.data;
             if(this.imagePath){
-                //this.fileUpload();
+                this.fileUpload(this.CameraParams);
             }
 
         }else{

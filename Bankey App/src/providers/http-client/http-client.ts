@@ -17,7 +17,7 @@ export class HttpClientProvider {
 
   getHeader(){
       if(localStorage.userObject){
-         return new HttpHeaders().set('Content-Type','application/json').set("authorization", "Token 3fff27b6eb8ba39825db2f4da9d56d73ab313456");
+         return new HttpHeaders().set('Content-Type','application/json').set("authorization", "Token "+JSON.parse(localStorage.userObject).auth_token);
       }else{
          return new HttpHeaders().set('Content-Type','application/json');
       }

@@ -75,6 +75,8 @@ export class MobilePage {
         }else{
             //replace by alert controller of ionic
             if(result.message == "User Exist."){
+                localStorage.mobileNumber = otpRequestParams.mobile_number;
+                localStorage.imagePath = "http://54.91.82.248/"+result.data.photo;
                 this.navCtrl.push(PasscodeLoginPage,{"userName":result.data.name,"profilePic":"http://54.91.82.248/"+result.data.photo});
             }else{
                 this.commonFn.showAlert(result.message);

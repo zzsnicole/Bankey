@@ -6,6 +6,7 @@ import {MobilePage} from "../mobile/mobile";
 import {CommonFunctionsProvider} from "../../providers/common-functions/common-functions";
 import {HttpClientProvider} from "../../providers/http-client/http-client";
 import {HomeKeyPage} from "../home-key/home-key";
+import {EditProfilePage} from "../edit-profile/edit-profile";
 
 /**
  * Generated class for the SettingPage page.
@@ -78,6 +79,9 @@ export class SettingPage {
           break;
         case "become-key":
             this.navCtrl.push(HomeKeyPage);
+            break;
+        case "edit-profile":
+            this.navCtrl.push(EditProfilePage);
             break;
     }
   }

@@ -1,15 +1,12 @@
 import { Component } from '@angular/core';
 import {ActionSheetController, IonicPage, NavController, NavParams, Platform} from 'ionic-angular';
-import {InviteFriendsPage} from "../invite-friends/invite-friends";
-import {Camera, CameraOptions} from "@ionic-native/camera";
-import {PersonalDetailAddressKeyPage} from "../personal-detail-address-key/personal-detail-address-key";
-import {CommonFunctionsProvider} from "../../providers/common-functions/common-functions";
-import {DomSanitizer} from '@angular/platform-browser';
+import { Camera, CameraOptions } from '@ionic-native/camera';
 import {HttpClientProvider} from "../../providers/http-client/http-client";
 import {File} from "@ionic-native/file";
-
+import {CommonFunctionsProvider} from "../../providers/common-functions/common-functions";
+import {DomSanitizer} from '@angular/platform-browser';
 /**
- * Generated class for the PersonalDetailKeyPage page.
+ * Generated class for the EditProfilePage page.
  *
  * See https://ionicframework.com/docs/components/#navigation for more info on
  * Ionic pages and navigation.
@@ -17,63 +14,93 @@ import {File} from "@ionic-native/file";
 
 @IonicPage()
 @Component({
-  selector: 'page-personal-detail-key',
-  templateUrl: 'personal-detail-key.html',
+  selector: 'page-edit-profile',
+  templateUrl: 'edit-profile.html',
 })
-export class PersonalDetailKeyPage {
-
+export class EditProfilePage {
     headerLabel = 'Your personal details';
-    userInfo ={
-        name:"",
-        birth_date:""
-    }
+    userInfo = {
+        "name":"",
+        "email": "",
+        "line1": "",
+        "line2": "",
+        "birth_date": "",
+        "country":"US"
+    };
+    userPostObj:any;
+    imagePath = "";
     CameraParams:any;
-    imagePath:any;
     cameraOption: any = {
         quality: 20,
         sourceType: '',
         saveToPhotoAlbum: false,
         correctOrientation: true,
-        destinationType: this.platform.is('ios') ? this.camera.DestinationType.DATA_URL : this.camera.DestinationType.DATA_URL,
+        destinationType: this.camera.DestinationType.DATA_URL,
         encodingType: this.camera.EncodingType.JPEG,
         mediaType: this.camera.MediaType.PICTURE,
     };
-    constructor(public navCtrl: NavController,
-                public navParams: NavParams,
-                public camera: Camera,
-                public httpClient: HttpClientProvider,
-                public commonFn: CommonFunctionsProvider,
-                private file: File,
-                public actionSheetCtrl: ActionSheetController,
-                public platform: Platform,
-                public _DomSanitizer: DomSanitizer) {
+  constructor(public navCtrl: NavController,
+              public navParams: NavParams,
+              public camera: Camera,
+              public httpClient: HttpClientProvider,
+              public commonFn: CommonFunctionsProvider,
+              private file: File,
+              public actionSheetCtrl: ActionSheetController,
+              public platform: Platform,
+              public _DomSanitizer: DomSanitizer){
+  }
 
-    }
-
-
-
-    ionViewDidLoad() {
-        if(localStorage.imagePath){
-            this.imagePath = localStorage.imagePath;
+  ionViewDidLoad() {
+    console.log('ionViewDidLoad EditProfilePage');
+    this.getUserInfo();
+  }
+  getUserInfo(){
+    this.httpClient.getService("userdetails/"+JSON.parse(localStorage.userObject).user_id+"/").then(
+        result => {
+          console.log(result);
+            this.userPostObj = result;
+            this.userInfo.email = this.userPostObj.email;
+            this.userInfo.name = this.userPostObj.name;
+            this.userInfo.birth_date = this.userPostObj.birth_date;
+            this.userInfo.line1 = this.userPostObj.address.line1;
+            this.userInfo.line2 = this.userPostObj.address.line2;
+            this.imagePath =  this.userPostObj.photo;
+        },
+        err => {
+          console.log(err);
         }
-        console.log('ionViewDidLoad PersonalDetailKey Page');
-    }
-
-    Submit(){
-        if(this.userInfo.name == ""){
-            this.commonFn.showAlert("Please enter Name");
+    )
+  }
+    UpdateUser(){
+        if(this.userInfo.name == ''){
+          this.commonFn.showAlert("Please enter name.");
+          return false;
+        }
+        if(this.userInfo.email == ''){
+            this.commonFn.showAlert("Please enter email.");
             return false;
         }
-        else if(this.userInfo.birth_date == ""){
-            this.commonFn.showAlert("Please enter Birth Date");
+        if(this.userInfo.birth_date == ''){
+            this.commonFn.showAlert("Please enter birth date.");
             return false;
         }
-        console.log(this.userInfo);
-        this.navCtrl.push(PersonalDetailAddressKeyPage,{"userInfo":this.userInfo});
+
+        this.userPostObj.email = this.userInfo.email;
+        this.userPostObj.name = this.userInfo.name;
+        this.userPostObj.birth_date = this.userInfo.birth_date;
+        this.userPostObj.address.line1 = this.userInfo.line1;
+        this.userPostObj.address.line2 = this.userInfo.line2;
+        this.userPostObj.address.country = this.userInfo.country;
+        delete(this.userPostObj.photo);
+        this.httpClient.putService("userdetails/"+JSON.parse(localStorage.userObject).user_id+"/",this.userPostObj).then(
+        result => {
+            console.log(result);
+        },
+        err => {
+            console.log(err);
+        }
+        );
     }
-
-    base64Image = ''
-
     presentActionSheet = function() {
         let actionSheet = this.actionSheetCtrl.create({
             title: 'Select Image Source',
@@ -94,20 +121,6 @@ export class PersonalDetailKeyPage {
         });
         actionSheet.present();
     };
-
-    fileUpload(params){
-        this.httpClient.putService('uploadphoto/',JSON.stringify(params)).then((result:any) => {
-            console.log(result);
-            if(result.success){
-                localStorage.imageData = this.imagePath;
-                this.navCtrl.push(InviteFriendsPage);
-            }else{
-                this.commonFn.showAlert(result.message);
-            }
-        }, (err) => {
-            console.log(err);
-        });
-    }
 
     public takePicture(sourceType) {
         // Create options for the Camera Dialog
@@ -152,12 +165,21 @@ export class PersonalDetailKeyPage {
         });
     }
 
-    goToAddressPage() {
-
+    fileUpload(params){
+        this.httpClient.putService('uploadphoto/',JSON.stringify(params)).then((result:any) => {
+            console.log(result);
+            if(result.success){
+                localStorage.imageData = this.imagePath;
+            }else{
+                this.commonFn.showAlert(result.message);
+            }
+        }, (err) => {
+            console.log(err);
+        });
     }
+
 
     goBack(){
         this.navCtrl.pop();
-    }
-
+      }
 }

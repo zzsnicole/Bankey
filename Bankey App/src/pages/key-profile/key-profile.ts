@@ -17,7 +17,8 @@ import {KeyRequestConfirmPage} from "../key-request-confirm/key-request-confirm"
 })
 export class KeyProfilePage {
   ratingValue = 4;
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController,
+              public navParams: NavParams) {
   }
 
   ionViewDidLoad() {

@@ -15,7 +15,8 @@ import {PersonalDetailKeyPage} from "../personal-detail-key/personal-detail-key"
   templateUrl: 'set-service-fee.html',
 })
 export class SetServiceFeePage {
-  feeValue = 0.10;
+  feeValue = 2;
+  numberBtnValue = 2;
   constructor(public navCtrl: NavController, public navParams: NavParams) {
   }
 
@@ -24,6 +25,7 @@ export class SetServiceFeePage {
   }
 
   GoPersonDetail() {
+    localStorage.feeValue = this.feeValue.toFixed(2);
     this.navCtrl.push(PersonalDetailKeyPage);
   }
 
@@ -36,5 +38,10 @@ export class SetServiceFeePage {
 
   goBack(){
     this.navCtrl.pop();
+  }
+  numberBtn(index){
+    console.log("you clicked button"+index);
+    this.numberBtnValue = index;
+    this.feeValue = index;
   }
 }

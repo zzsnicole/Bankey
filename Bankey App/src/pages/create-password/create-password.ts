@@ -1,6 +1,8 @@
 import { PersonalDetailsPage } from './../personal-details/personal-details';
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
+import {CommonFunctionsProvider} from "../../providers/common-functions/common-functions";
+import {HttpClientProvider} from "../../providers/http-client/http-client";
 
 /**
  * Generated class for the CreatePasswordPage page.
@@ -18,13 +20,20 @@ export class CreatePasswordPage {
 	createPasswordLabel = "Create a passcode for your Bankey account";
 	enteredPasscode = '';
 	firstPassword = '';
-	confirmPassword = ''
-
-	constructor(public navCtrl: NavController, public navParams: NavParams) {
+	confirmPassword = '';
+    isPassChange = false;
+	constructor(public navCtrl: NavController,
+				public navParams: NavParams,
+				public commonFn: CommonFunctionsProvider,
+				public httpClient: HttpClientProvider) {
 	}
 
 	ionViewDidLoad() {
 		console.log('ionViewDidLoad CreatePasswordPage');
+        this.isPassChange = this.navParams.get("pass_change");
+        if(this.isPassChange){
+            this.createPasswordLabel = "reset a passcode for your Bankey account";
+		}
 	}
 
 	digit(d) {
@@ -53,7 +62,23 @@ export class CreatePasswordPage {
 	}
 
   setPassword() {
+		if(this.isPassChange){
+            this.httpClient.postService('forgotpassword/',{"mobile_number":localStorage.mobileNumber,
+				"password":this.enteredPasscode }).then((result:any) => {
+                console.log(result);
+                if(result.success){
+                    this.navCtrl.remove(2,1);
+                    this.navCtrl.pop();
+                }else{
+                    this.commonFn.showAlert(result.message);
+                }
+            }, (err) => {
+                console.log(err);
+            });
+
+		}else {
           this.navCtrl.push(PersonalDetailsPage,{"password_":this.enteredPasscode});
+	    }
   }
 
 	delete() {
