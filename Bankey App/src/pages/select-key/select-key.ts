@@ -13,6 +13,7 @@ import {
 import {KeyProfilePage} from "../key-profile/key-profile";
 import {LoadingModalPage} from "../loading-modal/loading-modal";
 import {MobilePage} from "../mobile/mobile";
+import {PushProvider} from "../../providers/push/push";
 
 declare var google;
 /**
@@ -39,10 +40,12 @@ export class SelectKeyPage {
                 public navParams: NavParams,
                 private googleMaps: GoogleMaps,
                 private ngZone: NgZone,
-                public modalCtrl: ModalController) {
+                public modalCtrl: ModalController,
+                public pushService: PushProvider) {
 
     }
     ionViewDidLoad() {
+         this.pushService.init();
          this.presentOverlay();
          this.getLocation();
          this.loadMap();

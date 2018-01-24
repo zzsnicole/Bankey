@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "911473836893",
+    "firebase_url": "https://bankey-1514454034941.firebaseio.com",
+    "project_id": "bankey-1514454034941",
+    "storage_bucket": "bankey-1514454034941.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:911473836893:android:beda5294663e6c53",
+        "android_client_info": {
+          "package_name": "com.ionic.bankey"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "911473836893-pq7b32r7l2vsdgunku38v49ipkoo5boc.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ionic.bankey",
+            "certificate_hash": "9daf913ee654353a309cb2ba0bf63720d2b48597"
+          }
+        },
+        {
+          "client_id": "911473836893-tbbrd266b8t80dlb2boiqcmhu4it3puk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCSqiK9_o80ZmKVNn_IFOxaVe8Z8R1ybjo"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "911473836893-tbbrd266b8t80dlb2boiqcmhu4it3puk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

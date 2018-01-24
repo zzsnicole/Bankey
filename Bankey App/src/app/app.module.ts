@@ -49,6 +49,8 @@ import {TermsAndConditionPage} from "../pages/terms-and-condition/terms-and-cond
 import {PrivacyPolicyPage} from "../pages/privacy-policy/privacy-policy";
 import {SetServiceFeePage} from "../pages/set-service-fee/set-service-fee";
 import {EditProfilePage} from "../pages/edit-profile/edit-profile";
+import { PushProvider } from '../providers/push/push';
+import { FCM } from '@ionic-native/fcm';
 
 @NgModule({
     declarations: [
@@ -140,10 +142,12 @@ import {EditProfilePage} from "../pages/edit-profile/edit-profile";
         SocialSharing,
         GoogleMaps,
         File,
+        FCM,
         Contacts,
         {provide: ErrorHandler, useClass: IonicErrorHandler},
         HttpClientProvider,
-        CommonFunctionsProvider
+        CommonFunctionsProvider,
+        PushProvider
     ]
 })
 export class AppModule {
