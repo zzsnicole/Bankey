@@ -25,7 +25,7 @@ SECRET_KEY = '-ob3kia&kv8qio2*55%mci7k-2&zh3y*h-5__m+q7=r^4m3rsi'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -37,10 +37,14 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
+    'postman',
     'rest_framework',
+    'rest_framework.authtoken',
     'user_management',
     'wallet_transactions',
     'corsheaders',
+    'push_notifications'
 ]
 
 MIDDLEWARE = [
@@ -53,7 +57,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
-
+SITE_ID = 1
 ROOT_URLCONF = 'Bankey.urls'
 
 TEMPLATES = [
@@ -80,7 +84,7 @@ WSGI_APPLICATION = 'Bankey.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'bankey_db',
+        'NAME': 'bankey_database',
         'USER': 'postgres',
         'PASSWORD': 'postgres',
         'HOST': 'localhost',
@@ -135,19 +139,22 @@ STATUS_CHOICES = (('A', 'Active'), ('I', 'Inactive'), ('D', 'Delete'))
 TRANSACTION_TYPES = (('C', 'Credit'), ('D', 'Debit'), ('T', 'Transfer'))
 TRANSACTION_STATUS = (('S', 'Success'), ('F', 'Fail'), ('P', 'Pending'), ('R', 'Rejected'))
 CASH_REQUEST_STATUS = (('P', 'Pending'), ('A', 'Accepted'), ('R', 'Rejected'), ('C', 'Completed'))
+CASH_REQUEST_TYPE = (('A', 'Add Money'), ('W', 'Withdraw Money'))
 VERIFICATION_STATUS = (('V', 'Verified'), ('U', 'Unverified'))
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.TokenAuthentication',
         'rest_framework.authentication.BasicAuthentication',
         'rest_framework.authentication.SessionAuthentication',
     )
 }
-CORS_ORIGIN_ALLOW_ALL = False
+CORS_ORIGIN_ALLOW_ALL = True
 CORS_ALLOW_CREDENTIALS = True
-CORS_ORIGIN_WHITELIST = (
-    'http://localhost:8100'
-)
+# CORS_ORIGIN_WHITELIST = (
+#     'http://localhost:8100',
+#     'http://localhost:8080'
+# )
 
 # Twilio authentication parameters
 TWILIO_SID = "ACf2e9c09c67553da245af1a7274d46980"
@@ -217,3 +224,34 @@ LOGGING = {
     },
 }
 
+# Postman messanger settings
+POSTMAN_DISALLOW_ANONYMOUS = True
+POSTMAN_DISABLE_USER_EMAILING = True
+POSTMAN_SHOW_USER_AS = 'phone_no'
+POSTMAN_NAME_USER_AS = 'name'
+
+#
+# PUSH_NOTIFICATIONS_SETTINGS = {
+#         "FCM_API_KEY": "AIzaSyCSqiK9_o80ZmKVNn_IFOxaVe8Z8R1ybjo",
+#         "FCM_ERROR_TIMEOUT": 5000
+#         # "APNS_CERTIFICATE": "/path/to/your/certificate.pem",
+#         # "APNS_TOPIC": "com.example.push_test"
+#         # "APNS_USE_ALTERNATIVE_PORT": 2197,
+#         # "APNS_USE_SANDBOX": "api.development.push.apple.com"
+# }
+
+PUSH_NOTIFICATIONS_SETTINGS = {
+  # Load and process all PUSH_NOTIFICATIONS_SETTINGS using the AppConfig manager.
+  "CONFIG": "push_notifications.conf.AppConfig",
+
+  # collection of all defined applications
+  "APPLICATIONS": {
+    "bankey_android": {
+      # PLATFORM (required) determines what additional settings are required.
+      "PLATFORM": "FCM",
+      # required FCM setting
+      "API_KEY": "AIzaSyDEnC79xdVt7VWfbzD4VoJDJ1Oglnz0IxM",
+      "ERROR_TIMEOUT": 5000
+    }
+  }
+}

@@ -23,6 +23,10 @@ class Country(models.Model):
     flag = models.ImageField(upload_to='country_flags/',blank=False, null=True)
     status = models.CharField(max_length=1, choices=settings.STATUS_CHOICES, default='A')
 
+    class Meta:
+        verbose_name = "Country"
+        verbose_name_plural = "Countries"
+
     def __str__(self):
         country = '%s(%s)' % (self.name, self.code)
         return country.strip()
@@ -79,6 +83,8 @@ class User(AbstractBaseUser, PermissionsMixin):
     birth_date = models.DateField('Birth Date', blank=True, null=True)
     contacts = models.ManyToManyField('self', related_name='user_contacts', blank=True)
     status = models.CharField(max_length=1, choices=settings.STATUS_CHOICES, default='A')
+    stripe_customer_id = models.CharField(max_length=256, blank=False, null=True)
+    stripe_account_id = models.CharField(max_length=256, blank=False, null=True)
 
     objects = UserManager()
 
@@ -123,6 +129,19 @@ class PhoneVerification(models.Model):
     status = models.CharField(max_length=1, choices=settings.VERIFICATION_STATUS, default='U')
 
 
+class ForgotPasswordRequests(models.Model):
+    """
+    Forgot password requests
+    """
+    phone_no = models.CharField(_('phone number'), validators=[RegexValidator(regex=r'^\+?1?\d{9,15}$',
+                                 message="Phone number must be entered in the format:\
+                                  '+999999999'. Up to 15 digits allowed.")], max_length=15,\
+                                  unique=True, blank=False, null=False)
+    code = models.PositiveIntegerField(unique=True, blank=False, null=True)
+    created_at = models.DateTimeField(default=timezone.now)
+    status = models.CharField(max_length=1, choices=settings.VERIFICATION_STATUS, default='U')
+
+
 class Teller(models.Model):
     """
     Teller model
@@ -133,6 +152,7 @@ class Teller(models.Model):
         default=False,
         help_text=_('Is service activate for users.'),
     )
+    fee = models.DecimalField(max_digits=5, decimal_places=2, blank=False, null=False, default=0)
 
     def __str__(self):
         return self.user.email

@@ -6,8 +6,10 @@ import time, base64, six, uuid, imghdr
 from django.core.files.base import ContentFile
 from django.core.files.base import ContentFile
 
-from user_management.models import *
 from rest_framework import serializers
+from rest_framework.authtoken.models import Token
+
+from user_management.models import *
 
 
 class Base64ImageField(serializers.ImageField):
@@ -95,9 +97,7 @@ class UserSerializer(serializers.ModelSerializer):
         address_data = validated_data.pop('address')
         user = User.objects.create(**validated_data)
         country = Country.objects.get(code=address_data['country'])
-        user.address = Address.objects.create(line1=address_data['line1'], line2=address_data['line2'],\
-                                              city=address_data['city'], state=address_data['state'], country=country,\
-                                              pin_code=address_data['pin_code'])
+        user.address = Address.objects.create(country=country)
         user.set_password(validated_data['password'])
         user.save()
         Token.objects.create(user=user)
@@ -127,7 +127,7 @@ class UserContactsSerializer(serializers.ModelSerializer):
     """
     class Meta:
         model = User
-        fields = ('email', 'phone_no', 'photo')
+        fields = ('phone_no', 'photo')
 
 
 class TellerRatingsAndFeedbackSerializer(serializers.ModelSerializer):

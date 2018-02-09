@@ -5,38 +5,3 @@ from user_management.models import *
 from wallet_transactions.models import *
 from rest_framework import serializers
 
-
-class CurrencySerializer(serializers.ModelSerializer):
-    """
-    Currency Serializer
-    """
-    class Meta:
-        model = Currency
-        fields = ('name', 'code', 'status')
-
-
-class UserWalletSerializer(serializers.ModelSerializer):
-    """
-    UserWallet Serializer
-    """
-    class Meta:
-        model = UserWallet
-        fields = ('user', 'currency', 'balance','status')
-
-
-class TellerCashBalancesSerializer(serializers.ModelSerializer):
-    """
-    TellerCashBalances Serializer
-    """
-    class Meta:
-        model = TellerCashBalances
-        fields = ('teller', 'currency', 'balance')
-
-
-class SendMoneyTransactionHistorySerializer(serializers.ModelSerializer):
-    """
-    SendMoneyTransactionHistory Serializer
-    """
-    class Meta:
-        model = SendMoneyTransactionHistory
-        fields = ('from_user', 'to_user', 'transaction', 'note')

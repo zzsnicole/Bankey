@@ -9,10 +9,9 @@ from rest_framework.views import APIView
 from rest_framework import status
 from rest_framework.permissions import IsAdminUser, AllowAny, IsAuthenticated
 
-from .serializers import *
+from wallet_transactions.rest.serializers.wallet import *
 from user_management.models import *
 from wallet_transactions.models import *
 from user_management.rest.permissions import *
 
 logger = logging.getLogger("wallets_log")
-
