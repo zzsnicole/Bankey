@@ -82,32 +82,6 @@ class Signup(generics.CreateAPIView):
             })
 
 
-# class PhotoView(APIView):
-#     """
-#     Upload photo
-#     """
-#     parser_classes = (MultiPartParser, FormParser)
-#
-#     def put(self, request, *args, **kwargs):
-#         try:
-#             user = User.objects.get(phone_no=request.data['phone_no'])
-#             user.photo = request.data['photo']
-#             user.save()
-#             logger.info("{} photo is uploaded successfully.".format(request.data['phone_no']))
-#             return Response({
-#               'success': True,
-#               'message': 'Successfully uploaded photo.',
-#               'data': {}
-#             })
-#         except Exception as e:
-#             logger.exception("{}, error occured while uploading photo.".format(e))
-#             return Response({
-#               'success': False,
-#               'message': 'Error occured while uploading photo.',
-#               'data': {}
-#            })
-
-
 class PhotoView(UpdateAPIView):
     """
     Upload profile photo
@@ -327,9 +301,9 @@ class PhoneVerificationRequestView(APIView):
                                                                 code = random_string)
 
             client = Client(settings.TWILIO_SID, settings.TWILIO_AUTH_TOKEN)
-            # message = client.messages.create(verification.phone_no,
-            #     body="From bankey, your verification code is {}".format(verification.code),
-            #     from_=settings.TWILIO_PHONE_NUMBER)
+            message = client.messages.create(verification.phone_no,
+                body="From bankey, your verification code is {}".format(verification.code),
+                from_=settings.TWILIO_PHONE_NUMBER)
             logger.info("Verification code successfully sent to {}.".format(verification.phone_no))
 
             return Response({
@@ -370,9 +344,9 @@ class ForgotPasswordRequestView(APIView):
                 })
 
             client = Client(settings.TWILIO_SID, settings.TWILIO_AUTH_TOKEN)
-            # message = client.messages.create(verification.phone_no,
-            #     body="From bankey, your verification code is {}".format(verification.code),
-            #     from_=settings.TWILIO_PHONE_NUMBER)
+            message = client.messages.create(verification.phone_no,
+                body="From bankey, your verification code is {}".format(verification.code),
+                from_=settings.TWILIO_PHONE_NUMBER)
             logger.info("Verification code successfully sent to {}.".format(verification.phone_no))
 
             return Response({
