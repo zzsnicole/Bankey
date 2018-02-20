@@ -8,8 +8,10 @@ from django.core.files.base import ContentFile
 
 from rest_framework import serializers
 from rest_framework.authtoken.models import Token
+from mangopay.resources import NaturalUser, Wallet
 
 from user_management.models import *
+from wallet_transactions.models import *
 
 
 class Base64ImageField(serializers.ImageField):
@@ -101,23 +103,56 @@ class UserSerializer(serializers.ModelSerializer):
         user.set_password(validated_data['password'])
         user.save()
         Token.objects.create(user=user)
+        first_name, last_name = validated_data['name'].split(' ')
+        birth_date = int(time.mktime(time.strptime(str(validated_data['birth_date']),'%Y-%m-%d')))
+        mangopay_user = NaturalUser(first_name=first_name,
+                                   last_name=last_name,
+                                   birthday=birth_date,
+                                   nationality=country.code,
+                                   country_of_residence=country.code,
+                                   person_type='NATURAL',
+                                   email=validated_data['email'])
+        mangopay_user.save()
+        user.mangopay_user_id = mangopay_user.id
+        user.save()
+        wallet = Wallet(owners=[mangopay_user],
+                        description='Wallet for USD',
+                        currency='USD')
+
+        wallet.save()
+        currency = Currency.objects.get(code='USD')
+        UserWallet.objects.create(user=user, currency=currency, mangopay_wallet_id= wallet.id)
         return user
 
     def update(self, instance, validated_data):
+        mangopay_user = NaturalUser.get(instance.mangopay_user_id)
+        print(">>>>>",mangopay_user.id)
         instance.email = validated_data.get('email', instance.email)
         instance.name = validated_data.get('name', instance.name)
         instance.birth_date = validated_data.get('birth_date', instance.birth_date)
         # instance.photo = validated_data.get('photo', instance.photo)
         instance.save()
-        address = instance.address
+        mangopay_user.email = instance.email
+        mangopay_user.birthday = int(time.mktime(time.strptime(str(instance.birth_date),'%Y-%m-%d')))
+        mangopay_user.first_name, mangopay_user.last_name = instance.name.split(' ')
+        print(instance.email, type(instance.email), int(time.mktime(time.strptime(str(instance.birth_date),'%Y-%m-%d'))),\
+              type(int(time.mktime(time.strptime(str(instance.birth_date),'%Y-%m-%d')))))
         address_data = validated_data.pop('address')
+        address = instance.address
         address.line1 = address_data.get('line1', address.line1)
+        mangopay_user.address.address_line_1 = address_data.get('line1', address.line1)
         address.line2 = address_data.get('line2', address.line2)
+        mangopay_user.address.address_line_2 = address_data.get('line2', address.line2)
         address.city = address_data.get('city', address.city)
+        mangopay_user.address.city = address_data.get('city', address.city)
         address.state = address_data.get('state', address.state)
+        mangopay_user.address.region = address_data.get('state', address.state)
         address.country = Country.objects.get(code=address_data.get('country', address.country))
+        mangopay_user.address.country = address_data.get('country', address.country)
         address.pin_code = address_data.get('pin_code', address.pin_code)
+        mangopay_user.address.postal_code = address_data.get('pin_code', address.pin_code)
         address.save()
+        mangopay_user.save()
         return instance
 
 

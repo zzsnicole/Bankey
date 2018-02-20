@@ -33,24 +33,38 @@ class AddTeller(APIView):
     @transaction.atomic()
     def post(self, request, format=None):
         try:
-            user = request.user
+            mangopay_user = NaturalUser.get(instance.mangopay_user_id)
             address = request.user.address
-            user.email = request.data['email']
-            user.name = request.data['name']
-            user.birth_date = request.data['birth_date']
-            user.save()
+            # request.user.email = request.data['email']
+            # request.user.name = request.data['name']
+            # request.user.birth_date = request.data['birth_date']
+            # request.user.save()
             address_data = request.data['address']
             address.line1 = address_data['line1']
+            mangopay_user.address.address_line_1 = address_data['line1']
             address.line2 = address_data['line2']
+            mangopay_user.address.address_line_2 = address_data['line2']
             address.city = address_data['city']
+            mangopay_user.address.city = address_data['city']
             address.state = address_data['state']
+            mangopay_user.address.region = address_data['state']
             address.country = Country.objects.get(code=address_data['country'])
+            mangopay_user.address.country = address_data['country']
             if address_data['pin_code']:
                 address.pin_code = int(address_data['pin_code'])
+                mangopay_user.address.postal_code = int(address_data['pin_code'])
             else:
                 address.pin_code = None
             address.save()
-            Teller.objects.create(user=user, fee=request.data['fee'])
+            mangopay_user.save()
+            # card_detail = UserCardDetails.objects.get(user=request.user, currency__code=request.data['currency'],\
+            #                                                                                     is_completed = False)
+            # card_registration = CardRegistration.get(card_detail.mangopay_card_registration_id)
+            # card_registration.registration_data = request.data['registration_data']
+            # card_registration.save()
+            # card_detail.is_completed = True
+            # card_detail.save()
+            Teller.objects.create(user=request.user, fee=request.data['fee'])
             count = Teller.objects.filter(user__status='A').count()
             logger.info("Teller role is assigned to {}.".format(user.phone_no))
             return Response({
@@ -69,28 +83,88 @@ class AddTeller(APIView):
             })
 
 
-class SearchTellersView(generics.ListAPIView):
+# class SearchTellersView(generics.ListAPIView):
+#     """
+#     Search Teller by phone_no, country and service
+#     """
+#     serializer_class = TellerSerializer
+#     permission_classes = (IsAuthenticated,)
+#
+#     def get_queryset(self):
+#         queryset = Teller.objects.filter(user__status='A', service_activation=True)
+#         phone_no = self.request.query_params.get('phone_no', None)
+#         country = self.request.query_params.get('country', None)
+#         service = self.request.query_params.get('service', None)
+#         if phone_no is not None:
+#             queryset = queryset.filter(user__phone_no='+'+phone_no.strip())
+#             return queryset
+#         if country is not None:
+#             queryset = queryset.filter(user__address__country__code=country)
+#
+#         if service is not None:
+#             teller_list = TellerServiceCharges.objects.filter(service__code=service).values_list('teller',flat=True)
+#             queryset = queryset.filter(id__in=teller_list)
+#         return queryset
+
+
+class AddTellerLocationView(APIView):
     """
-    Search Teller by phone_no, country and service
+    Add a location of teller
     """
-    serializer_class = TellerSerializer
     permission_classes = (IsAuthenticated,)
 
-    def get_queryset(self):
-        queryset = Teller.objects.filter(user__status='A', service_activation=True)
-        phone_no = self.request.query_params.get('phone_no', None)
-        country = self.request.query_params.get('country', None)
-        service = self.request.query_params.get('service', None)
-        if phone_no is not None:
-            queryset = queryset.filter(user__phone_no='+'+phone_no.strip())
-            return queryset
-        if country is not None:
-            queryset = queryset.filter(user__address__country__code=country)
+    def get(self, request):
+        try:
+            teller = Teller.objects.get(user=request.user)
+            print(">>>>>teller=",teller)
+            teller.lat = decimal.Decimal(self.request.query_params.get('lat', None))
+            teller.long = decimal.Decimal(self.request.query_params.get('long', None))
+            teller.save()
+            teller_serializer = TellerSerializer(teller)
+            logger.info("New location added successfully for {} teller.".format(request.user.phone_no))
+            return Response({
+                'success': True,
+                'message': 'Successfully added a location of teller.',
+                'data': teller_serializer.data
+            })
+        except Exception as e:
+            logger.exception("{}, error occured while adding a location of teller.".format(e))
+            return Response({
+                'success': False,
+                'message': 'Error occured while adding a location of teller.',
+                'data':{}
+            })
 
-        if service is not None:
-            teller_list = TellerServiceCharges.objects.filter(service__code=service).values_list('teller',flat=True)
-            queryset = queryset.filter(id__in=teller_list)
-        return queryset
+
+class SearchTellersView(APIView):
+    """
+    Return tellers to display on map
+    """
+    permission_classes = (IsAuthenticated,)
+
+    def get(self, request):
+        try:
+            lat = decimal.Decimal(self.request.query_params.get('lat', None))
+            long = decimal.Decimal(self.request.query_params.get('long', None))
+            tellers = Teller.objects.filter(user__status='A', service_activation=True)
+            print(">>>>>tellers=",tellers)
+            nearest_tellers = []
+            for teller in tellers:
+                if teller.is_nearest((lat,long)):
+                    teller_serializer = TellerSerializer(teller)
+                    nearest_tellers.append(teller_serializer.data)
+            return Response({
+                'success': True,
+                'message': 'Successfully displayed details.',
+                'data': nearest_tellers
+            })
+        except Exception as e:
+            logger.exception("{}, error occured while displaying teller details.".format(e))
+            return Response({
+                'success': False,
+                'message': 'Error occured while displaying teller details.',
+                'data':{}
+            })
 
 
 class GetTellerDetailsView(APIView):
@@ -166,7 +240,7 @@ class ChangeTellerActivationMode(generics.RetrieveUpdateAPIView):
 
 class ChangeTellerFee(generics.RetrieveUpdateAPIView):
     """
-    Display and update teller's service activation mode
+    Display and update teller's service fee
     """
     queryset = Teller.objects.filter(user__status='A')
     serializer_class = TellerSerializer

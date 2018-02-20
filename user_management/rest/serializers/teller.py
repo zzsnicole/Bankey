@@ -17,7 +17,7 @@ class TellerSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Teller
-        fields = ('user', 'service_activation', 'fee')
+        fields = ('user', 'service_activation', 'fee', 'lat', 'long')
 
 
 class ServiceSerializer(serializers.ModelSerializer):

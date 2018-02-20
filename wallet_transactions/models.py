@@ -11,6 +11,7 @@ class Currency(models.Model):
     """
     name = models.CharField(max_length=128, blank=False, null=False)
     code = models.CharField(max_length=128, unique=True, blank=False, null=False)
+    fee = models.DecimalField(max_digits=7, decimal_places=2, blank=False, null=True)
     status = models.CharField(max_length=1, choices=settings.STATUS_CHOICES, default='A')
 
     class Meta:
@@ -37,7 +38,7 @@ class UserWallet(models.Model):
                              blank=False, null=False)
     currency = models.ForeignKey(Currency, related_name='userwalletcurrency',\
                              blank=False, null=False)
-    balance = models.DecimalField(max_digits=7, decimal_places=2, blank=False, null=False)
+    mangopay_wallet_id = models.CharField(max_length=256, blank=False, null=True)
     status = models.CharField(max_length=1, choices=settings.STATUS_CHOICES, default='A')
 
     class Meta:
@@ -78,7 +79,7 @@ class CashRequest(models.Model):
                              blank=False, null=False)
     teller = models.ForeignKey(Teller, related_name='cash_request',\
                              blank=False, null=False)
-    user_confirmation_code = models.CharField(max_length=128, unique=True, blank=True, null=False)
+    user_confirmation_code = models.CharField(max_length=128, unique=True, blank=True, null=True)
 
     request_type = models.CharField(max_length=1, choices=settings.CASH_REQUEST_TYPE, null=True)
 
@@ -197,3 +198,22 @@ class TellerCashBalances(models.Model):
 
     class Meta:
         unique_together = ('teller','currency')
+
+
+class UserCardDetails(models.Model):
+    """
+    User's credit or debit cards information
+    """
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='user_card_details',\
+                             blank=False, null=False)
+    currency = models.ForeignKey(Currency, related_name='user_card_details',\
+                             blank=False, null=False)
+    mangopay_card_registration_id = models.CharField(max_length=128, blank=False, null=True)
+    is_completed = models.BooleanField(default=False)
+
+    class Meta:
+        unique_together = ('user','currency')
+
+    def __str__(self):
+        card = '%s - %s' % (self.currency, self.mangopay_card_registration_id)
+        return card.strip()

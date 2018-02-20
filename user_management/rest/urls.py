@@ -27,6 +27,7 @@ urlpatterns = [
     url(r'^api/teller/$', AddTeller.as_view(), name='add_teller'),
     url(r'^api/teller/activationmode/$', ChangeTellerActivationMode.as_view(),name='change_teller_activation_mode'),
     url(r'^api/teller/fee/$', ChangeTellerFee.as_view(),name='change_teller_fee'),
+    url(r'^api/add/teller/location/$', AddTellerLocationView.as_view(), name='add_teller_location'),
     url(r'^api/searchtellers/$', SearchTellersView.as_view(), name='search_tellers'),
     url(r'^api/tellerdetails/$', GetTellerDetailsView.as_view(), name='teller_details'),
     url(r'^api/tellerfeedback/$', UserRatingsAndFeedbackViews.as_view(), name='teller_feedback'),

@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 """
 
 import os
+import mangopay
+from mangopay.api import APIRequest
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -255,3 +257,8 @@ PUSH_NOTIFICATIONS_SETTINGS = {
     }
   }
 }
+
+#Mangopay credentials
+mangopay.client_id='bankeyapp'
+mangopay.passphrase='rhrWUZBFHXjGFS5A7iKZKZyWFYeYv12bjc7BEaf4LtWKpBNPYA'
+handler = APIRequest(sandbox=True)

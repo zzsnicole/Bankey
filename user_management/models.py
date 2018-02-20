@@ -1,4 +1,4 @@
-from __future__ import unicode_literals
+import math, decimal
 
 from django.db import models
 from django.utils import timezone
@@ -83,8 +83,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     birth_date = models.DateField('Birth Date', blank=True, null=True)
     contacts = models.ManyToManyField('self', related_name='user_contacts', blank=True)
     status = models.CharField(max_length=1, choices=settings.STATUS_CHOICES, default='A')
-    stripe_customer_id = models.CharField(max_length=256, blank=False, null=True)
-    stripe_account_id = models.CharField(max_length=256, blank=False, null=True)
+    mangopay_user_id = models.CharField(max_length=256, blank=False, null=True)
 
     objects = UserManager()
 
@@ -153,9 +152,35 @@ class Teller(models.Model):
         help_text=_('Is service activate for users.'),
     )
     fee = models.DecimalField(max_digits=5, decimal_places=2, blank=False, null=False, default=0)
+    lat = models.DecimalField(max_digits=9, decimal_places=6, blank=False, null=True)
+    long = models.DecimalField(max_digits=9, decimal_places=6, blank=False, null=True)
 
     def __str__(self):
-        return self.user.email
+        return self.user.phone_no
+
+    def is_nearest(self, user_pos):
+        """
+        Return true if distance between object and user_pos is less than or equal 500 meter.
+        Used the haversine formula.
+        """
+        radius = 6371000  # Meter
+        user_lat, user_long = user_pos
+
+        dlat = math.radians(self.lat - decimal.Decimal(user_lat))
+        dlon = math.radians(self.long - decimal.Decimal(user_long))
+        a = math.sin(dlat / 2)**2 + math.cos(math.radians(user_lat)) * math.cos(math.radians(self.lat))\
+                                                                                            * math.sin(dlon / 2)**2
+        c = 2 * math.atan2(math.sqrt(a), math.sqrt(1 - a))
+        d = radius * c
+        print("distance=",d)
+
+
+        if d < 501:
+            print("Is_near=true")
+            return True
+        else:
+            print("Is_near=false")
+            return False
 
 
 class UserRatingsAndFeedback(models.Model):

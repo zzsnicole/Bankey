@@ -68,13 +68,18 @@ class Signup(generics.CreateAPIView):
             user.data['user_id'] = User.objects.get(phone_no=user.data['phone_no']).id
             user.data['count'] = User.objects.filter(status='A').count()
             logger.info("{} user is created successfully.".format(user.data['phone_no']))
+            login_user = authenticate(request, phone_no=request.data['phone_no'],\
+                                                password=request.data['password'])
+            if login_user is not None:
+                login(request, login_user)
+                user.data['auth_token'] = Token.objects.get(user=login_user).key
             return Response({
                 'success': True,
                 'message': 'User successfully created.',
                 'data':user.data
             })
         except Exception as e:
-            logger.error("{}, error occured while signup.".format(e))
+            logger.exception("{}, error occured while signup.".format(e))
             return Response({
                 'success': False,
                 'message': 'User fail to create.',
