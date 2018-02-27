@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 
 import os
 import mangopay
+import googlemaps
 from mangopay.api import APIRequest
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -43,6 +44,7 @@ INSTALLED_APPS = [
     'postman',
     'rest_framework',
     'rest_framework.authtoken',
+    'rest_framework_swagger',
     'user_management',
     'wallet_transactions',
     'corsheaders',
@@ -262,3 +264,9 @@ PUSH_NOTIFICATIONS_SETTINGS = {
 mangopay.client_id='bankeyapp'
 mangopay.passphrase='rhrWUZBFHXjGFS5A7iKZKZyWFYeYv12bjc7BEaf4LtWKpBNPYA'
 handler = APIRequest(sandbox=True)
+
+SWAGGER_SETTINGS = {
+'JSON_EDITOR': True,
+}
+
+GMAPS = googlemaps.Client(key=" ")

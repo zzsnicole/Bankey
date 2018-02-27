@@ -152,7 +152,10 @@ class SearchTellersView(APIView):
             for teller in tellers:
                 if teller.is_nearest((lat,long)):
                     teller_serializer = TellerSerializer(teller)
-                    nearest_tellers.append(teller_serializer.data)
+                    teller_details = teller_serializer.data
+                    print(">>>>>>>>>>duration=", teller.get_duration((lat,long)))
+                    teller_details['duration'] = teller.get_duration((lat,long))
+                    nearest_tellers.append(teller_details)
             return Response({
                 'success': True,
                 'message': 'Successfully displayed details.',
@@ -167,27 +170,59 @@ class SearchTellersView(APIView):
             })
 
 
-class GetTellerDetailsView(APIView):
+class GetTellerDetailsView(generics.RetrieveAPIView):
     """
     Get teller details
     """
+    queryset = Teller.objects.filter(user__status='A')
+    serializer_class = TellerSerializer
     permission_classes = (IsAuthenticated,)
 
-    def post(self, request):
+    def retrieve(self, request, *args, **kwargs):
         try:
-            teller = Teller.objects.get(user__phone_no=request.data['mobile_number'], service_activation=True)
-            teller_serializer = TellerSerializer(teller)
+            instance = self.get_object()
+            serializer = self.get_serializer(instance)
             return Response({
                 'success': True,
                 'message': 'Successfully displayed details.',
-                'data':teller_serializer.data
+                'data':serializer.data
             })
         except Exception as e:
             logger.error("{}, error occured while displaying teller details.".format(e))
             return Response({
                 'success': False,
                 'message': 'Error occured while displaying teller details.',
-                'data':{}
+                'data': {}
+            })
+
+
+class GetTellerDirection(generics.RetrieveAPIView):
+    """
+    Get direction between user and key user
+    """
+    queryset = Teller.objects.filter(user__status='A')
+    serializer_class = TellerSerializer
+    permission_classes = (IsAuthenticated,)
+
+    def retrieve(self, request, *args, **kwargs):
+        try:
+            instance = self.get_object()
+            lat = decimal.Decimal(self.request.query_params.get('lat', None))
+            long = decimal.Decimal(self.request.query_params.get('long', None))
+            direction_steps = instance.get_direction((lat,long))
+            return Response({
+                'success': True,
+                'message': 'Successfully displayed directions from user to teller.',
+                'data':{
+                    'directions': direction_steps
+                }
+            })
+        except Exception as e:
+            logger.error("{}, error occured while displaying directions between user and key user.".format(e))
+            return Response({
+                'success': False,
+                'message': 'Error occured while displaying directions between user and key user.',
+                'data': {}
             })
 
 

@@ -1,5 +1,6 @@
 import math, decimal
 
+from datetime import datetime
 from django.db import models
 from django.utils import timezone
 from django.conf import settings
@@ -154,6 +155,7 @@ class Teller(models.Model):
     fee = models.DecimalField(max_digits=5, decimal_places=2, blank=False, null=False, default=0)
     lat = models.DecimalField(max_digits=9, decimal_places=6, blank=False, null=True)
     long = models.DecimalField(max_digits=9, decimal_places=6, blank=False, null=True)
+    ratings = models.PositiveIntegerField(validators=[MinValueValidator(1), MaxValueValidator(5)])
 
     def __str__(self):
         return self.user.phone_no
@@ -174,13 +176,53 @@ class Teller(models.Model):
         d = radius * c
         print("distance=",d)
 
-
         if d < 501:
             print("Is_near=true")
             return True
         else:
             print("Is_near=false")
             return False
+
+    def get_duration(self, user_pos):
+        """
+        Return time duration between 2 GPS point.
+        """
+        reverse_geocode_result = settings.GMAPS.reverse_geocode(user_pos)
+        origin = reverse_geocode_result[0]['formatted_address']
+
+        reverse_geocode_result = settings.GMAPS.reverse_geocode((self.lat, self.long))
+        destination = reverse_geocode_result[0]['formatted_address']
+
+        directions_result = settings.GMAPS.directions(origin,
+                                             destination,
+                                             mode="walking",
+                                             departure_time=datetime.now())
+        legs = directions_result[0]['legs']
+        print("legs>>>",legs[0])
+        duration = legs[0]['duration']
+        return duration['text']
+
+    def get_direction(self, user_pos):
+        """
+        Return directions between 2 GPS point.
+        """
+        direction_steps = []
+        reverse_geocode_result = settings.GMAPS.reverse_geocode(user_pos)
+        origin = reverse_geocode_result[0]['formatted_address']
+
+        reverse_geocode_result = settings.GMAPS.reverse_geocode((self.lat, self.long))
+        destination = reverse_geocode_result[0]['formatted_address']
+
+        directions_result = settings.GMAPS.directions(origin,
+                                             destination,
+                                             mode="walking",
+                                             departure_time=datetime.now())
+        legs = directions_result[0]['legs']
+        print("legs>>>",legs[0])
+        steps = legs[0]['steps']
+        for step in steps:
+            direction_steps.append(step['html_instructions'])
+        return direction_steps
 
 
 class UserRatingsAndFeedback(models.Model):

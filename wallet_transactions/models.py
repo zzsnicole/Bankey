@@ -81,6 +81,10 @@ class CashRequest(models.Model):
                              blank=False, null=False)
     user_confirmation_code = models.CharField(max_length=128, unique=True, blank=True, null=True)
 
+    note = models.CharField(max_length=1024, blank=True, null=True)
+
+    transaction_reference_number = models.CharField(max_length=32, blank=False, null=True)
+
     request_type = models.CharField(max_length=1, choices=settings.CASH_REQUEST_TYPE, null=True)
 
     request_status = models.CharField(max_length=1, choices=settings.CASH_REQUEST_STATUS, default='P')

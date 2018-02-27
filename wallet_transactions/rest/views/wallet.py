@@ -3,20 +3,44 @@ import logging
 from django.http import Http404
 from django.db import transaction
 
-from rest_framework import viewsets
+from rest_framework import generics
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from rest_framework import status
-from rest_framework.permissions import IsAdminUser, AllowAny, IsAuthenticated
-from mangopay.resources import NaturalUser, Wallet, CardRegistration
+from rest_framework.permissions import IsAuthenticated
+from mangopay.resources import NaturalUser, Wallet
 
-from user_management.rest.permissions import *
 from user_management.models import *
 from wallet_transactions.models import *
 from wallet_transactions.rest.serializers.wallet import *
 
 
 logger = logging.getLogger("wallets_log")
+
+
+class CurrencyListView(generics.ListAPIView):
+    """
+    List currencies
+    """
+    queryset = Currency.objects.filter(status='A')
+    serializer_class = CurrencySerializer
+    permission_classes = (IsAuthenticated,)
+
+    def get(self, request, *args, **kwargs):
+        try:
+            res = self.list(request, *args, **kwargs)
+            logger.info("List of currencies are successfully retrieved.")
+            return Response({
+                'success': True,
+                'message': 'List of currencies.',
+                'data': res.data
+            })
+        except Exception as e:
+            logger.error("{}, error occured while listing currencies.".format(e))
+            return Response({
+                'success': False,
+                'message': 'Error occured while listing currencies.',
+                'data':{}
+            })
 
 
 class CreateWallet(APIView):
@@ -81,84 +105,5 @@ class GetWalletBalance(APIView):
             return Response({
                 'success': False,
                 'message': 'Error occured while returning balance.',
-                'data':{}
-            })
-
-
-class PreCardRegistrationView(APIView):
-    """
-    Pre Card Registration
-    """
-    permission_classes = (IsAuthenticated,)
-
-    @transaction.atomic()
-    def post(self, request, format=None):
-        try:
-            try:
-                card_detail = UserCardDetails.objects.get(user=request.user, currency__code=request.data['currency'])
-                if card_detail.is_completed:
-                    return Response({
-                        'success': False,
-                        'message': 'Card already registrated for given currency.',
-                        'data': {}
-                    })
-                else:
-                    card_registration = CardRegistration.get(card_detail.mangopay_card_registration_id)
-
-            except UserCardDetails.DoesNotExist:
-                mangopay_user = NaturalUser.get(request.user.mangopay_user_id)
-                currency = Currency.objects.get(code=request.data['currency'])
-                card_registration = CardRegistration(user=mangopay_user, currency=currency.code)
-                card_registration.save()
-                UserCardDetails.objects.create(user=request.user, currency=currency, \
-                                                 mangopay_card_registration_id=card_registration.id)
-            logger.info("Card successfully pre-registered for {} currency by {} user.".format(request.data['currency'],\
-                                                                                                request.user.phone_no))
-            return Response({
-                'success': True,
-                'message': 'Pre card registration successful.',
-                'data': {
-                    "AccessKey": card_registration.AccessKey,
-                    "PreregistrationData": card_registration.PreregistrationData,
-                    "CardRegistrationURL": card_registration.CardRegistrationURL
-                }
-            })
-        except Exception as e:
-            logger.exception("{}, error occured while pre card registration.".format(e))
-            return Response({
-                'success': False,
-                'message': 'Error occured while pre card registration.',
-                'data':{}
-            })
-
-
-class CardRegistrationView(APIView):
-    """
-    Card Registration
-    """
-    permission_classes = (IsAuthenticated,)
-
-    @transaction.atomic()
-    def post(self, request, format=None):
-        try:
-            card_detail = UserCardDetails.objects.get(user=request.user, currency__code=request.data['currency'],\
-                                                                                                is_completed = False)
-            card_registration = CardRegistration.get(card_detail.mangopay_card_registration_id)
-            card_registration.registration_data = request.data['registration_data']
-            card_registration.save()
-            card_detail.is_completed = True
-            card_detail.save()
-            logger.info("Card successfully registered for {} currency by {} user.".format(request.data['currency'],\
-                                                                                                request.user.phone_no))
-            return Response({
-                'success': True,
-                'message': 'card registration successful.',
-                'data': {}
-            })
-        except Exception as e:
-            logger.error("{}, error occured while card registration.".format(e))
-            return Response({
-                'success': False,
-                'message': 'Error occured while card registration.',
                 'data':{}
             })

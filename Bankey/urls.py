@@ -19,12 +19,16 @@ from django.conf.urls import url, include
 from django.conf.urls.static import static
 
 from rest_framework.authtoken import views
+from rest_framework_swagger.views import get_swagger_view
+
+schema_view = get_swagger_view(title='Bankey API')
 
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     url(r'^api-token-auth/', views.obtain_auth_token),
+    url(r'^schema/$', schema_view),
     url(r'^user/', include('user_management.rest.urls', namespace='uesr_management')),
     url(r'^wallet/', include('wallet_transactions.rest.urls', namespace='wallet_transactions')),
     url(r'^messages/', include('postman.urls', namespace='postman', app_name='postman')),
