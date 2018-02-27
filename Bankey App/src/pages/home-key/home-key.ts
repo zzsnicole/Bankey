@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import {MobilePage} from "../mobile/mobile";
 import {EnterAmountKeyPage} from "../enter-amount-key/enter-amount-key";
+import {PersonalDetailAddressKeyPage} from "../personal-detail-address-key/personal-detail-address-key";
 
 /**
  * Generated class for the HomeKeyPage page.
@@ -43,6 +44,9 @@ export class HomeKeyPage {
   ];
 
   public goToNextPage(){
-      this.navCtrl.push(EnterAmountKeyPage);
+      this.navCtrl.push(PersonalDetailAddressKeyPage);
+  }
+  public goBack(){
+      this.navCtrl.pop();
   }
 }

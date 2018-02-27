@@ -5,15 +5,18 @@
   Ionic pages and navigation.
 -->
 <ion-content padding>
+  <div end text-right>
+    <h6 class="secondary-text-color" end clear (click)="goBack();">Cancel</h6>
+  </div>
   <div style="text-align:center; margin-top:50px;">
     <img src="assets/img/05_slide_logo.png">
-    <h3>Hi, Welcome to Bankey!
+    <h3 class="secondary-text-color">Hi, Welcome to Bankey!
     </h3>
   </div>
   <ion-grid>
     <ion-row class="phone-labels">
       <ion-col col-3 no-padding style="margin-right: 5px;">
-        <ion-label no-margin stacked="" color="dark" style="display:inline-block;">Country </ion-label>
+        <ion-label no-margin stacked="" color="secondary" style="display:inline-block;">Country </ion-label>
         <img *ngIf="selectedCountry.flag" src="{{selectedCountry.flag}}" width="14"/>
             <select-searchable
                     title="Select Country"
@@ -27,7 +30,7 @@
 
       </ion-col>
       <ion-col col-8 no-padding>
-        <ion-label no-margin left color="dark" stacked="">Phone Number</ion-label>
+        <ion-label no-margin left color="secondary" stacked="">Phone Number</ion-label>
         <ion-item style="padding-left: 0px;">
           <ion-input type="tel" [(ngModel)]="mobileNumber" placeholder="Phone number" name="phonenumber" required></ion-input>
         </ion-item>

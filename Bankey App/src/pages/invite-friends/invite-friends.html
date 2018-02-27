@@ -6,13 +6,13 @@
 -->
 <ion-content padding class="content">
   <div class="img-row">
-    <img src="assets/img/10_slide_logo.png">
+    <img src="assets/img/10_slide_logo.png" (click)="goKeyUserSliderPage()">
   </div>
 
   <div class="text-row">
-    <div>Your are number {{userNumber}} on the list</div>
+    <div>Welcome {{userName}}!</div>
     <div class="bold-text"  >
-      You are on the list, {{userName}}!
+      Your are number {{userNumber}} on the list
     </div>
 
     <div class="description">
@@ -20,12 +20,12 @@
     </div>
   </div>
 
-  <ion-row justify-content-center style="display: grid;text-align:center;">
-    <button ion-fab color="secondary" (click)="goKeyUserSliderPage()">
-      <ion-icon name="ios-arrow-forward"></ion-icon>
-    </button>
-    Go Login
-  </ion-row>
+  <!--<ion-row justify-content-center style="display: grid;text-align:center;">-->
+    <!--<button ion-fab color="secondary" (click)="goKeyUserSliderPage()">-->
+      <!--<ion-icon name="ios-arrow-forward"></ion-icon>-->
+    <!--</button>-->
+    <!--Next-->
+  <!--</ion-row>-->
 
   <ion-row padding-top justify-content-center style="display: grid;text-align:center;">
     <button ion-fab color="secondary" (click)="openSharing()">

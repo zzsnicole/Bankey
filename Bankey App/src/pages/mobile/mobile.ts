@@ -6,6 +6,7 @@ import { SelectSearchable } from '../../components/select-searchable/select-sear
 import { HttpClientProvider } from "../../providers/http-client/http-client";
 import { PasscodeLoginPage } from "./../passcode-login/passcode-login";
 import { CommonFunctionsProvider } from "../../providers/common-functions/common-functions";
+import {HomePage} from "../home/home";
 /**
  * Generated class for the MobilePage page.
  *
@@ -90,5 +91,9 @@ export class MobilePage {
 
   typeaheadOnSelect($event) {
     this.selectedCountry = $event.item;
+  }
+
+  goBack(){
+    this.navCtrl.setRoot(HomePage);
   }
 }

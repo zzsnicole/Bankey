@@ -28,12 +28,11 @@ export class PersonalDetailAddressKeyPage {
   }
 
   ionViewDidLoad() {
-    this.userInfo = this.navParams.get("userInfo");
     console.log('ionViewDidLoad PersonalDetailAddressKeyPage');
   }
 
   Submit(){
-    this.navCtrl.push(PersonalDetailEmailKeyPage,{"userInfo":this.userInfo,"addressInfo":this.addressInfo});
+    this.navCtrl.push(PersonalDetailEmailKeyPage,{"addressInfo":this.addressInfo});
   }
 
   goToEmailPage(){

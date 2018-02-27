@@ -19,7 +19,7 @@
   <ion-row style="background-color: #f8f8f8;">
     <div class="photo-row">
       <ion-col col-8 style="padding-left: 50px;">
-        <h5 (click)="GoProfile();">Achraf Alobaid</h5>
+        <h5 (click)="GoProfile();">{{userName}}</h5>
       </ion-col>
       <ion-col col-3 style="padding-right: 25px;">
         <div class="circle">
@@ -39,16 +39,15 @@
 
   <ion-row class="center-btn-set" style="padding-top: 40px;">
     <p style="padding-top: 14px;">My Balance</p>
-
-    <ion-select>
-      <ion-option selected value="us">$</ion-option>
-      <ion-option value="india">Rs</ion-option>
-    </ion-select>
+      <ion-select class="custom-select">
+        <ion-option selected value="us">$</ion-option>
+        <ion-option value="india">Rs</ion-option>
+      </ion-select>
   </ion-row>
 
   <h1 class="amount-text" text-center>00.00</h1>
 
-  <div class="blue-background" margin-top (click)="goToPendingRequest()">
+  <div showWhen="false" class="blue-background" margin-top (click)="goToPendingRequest()">
     <ion-item-divider class="btn-with-side-bar">{{requestStatusString}}}</ion-item-divider>
   </div>
   <div class="primary-bg-color" margin-top>
@@ -61,15 +60,15 @@
     <ion-row class="center-btn-set">
 
       <ion-row padding-top class="bottom-start-btn" justify-content-center style="display: grid;text-align: center;">
-        <button ion-fab class="center-custom"><ion-icon name="remove"></ion-icon></button>
+        <button ion-fab class="center-custom"><ion-icon color="dark" name="remove"></ion-icon></button>
         Withdraw
       </ion-row>
       <ion-row padding-top class="bottom-start-btn" justify-content-center style="display: grid;text-align: center;">
-        <button (click)="GoContactList();" ion-fab class="center-custom"><ion-icon name="play"></ion-icon></button>
+        <button (click)="GoContactList();" ion-fab class="center-custom"><ion-icon name="play" color="dark"></ion-icon></button>
         Send
       </ion-row>
       <ion-row padding-top class="bottom-start-btn" justify-content-center style="display: grid;text-align: center;">
-        <button ion-fab class="center-custom"><ion-icon name="add"></ion-icon></button>
+        <button ion-fab class="center-custom"><ion-icon color="dark" name="add"></ion-icon></button>
         Add
       </ion-row>
 

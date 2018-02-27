@@ -109,3 +109,12 @@ ion-row button{
   -webkit-animation-duration: 0.3;
   animation-duration: 0.3s;
 }
+.swiper-pagination-bullet-active {
+  background: color($colors, primary, base) !important;
+}
+.swiper-pagination-bullet{
+  border: 1px solid gray !important;
+  background: #F0F0F0;
+  height: 10px;
+  width: 10px;
+}

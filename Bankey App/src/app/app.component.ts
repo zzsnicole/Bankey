@@ -20,12 +20,16 @@ import {HomeKeyPage} from "../pages/home-key/home-key";
 import {SetServiceFeePage} from "../pages/set-service-fee/set-service-fee";
 import {InviteFriendsKeyPage} from "../pages/invite-friends-key/invite-friends-key";
 import {PersonalDetailKeyPage} from "../pages/personal-detail-key/personal-detail-key";
+import {SettingPage} from "../pages/setting/setting";
+import {EditProfilePage} from "../pages/edit-profile/edit-profile";
+import {ContactListPage} from "../pages/contact-list/contact-list";
+import {MobilePage} from "../pages/mobile/mobile";
 
 @Component({
   templateUrl: 'app.html'
 })
 export class BankeyApp {
-  rootPage:any = InviteFriendsKeyPage;
+  rootPage:any = HomePage;
 
   constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen) {
     platform.ready().then(() => {

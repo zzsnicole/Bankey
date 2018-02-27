@@ -21,7 +21,9 @@ import {SettingPage} from "../setting/setting";
 })
 export class MyAccountPage {
   requestStatusString = "Pending request to add money from Name Surname";
+  userName:any = "Achraf Alobaid";
   constructor(public navCtrl: NavController, public navParams: NavParams) {
+      //this.userName = JSON.parse(localStorage.userObject).name;
   }
 
   ionViewDidLoad() {

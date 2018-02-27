@@ -9,6 +9,8 @@
 
   <h5 text-center class="secondary-text-color custom-place" margin-top>Settings</h5>
 
+  <ion-icon style="position: absolute;" class="logout-icon" padding text-lg-right color="primary" name="log-out" (click)="SignOut();"></ion-icon>
+
   <ion-card style="margin-top:20px !important;">
     <div class="photo-row">
       <div class="circle">
@@ -16,13 +18,13 @@
         <img *ngIf="base64Image " [src]="base64Image">
       </div>
     </div>
-    <h5 class="title">Achraf Alobaid</h5>
+    <h5 class="title">{{userName}}</h5>
   </ion-card>
   <ion-list >
     <button ion-item (click)="ChangePage('edit-profile');">
       Edit Profile
     </button>
-    <button ion-item>
+    <button ion-item (click)="openSharing();">
       Share with friends
     </button>
     <button ion-item (click)="ChangePage('become-key');" >
@@ -37,7 +39,7 @@
     </button>
     <ion-item>
       <ion-label> Key Service</ion-label>
-      <ion-toggle [(ngModel)]="KeyServiceStatus" (click)="updateStatusOfKeyService($event);"></ion-toggle>
+      <ion-toggle [(ngModel)]="KeyServiceStatus" (ionChange)="updateStatusOfKeyService($event);"></ion-toggle>
     </ion-item>
     <button ion-item (click)="ChangePage('terms-condition');" >
       Terms and Conditions
@@ -45,8 +47,8 @@
     <button ion-item (click)="ChangePage('privacy-policy')">
       Privacy Policy
     </button>
-    <button ion-item (click)="SignOut();" >
-      Sign Out
-    </button>
+    <!--<button ion-item (click)="SignOut();" >-->
+      <!--Sign Out-->
+    <!--</button>-->
   </ion-list>
 </ion-content>

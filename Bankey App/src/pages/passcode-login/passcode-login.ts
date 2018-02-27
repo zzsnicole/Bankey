@@ -6,6 +6,7 @@ import { HttpClientProvider } from "../../providers/http-client/http-client";
 import {SettingPage} from "../setting/setting";
 import {CommonFunctionsProvider} from "../../providers/common-functions/common-functions";
 import {MobilePage} from "../mobile/mobile";
+import {MyAccountPage} from "../my-account/my-account";
 /**
  * Generated class for the PasscodeLoginPage page.
  *
@@ -36,7 +37,6 @@ export class PasscodeLoginPage {
     this.userInfo.mobile_number = localStorage.mobileNumber;
     this.userName = this.navParams.get("userName");
     this.profilePic = this.navParams.get("profilePic");
-      console.log(this.navParams.get("test"))
     console.log('ionViewDidLoad PasscodeLoginPage');
   }
 
@@ -54,11 +54,11 @@ export class PasscodeLoginPage {
   }
 
   signIn() {
-    
+
     this.httpClient.postService('login/',this.userInfo).then((result:any) => {
         console.log(result);
         if(result.success){
-            this.navCtrl.push(EnterAmountPage);
+            this.navCtrl.setRoot(MyAccountPage);
             localStorage.userObject = JSON.stringify(result.data);
             //localStorage.userData = result.data;
         }else{

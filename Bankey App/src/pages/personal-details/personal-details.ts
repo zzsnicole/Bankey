@@ -199,8 +199,9 @@ export class PersonalDetailsPage {
     this.httpClient.postService('signup/',this.userInfo).then((result:any) => {
         console.log(result);
         if(result.success){
-            this.navCtrl.push(InviteFriendsPage,{"userName":result.data.name})
-            localStorage.userData = result.data;
+            this.navCtrl.push(InviteFriendsPage,{"userName":result.data.name,"userCount":result.data.count})
+            //localStorage.userData = result.data;
+            localStorage.userObject = JSON.stringify(result.data);
             if(this.imagePath){
                 this.fileUpload(this.CameraParams);
             }

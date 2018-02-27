@@ -11,16 +11,16 @@
 
     <div class="header-label">
         <h5 class="secondary-text-color">{{headerLabel}}</h5>
-        <p text-center>We have sent it to +98234655272</p>
+        <p text-center style="color: gray;">We have sent it to {{mobileNumber}}</p>
     </div>
 
     <div class="dash-row" style="margin:auto;">
-        <input #input class="partitioned" [(ngModel)]="otpCode" (input)="onKeyup($event)" type="text" maxlength="6"
+        <input #input class="partitioned" [(ngModel)]="otpCode" (input)="onKeyup($event)" type="tel" maxlength="6"
                length="6"/>
 
     </div>
 
-    <p text-center style="padding-top: 50px;"> You can resend your code if it does not arrive in 00:41</p>
+    <p text-center style="padding-top: 50px;color: gray;"> You can resend your code if it does not arrive in <span style="color: black;">00:41</span></p>
     <ion-row padding-top class="bottom-start-btn" justify-content-center style="display: grid;text-align: center;">
         <button ion-fab color="secondary" round (click)="ValidateOtpForMobile()">
             <ion-icon name="ios-arrow-forward"></ion-icon>

@@ -22,6 +22,7 @@ export class EnterOtpPage {
 
   headerLabel = 'Enter the 6-digit code';
   otpCode = '';
+  mobileNumber:any;
   isPassChange:any = false;
   @ViewChild('input') input: ElementRef;
   @ViewChild('inputHidden') inputHidden: ElementRef;
@@ -30,6 +31,7 @@ export class EnterOtpPage {
               public navParams: NavParams,
               public httpClient: HttpClientProvider,
               public commonFn: CommonFunctionsProvider) {
+      this.mobileNumber = localStorage.mobileNumber;
   }
 
   ionViewDidLoad() {

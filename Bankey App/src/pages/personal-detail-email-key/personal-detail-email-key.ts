@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import {InviteFriendsKeyPage} from "../invite-friends-key/invite-friends-key";
 import {HttpClientProvider} from "../../providers/http-client/http-client";
 import {CommonFunctionsProvider} from "../../providers/common-functions/common-functions";
+import {SetServiceFeePage} from "../set-service-fee/set-service-fee";
 
 /**
  * Generated class for the PersonalDetailEmailKeyPage page.
@@ -18,16 +19,14 @@ import {CommonFunctionsProvider} from "../../providers/common-functions/common-f
 })
 export class PersonalDetailEmailKeyPage {
   email_id:String= "";
-  userInfo:any;
-  addressInfo:any;
+  addressInfo:String;
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
               public httpClient: HttpClientProvider,
               public commonFn: CommonFunctionsProvider ) {
   }
 
-  ionViewDidLoad() {
-      this.userInfo = this.navParams.get("userInfo");
+  ionViewDidLoad() {;
       this.addressInfo = this.navParams.get("addressInfo");
       console.log('ionViewDidLoad PersonalDetailEmailKeyPage');
   }
@@ -35,29 +34,10 @@ export class PersonalDetailEmailKeyPage {
   Submit(){
     if(!this.email_id || this.email_id == ''){
         this.commonFn.showAlert("Please enter Email ID");
+        return false;
     }
-    this.DoSignUP();
-  }
-
-  DoSignUP(){
-      let params = {
-          "email":this.email_id,
-          "name": this.userInfo.name,
-          "birth_date": this.userInfo.birth_date,
-          "address":this.addressInfo,
-          "fee":Number(localStorage.feeValue)
-      }
-      console.log(params);
-      this.httpClient.postService("teller/",params).then(
-          (result:any) => {
-            console.log(result);
-            if(result.success){
-                this.navCtrl.push(InviteFriendsKeyPage,{"userName":this.userInfo.name,"userListNumber":result.data.count});
-            }
-          },
-          err => {
-            console.log(err);
-          });
+    this.navCtrl.push(SetServiceFeePage,{"emailID":this.email_id,"addressInfo":this.addressInfo});
+    //this.DoSignUP();
   }
   goBack(){
       this.navCtrl.pop();

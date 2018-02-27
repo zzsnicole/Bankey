@@ -1,13 +1,17 @@
 <ion-content class="info-slides">
+
   <ion-slides pager autoplay=1000>
+
     <ion-slide *ngFor="let slide of slides">
+      <div end text-left>
+        <ion-icon class="back-icon-size" text-lg-left color="primary" name="ios-arrow-back" (click)="goBack()"></ion-icon>
+      </div>
       <div end text-right>
         <button end ion-button clear>عربى</button>
       </div>
       <img [src]="slide.image" class="slide-image" />
       <h2 class="slide-title" [innerHTML]="slide.title"></h2>
       <p padding-top [innerHTML]="slide.description"></p>
-
     </ion-slide>
   </ion-slides>
   <ion-row class="bottom-start-btn" justify-content-center style="display: grid;text-align: center;">

@@ -7,6 +7,7 @@ import {CommonFunctionsProvider} from "../../providers/common-functions/common-f
 import {HttpClientProvider} from "../../providers/http-client/http-client";
 import {HomeKeyPage} from "../home-key/home-key";
 import {EditProfilePage} from "../edit-profile/edit-profile";
+import {SocialSharing} from "@ionic-native/social-sharing";
 
 /**
  * Generated class for the SettingPage page.
@@ -22,12 +23,21 @@ import {EditProfilePage} from "../edit-profile/edit-profile";
 })
 export class SettingPage {
   KeyServiceStatus:boolean = false;
+  userName:any = "Achraf Alobaid";
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
               public commonFn: CommonFunctionsProvider,
-              public httpClient: HttpClientProvider) {
+              public httpClient: HttpClientProvider,
+              public socialSharing: SocialSharing) {
+      //this.userName = JSON.parse(localStorage.userObject).name;
   }
-
+  options = {
+    message: 'share this', // not supported on some apps (Facebook, Instagram)
+    subject: 'the subject', // fi. for email
+    files: ['', ''], // an array of filenames either locally or remotely
+    url: 'https://www.website.com/foo/#bar?a=b',
+    chooserTitle: 'Pick an app' // Android only, you can override the default share sheet title
+  }
   ionViewDidLoad() {
     console.log('ionViewDidLoad SettingPage');
     this.getStatusOfKeyService();
@@ -53,8 +63,9 @@ export class SettingPage {
                   this.httpClient.putService("teller/activationmode/",{"service_activation":this.KeyServiceStatus}).then(
                       (result:any) => {
                           console.log(result);
+                          console.log(result);
                           if(result.success){
-                              this.commonFn
+                              this.commonFn.showAlert("Key service turned "+displayKeyword);
                           }
                       }
                   )
@@ -85,6 +96,21 @@ export class SettingPage {
             break;
     }
   }
+
+    openSharing() {
+        console.log(this.socialSharing)
+        this.socialSharing.shareWithOptions(this.options).then(() => {
+            // Sharing via email is possible
+            console.log("Share done");
+
+        }).catch(() => {
+            // Sharing via email is not possible
+            console.log('not ok');
+            //this.navCtrl.push(PostSharePage)
+
+        });
+
+    }
   SignOut(){
     //do api call
       this.commonFn.showConfirm("Sign Out","Yes","No","Are you sure you want to sign out from the bankey app now?").then(

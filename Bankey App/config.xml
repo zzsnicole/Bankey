@@ -103,5 +103,8 @@
         <variable name="CONTACTS_USAGE_DESCRIPTION" value=" " />
     </plugin>
     <plugin name="cordova-plugin-fcm" spec="^2.1.2" />
-    <engine name="ios" spec="^4.5.4" />
+    <plugin name="cordova-plugin-geolocation" spec="^4.0.1">
+        <variable name="GEOLOCATION_USAGE_DESCRIPTION" value="To locate you" />
+    </plugin>
+    <allow-navigation href="http://10.0.28.186:8104" />
 </widget>

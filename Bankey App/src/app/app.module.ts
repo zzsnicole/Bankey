@@ -10,6 +10,8 @@ import {StatusBar} from '@ionic-native/status-bar';
 import {GoogleMaps} from '@ionic-native/google-maps';
 import { File } from '@ionic-native/file';
 import {Contacts} from "@ionic-native/contacts";
+import { Geolocation } from '@ionic-native/geolocation';
+import { FCM } from '@ionic-native/fcm';
 
 import {BankeyApp} from './app.component';
 import {HomePage} from '../pages/home/home';
@@ -50,7 +52,7 @@ import {PrivacyPolicyPage} from "../pages/privacy-policy/privacy-policy";
 import {SetServiceFeePage} from "../pages/set-service-fee/set-service-fee";
 import {EditProfilePage} from "../pages/edit-profile/edit-profile";
 import { PushProvider } from '../providers/push/push';
-import { FCM } from '@ionic-native/fcm';
+import { LocationServiceProvider } from '../providers/location-service/location-service';
 
 @NgModule({
     declarations: [
@@ -144,10 +146,12 @@ import { FCM } from '@ionic-native/fcm';
         File,
         FCM,
         Contacts,
+        Geolocation,
         {provide: ErrorHandler, useClass: IonicErrorHandler},
         HttpClientProvider,
         CommonFunctionsProvider,
-        PushProvider
+        PushProvider,
+        LocationServiceProvider
     ]
 })
 export class AppModule {
