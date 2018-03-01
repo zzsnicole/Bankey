@@ -110,7 +110,7 @@ export class PersonalDetailsPage {
             console.log(result);
             if(result.success){
                 localStorage.imageData = this.imagePath;
-                this.navCtrl.push(InviteFriendsPage);
+                //this.navCtrl.push(InviteFriendsPage);
             }else{
                 this.commonFn.showAlert(result.message);
             }
@@ -199,13 +199,12 @@ export class PersonalDetailsPage {
     this.httpClient.postService('signup/',this.userInfo).then((result:any) => {
         console.log(result);
         if(result.success){
-            this.navCtrl.push(InviteFriendsPage,{"userName":result.data.name,"userCount":result.data.count})
             //localStorage.userData = result.data;
             localStorage.userObject = JSON.stringify(result.data);
             if(this.imagePath){
                 this.fileUpload(this.CameraParams);
             }
-
+            this.navCtrl.push(InviteFriendsPage,{"userName":result.data.name,"userCount":result.data.count})
         }else{
             this.commonFn.showAlert(result.message);
         }

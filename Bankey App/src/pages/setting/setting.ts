@@ -24,6 +24,7 @@ import {SocialSharing} from "@ionic-native/social-sharing";
 export class SettingPage {
   KeyServiceStatus:boolean = false;
   userName:any = "Achraf Alobaid";
+  oldKeyServiceStatus:boolean = false;
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
               public commonFn: CommonFunctionsProvider,
@@ -48,11 +49,16 @@ export class SettingPage {
               console.log(result);
               if(result.success){
                  this.KeyServiceStatus = result.data.activation_mode;
+                 this.oldKeyServiceStatus = result.data.activation_mode;
               }
           }
       )
   }
-  updateStatusOfKeyService (e){
+
+  updateStatusOfKeyService (ctl, oldValue){
+      if(this.oldKeyServiceStatus == this.KeyServiceStatus){
+          return;
+      }
       let displayKeyword = "ON"
       if(!this.KeyServiceStatus){
           displayKeyword = "OFF"
@@ -63,9 +69,9 @@ export class SettingPage {
                   this.httpClient.putService("teller/activationmode/",{"service_activation":this.KeyServiceStatus}).then(
                       (result:any) => {
                           console.log(result);
-                          console.log(result);
                           if(result.success){
                               this.commonFn.showAlert("Key service turned "+displayKeyword);
+                              this.oldKeyServiceStatus = this.KeyServiceStatus;
                           }
                       }
                   )
@@ -120,6 +126,7 @@ export class SettingPage {
                     (result:any) =>{
                         if(result.success){
                             this.navCtrl.setRoot(MobilePage);
+                            localStorage.clear();
                         }
                     }
                 )

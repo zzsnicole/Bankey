@@ -9,9 +9,10 @@ import {MobilePage} from "../mobile/mobile";
 export class HomePage {
 
   constructor(public navCtrl: NavController) {
-    
+      //temp localstorage clear till we define navigation for logged in user
+      localStorage.clear();
   }
- 
+
   public slides = [
     {
       title: "Create your Bankey Profile",

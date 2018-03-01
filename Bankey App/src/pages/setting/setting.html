@@ -39,7 +39,7 @@
     </button>
     <ion-item>
       <ion-label> Key Service</ion-label>
-      <ion-toggle [(ngModel)]="KeyServiceStatus" (ionChange)="updateStatusOfKeyService($event);"></ion-toggle>
+      <ion-toggle [(ngModel)]="KeyServiceStatus" (ionChange)="updateStatusOfKeyService($event, KeyServiceStatus);"></ion-toggle>
     </ion-item>
     <button ion-item (click)="ChangePage('terms-condition');" >
       Terms and Conditions
