@@ -314,22 +314,24 @@ class PhoneVerificationRequestView(APIView):
         try:
             try:
                 random_string = ''.join([random.choice(string.digits) for n in range(6)])
-                verification = PhoneVerification.objects.get(phone_no=request.data['mobile_number'])
-                if verification.status == 'V':
-                    user = User.objects.get(phone_no=request.data['mobile_number'])
-                    user_serializer = UserSerializer(user)
-                    return Response({
-                        'success': False,
-                        'message': 'User Exist.',
-                        'data': user_serializer.data
-                    })
-                else:
+                user = User.objects.get(phone_no=request.data['mobile_number'])
+                user_serializer = UserSerializer(user)
+                return Response({
+                    'success': False,
+                    'message': 'User Exist.',
+                    'data': user_serializer.data
+                })
+            except User.DoesNotExist:
+                try:
+                    verification = PhoneVerification.objects.get(phone_no=request.data['mobile_number'])
                     verification.code = random_string
                     verification.verified_on = timezone.now()
+                    verification.status = 'U'
                     verification.save()
-            except PhoneVerification.DoesNotExist:
-                verification = PhoneVerification.objects.create(phone_no=request.data['mobile_number'],\
-                                                                code = random_string)
+
+                except PhoneVerification.DoesNotExist:
+                    verification = PhoneVerification.objects.create(phone_no=request.data['mobile_number'],\
+                                                                    code = random_string)
 
             client = Client(settings.TWILIO_SID, settings.TWILIO_AUTH_TOKEN)
             # message = client.messages.create(verification.phone_no,

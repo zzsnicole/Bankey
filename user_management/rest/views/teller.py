@@ -30,6 +30,32 @@ class AddTeller(APIView):
     """
     permission_classes = (IsAuthenticated,)
 
+    def get(self, request):
+        try:
+            Teller.objects.get(user=request.user)
+            return Response({
+                'success': True,
+                'message': 'Teller exist.',
+                'data': {
+                    'is_teller': True
+                }
+            })
+        except Teller.DoesNotExist:
+            return Response({
+                'success': True,
+                'message': 'Teller does not exit.',
+                'data': {
+                    'is_teller': False
+                }
+            })
+        except Exception as e:
+            logger.exception("{}, error occured while checking teller existence.".format(e))
+            return Response({
+                'success': False,
+                'message': 'Error occured while checking teller existence.',
+                'data':{}
+            })
+
     @transaction.atomic()
     def post(self, request, format=None):
         try:

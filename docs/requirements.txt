@@ -11,4 +11,6 @@ twilio==6.10.0
 django-cors-headers==2.1.0
 googlemaps==2.5.1
 django-rest-swagger==2.1.2
-
+mangopaysdk==3.4.0
+django-postman==3.6.1
+django-push-notifications==1.5.0
