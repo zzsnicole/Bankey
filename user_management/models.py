@@ -67,12 +67,19 @@ class User(AbstractBaseUser, PermissionsMixin):
     """
     User model
     """
+
+    GENDER_CHOICES = (
+        ('M', 'Male'),
+        ('F', 'Female'),
+    )
     phone_no = models.CharField(_('mobile number'), validators=[RegexValidator(regex=r'^\+?1?\d{9,15}$',
                                  message="Phone number must be entered in the format:\
                                   '+999999999'. Up to 15 digits allowed.")], max_length=15,\
                                   unique=True, blank=False, null=False)
     email = models.EmailField(_('email address'), blank=True, null=True)
     name = models.CharField(_('name'), max_length=30, blank=False, null=False)
+    surname = models.CharField(_('surname'), max_length=30, blank=False, null=False, default='')
+    gender = models.CharField(max_length=1, choices=GENDER_CHOICES, default='M')
     is_staff = models.BooleanField(
         _('staff status'),
         default=False,

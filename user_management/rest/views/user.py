@@ -145,8 +145,13 @@ class UserDetail(generics.RetrieveUpdateDestroyAPIView):
     Update user and delete user
     """
     queryset = User.objects.filter(status='A')
-    serializer_class = UserEditSerializer
+    # serializer_class = UserSerializer
     permission_classes = (IsSelf,)
+
+    def get_serializer_class(self, *args, **kwargs):
+        if self.request.method == 'PUT' or self.request.method == 'PATCH':
+            return UserEditSerializer
+        return UserSerializer
 
     def get(self, request, *args, **kwargs):
         return self.retrieve(request, *args, **kwargs)
@@ -155,7 +160,7 @@ class UserDetail(generics.RetrieveUpdateDestroyAPIView):
     def put(self, request, *args, **kwargs):
         try:
             res = self.update(request, *args, **kwargs)
-            logger.info("{} profile is updated successfully.".format(res.data['phone_no']))
+            logger.info("{} profile is updated successfully.".format(request.user.phone_no))
             return Response({
                 'success': True,
                 'message': 'Successfully updated.',
@@ -173,7 +178,7 @@ class UserDetail(generics.RetrieveUpdateDestroyAPIView):
     def patch(self, request, *args, **kwargs):
         try:
             res = self.partial_update(request, *args, **kwargs)
-            logger.info("{} profile is updated successfully.".format(res.data['phone_no']))
+            logger.info("{} profile is updated successfully.".format(request.user.phone_no))
             return Response({
                 'success': True,
                 'message': 'Successfully updated.',

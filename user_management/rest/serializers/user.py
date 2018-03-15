@@ -91,7 +91,7 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ('email', 'phone_no', 'password', 'name', 'date_joined','birth_date',\
+        fields = ('email', 'phone_no', 'password', 'name', 'surname', 'gender', 'date_joined','birth_date',\
                   'address', 'contacts', 'status', 'is_staff', 'is_superuser', 'photo')
         # read_only_fields = ('photo',)
 
@@ -103,10 +103,10 @@ class UserSerializer(serializers.ModelSerializer):
         user.set_password(validated_data['password'])
         user.save()
         Token.objects.create(user=user)
-        first_name, last_name = validated_data['name'].split(' ')
+        # first_name, last_name = validated_data['name'].split(' ')
         birth_date = int(time.mktime(time.strptime(str(validated_data['birth_date']),'%Y-%m-%d')))
-        mangopay_user = NaturalUser(first_name=first_name,
-                                   last_name=last_name,
+        mangopay_user = NaturalUser(first_name=validated_data['name'],
+                                   last_name=validated_data['surname'],
                                    birthday=birth_date,
                                    nationality=country.code,
                                    country_of_residence=country.code,
@@ -115,13 +115,13 @@ class UserSerializer(serializers.ModelSerializer):
         mangopay_user.save()
         user.mangopay_user_id = mangopay_user.id
         user.save()
-        wallet = Wallet(owners=[mangopay_user],
-                        description='Wallet for USD',
-                        currency='USD')
-
-        wallet.save()
-        currency = Currency.objects.get(code='USD')
-        UserWallet.objects.create(user=user, currency=currency, mangopay_wallet_id= wallet.id)
+        # wallet = Wallet(owners=[mangopay_user],
+        #                 description='Wallet for USD',
+        #                 currency='USD')
+        #
+        # wallet.save()
+        # currency = Currency.objects.get(code='USD')
+        # UserWallet.objects.create(user=user, currency=currency, mangopay_wallet_id= wallet.id)
         return user
 
     def update(self, instance, validated_data):
@@ -165,7 +165,7 @@ class UserEditSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ('address',)
-        read_only_fields = ('email', 'phone_no', 'password', 'name', 'date_joined','birth_date',\
+        read_only_fields = ('email', 'phone_no', 'password', 'name', 'surname', 'gender', 'date_joined','birth_date',\
                   'contacts', 'status', 'is_staff', 'is_superuser', 'photo',)
 
     def update(self, instance, validated_data):
