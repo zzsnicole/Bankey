@@ -156,6 +156,40 @@ class UserSerializer(serializers.ModelSerializer):
         return instance
 
 
+class UserEditSerializer(serializers.ModelSerializer):
+    """
+    User Edit Serializer
+    """
+    address = AddressSerializer()
+
+    class Meta:
+        model = User
+        fields = ('address',)
+        read_only_fields = ('email', 'phone_no', 'password', 'name', 'date_joined','birth_date',\
+                  'contacts', 'status', 'is_staff', 'is_superuser', 'photo',)
+
+    def update(self, instance, validated_data):
+        mangopay_user = NaturalUser.get(instance.mangopay_user_id)
+        print(">>>>>",mangopay_user.id)
+        address_data = validated_data.pop('address')
+        address = instance.address
+        address.line1 = address_data.get('line1', address.line1)
+        mangopay_user.address.address_line_1 = address_data.get('line1', address.line1)
+        address.line2 = address_data.get('line2', address.line2)
+        mangopay_user.address.address_line_2 = address_data.get('line2', address.line2)
+        address.city = address_data.get('city', address.city)
+        mangopay_user.address.city = address_data.get('city', address.city)
+        address.state = address_data.get('state', address.state)
+        mangopay_user.address.region = address_data.get('state', address.state)
+        address.country = Country.objects.get(code=address_data.get('country', address.country))
+        mangopay_user.address.country = address_data.get('country', address.country)
+        address.pin_code = address_data.get('pin_code', address.pin_code)
+        mangopay_user.address.postal_code = address_data.get('pin_code', address.pin_code)
+        address.save()
+        mangopay_user.save()
+        return instance
+
+
 class UserContactsSerializer(serializers.ModelSerializer):
     """
     UserContacts Serializer

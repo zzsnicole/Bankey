@@ -152,7 +152,7 @@ class Teller(models.Model):
         default=False,
         help_text=_('Is service activate for users.'),
     )
-    fee = models.DecimalField(max_digits=5, decimal_places=2, blank=False, null=False, default=0)
+    fee = models.DecimalField(max_digits=7, decimal_places=2, blank=False, null=False, default=0)
     lat = models.DecimalField(max_digits=9, decimal_places=6, blank=False, null=True)
     long = models.DecimalField(max_digits=9, decimal_places=6, blank=False, null=True)
     ratings = models.PositiveIntegerField(validators=[MinValueValidator(1), MaxValueValidator(5)])

@@ -145,7 +145,7 @@ class UserDetail(generics.RetrieveUpdateDestroyAPIView):
     Update user and delete user
     """
     queryset = User.objects.filter(status='A')
-    serializer_class = UserSerializer
+    serializer_class = UserEditSerializer
     permission_classes = (IsSelf,)
 
     def get(self, request, *args, **kwargs):
@@ -423,7 +423,7 @@ class PhoneVerificationView(APIView):
                 'data': {}
                 })
         except Exception as e:
-            logger.error("{}, error occured while mobile verification.".format(e))
+            logger.exception("{}, error occured while mobile verification.".format(e))
             return Response({
                 'success': False,
                 'message': 'Something goes wrong, please contact support team.',

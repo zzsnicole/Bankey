@@ -59,12 +59,12 @@ class AddTeller(APIView):
     @transaction.atomic()
     def post(self, request, format=None):
         try:
-            mangopay_user = NaturalUser.get(instance.mangopay_user_id)
+            mangopay_user = NaturalUser.get(request.user.mangopay_user_id)
             address = request.user.address
-            # request.user.email = request.data['email']
+            request.user.email = request.data['email']
             # request.user.name = request.data['name']
             # request.user.birth_date = request.data['birth_date']
-            # request.user.save()
+            request.user.save()
             address_data = request.data['address']
             address.line1 = address_data['line1']
             mangopay_user.address.address_line_1 = address_data['line1']
@@ -90,9 +90,9 @@ class AddTeller(APIView):
             # card_registration.save()
             # card_detail.is_completed = True
             # card_detail.save()
-            Teller.objects.create(user=request.user, fee=request.data['fee'])
+            Teller.objects.create(user=request.user, fee=request.data['fee'], ratings=2)
             count = Teller.objects.filter(user__status='A').count()
-            logger.info("Teller role is assigned to {}.".format(user.phone_no))
+            logger.info("Teller role is assigned to {}.".format(request.user.phone_no))
             return Response({
                 'success': True,
                 'message': 'Teller successfully created',
