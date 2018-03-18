@@ -115,13 +115,13 @@ class UserSerializer(serializers.ModelSerializer):
         mangopay_user.save()
         user.mangopay_user_id = mangopay_user.id
         user.save()
-        # wallet = Wallet(owners=[mangopay_user],
-        #                 description='Wallet for USD',
-        #                 currency='USD')
-        #
-        # wallet.save()
-        # currency = Currency.objects.get(code='USD')
-        # UserWallet.objects.create(user=user, currency=currency, mangopay_wallet_id= wallet.id)
+        wallet = Wallet(owners=[mangopay_user],
+                         description='Wallet for USD',
+                         currency='USD')
+
+        wallet.save()
+        currency = Currency.objects.get(code='USD')
+        UserWallet.objects.create(user=user, currency=currency, mangopay_wallet_id=wallet.id)
         return user
 
     def update(self, instance, validated_data):

@@ -20,6 +20,7 @@ from rest_framework.generics import ListAPIView, RetrieveAPIView, CreateAPIView,
 from user_management.rest.serializers.teller import *
 from user_management.rest.permissions import *
 from user_management.models import *
+from wallet_transactions.models import *
 
 logger = logging.getLogger("users_log")
 
@@ -282,14 +283,22 @@ class ChangeTellerActivationMode(generics.RetrieveUpdateAPIView):
     @transaction.atomic()
     def put(self, request, format=None):
         try:
-            teller = Teller.objects.get(user=request.user)
-            teller.service_activation = request.data['service_activation']
-            teller.save()
-            logger.info("Now activation mode is {} for {} teller.".format(teller.service_activation, request.user.phone_no))
-            return Response({
-                'success': True,
-                'message': 'Activation mode is successfully changed for teller.'
-            })
+            user_wallet = UserWallet.objects.get(user=request.user, currency__code="USD", status='A')
+            wallet = Wallet.get(user_wallet.mangopay_wallet_id)
+            if wallet.balance.amount > 100:
+                teller = Teller.objects.get(user=request.user)
+                teller.service_activation = request.data['service_activation']
+                teller.save()
+                logger.info("Now activation mode is {} for {} teller.".format(teller.service_activation, request.user.phone_no))
+                return Response({
+                    'success': True,
+                    'message': 'Activation mode is successfully changed for teller.'
+                })
+            else:
+                return Response({
+                    'success': True,
+                    'message': 'Teller dont have enough balance to change activation mode.'
+                })
         except Exception as e:
             logger.exception("{}, error occured while changing activation mode for teller.".format(e))
             return Response({

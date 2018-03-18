@@ -322,7 +322,7 @@ class PhoneVerificationRequestView(APIView):
                 user = User.objects.get(phone_no=request.data['mobile_number'])
                 user_serializer = UserSerializer(user)
                 return Response({
-                    'success': False,
+                    'success': True,
                     'message': 'User Exist.',
                     'data': user_serializer.data
                 })
@@ -336,7 +336,7 @@ class PhoneVerificationRequestView(APIView):
 
                 except PhoneVerification.DoesNotExist:
                     verification = PhoneVerification.objects.create(phone_no=request.data['mobile_number'],\
-                                                                    code = random_string)
+                                                                    code=random_string)
 
             client = Client(settings.TWILIO_SID, settings.TWILIO_AUTH_TOKEN)
             # message = client.messages.create(verification.phone_no,

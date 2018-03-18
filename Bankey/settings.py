@@ -139,6 +139,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
 # Required choices variables
+GENDER_CHOICES = (('M', 'Male'), ('F', 'Female'))
 STATUS_CHOICES = (('A', 'Active'), ('I', 'Inactive'), ('D', 'Delete'))
 TRANSACTION_TYPES = (('C', 'Credit'), ('D', 'Debit'), ('T', 'Transfer'))
 TRANSACTION_STATUS = (('S', 'Success'), ('F', 'Fail'), ('P', 'Pending'), ('R', 'Rejected'))
